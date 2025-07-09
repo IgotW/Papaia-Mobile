@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFBE6"
+    tools:context=".LoginActivity">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="450dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:src="@drawable/image_3"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="-20dp"
+        app:shapeAppearanceOverlay="@style/BottomCurveShape"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/league_spartan_bold"
+        android:gravity="center_horizontal"
+        android:text="Welcome Back"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:letterSpacing=".05"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log in you account"
+        android:gravity="center_horizontal"
+        android:fontFamily="@font/league_spartan"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"/>
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:background="#8B9467"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/league_spartan"
+        android:hint="Email/Username"
+        android:textColorHint="##492F1A"
+        android:textSize="16dp"
+        android:textColor="#492F1A"
+        android:paddingLeft="20dp"/>
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:background="#8B9467"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/league_spartan"
+        android:hint="Password"
+        android:textColorHint="##492F1A"
+        android:textSize="16dp"
+        android:textColor="#492F1A"
+        android:paddingLeft="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:layout_marginRight="55dp"
+        android:fontFamily="@font/league_spartan"
+        android:textSize="15sp"/>
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="Login"
+        android:background="#00712D"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account?"
+            android:textColor="@color/black"
+            android:fontFamily="@font/league_spartan"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textColor="#FF9100"
+            android:fontFamily="@font/league_spartan"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+</LinearLayout>
