@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFFBE6"
+    android:background="@color/background"
     tools:context=".LoginActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="450dp"
+        android:layout_width="500dp"
         android:layout_height="250dp"
         android:layout_gravity="center"
         android:src="@drawable/image_3"
@@ -38,28 +38,28 @@
         android:textSize="18sp"
         android:layout_marginTop="10dp"/>
     <EditText
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:background="#8B9467"
+        android:layout_width="280dp"
+        android:layout_height="60dp"
+        android:background="@drawable/edit_textbox_rounded"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/league_spartan"
         android:hint="Email/Username"
-        android:textColorHint="##492F1A"
-        android:textSize="16dp"
-        android:textColor="#492F1A"
+        android:textColorHint="@color/quarternary"
+        android:textSize="18dp"
+        android:textColor="@color/quarternary"
         android:paddingLeft="20dp"/>
     <EditText
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:background="#8B9467"
+        android:layout_width="280dp"
+        android:layout_height="60dp"
+        android:background="@drawable/edit_textbox_rounded"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/league_spartan"
         android:hint="Password"
-        android:textColorHint="##492F1A"
-        android:textSize="16dp"
-        android:textColor="#492F1A"
+        android:textColorHint="@color/quarternary"
+        android:textSize="18dp"
+        android:textColor="@color/quarternary"
         android:paddingLeft="20dp"/>
     <TextView
         android:layout_width="match_parent"
@@ -72,13 +72,14 @@
         android:fontFamily="@font/league_spartan"
         android:textSize="15sp"/>
     <Button
-        android:layout_width="250dp"
-        android:layout_height="50dp"
+        android:layout_width="280dp"
+        android:layout_height="60dp"
         android:text="Login"
-        android:background="#00712D"
+        android:background="@drawable/button_rounded"
         android:textColor="@color/white"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp"
+        android:textSize="16sp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
