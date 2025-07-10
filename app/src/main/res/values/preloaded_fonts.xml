@@ -3,5 +3,6 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/league_spartan</item>
         <item>@font/league_spartan_bold</item>
+        <item>@font/league_spartan_extrabold</item>
     </array>
 </resources>

@@ -83,7 +83,9 @@
             android:textColorHint="@color/quarternary"
             android:fontFamily="@font/league_spartan"
             android:textSize="20sp"
-            android:paddingLeft="20dp"/>
+            android:paddingLeft="20dp"
+            android:drawableStart="@drawable/location"
+            android:drawablePadding="12dp"/>
         <EditText
             android:layout_width="280dp"
             android:layout_height="60dp"
@@ -94,7 +96,9 @@
             android:fontFamily="@font/league_spartan"
             android:textSize="20sp"
             android:paddingLeft="20dp"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:drawableStart="@drawable/location"
+            android:drawablePadding="12dp"/>
         <EditText
             android:layout_width="280dp"
             android:layout_height="60dp"
@@ -105,7 +109,9 @@
             android:fontFamily="@font/league_spartan"
             android:textSize="20sp"
             android:paddingLeft="20dp"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:drawableStart="@drawable/location"
+            android:drawablePadding="12dp"/>
         <EditText
             android:layout_width="280dp"
             android:layout_height="60dp"
@@ -116,7 +122,9 @@
             android:fontFamily="@font/league_spartan"
             android:textSize="20sp"
             android:paddingLeft="20dp"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:drawableStart="@drawable/location"
+            android:drawablePadding="12dp"/>
         <EditText
             android:layout_width="280dp"
             android:layout_height="60dp"
@@ -127,7 +135,9 @@
             android:fontFamily="@font/league_spartan"
             android:textSize="20sp"
             android:paddingLeft="20dp"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:drawableStart="@drawable/location"
+            android:drawablePadding="12dp"/>
         <Button
             android:layout_width="280dp"
             android:layout_height="60dp"

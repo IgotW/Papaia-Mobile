@@ -48,7 +48,9 @@
         android:textColorHint="@color/quarternary"
         android:textSize="18dp"
         android:textColor="@color/quarternary"
-        android:paddingLeft="20dp"/>
+        android:paddingLeft="20dp"
+        android:drawableStart="@drawable/emailsmall"
+        android:drawablePadding="12dp"/>
     <EditText
         android:layout_width="280dp"
         android:layout_height="60dp"
@@ -60,7 +62,9 @@
         android:textColorHint="@color/quarternary"
         android:textSize="18dp"
         android:textColor="@color/quarternary"
-        android:paddingLeft="20dp"/>
+        android:paddingLeft="20dp"
+        android:drawableStart="@drawable/lock"
+        android:drawablePadding="12dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
