@@ -12,6 +12,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Papaia">
         <activity
+            android:name=".ForgotPassword3Activity"
+            android:exported="false" />
+        <activity
+            android:name=".ForgotPassword2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".ForgotPassword1Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Register3Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Register2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Register1Activity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
