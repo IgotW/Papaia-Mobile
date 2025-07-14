@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register3Activity"
+    tools:context=".activity.Register3Activity"
     android:background="@color/background">
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="-20dp"/>
         <ImageView
+            android:id="@+id/reg3_arrow_back"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/arrow_back"
@@ -75,6 +76,7 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/reg3_edittext_street"
             android:layout_width="280dp"
             android:layout_height="60dp"
             android:background="@drawable/edit_textbox_rounded"
@@ -87,6 +89,7 @@
             android:drawableStart="@drawable/location"
             android:drawablePadding="12dp"/>
         <EditText
+            android:id="@+id/reg3_edittext_barangay"
             android:layout_width="280dp"
             android:layout_height="60dp"
             android:background="@drawable/edit_textbox_rounded"
@@ -100,6 +103,7 @@
             android:drawableStart="@drawable/location"
             android:drawablePadding="12dp"/>
         <EditText
+            android:id="@+id/reg3_edittext_municipality"
             android:layout_width="280dp"
             android:layout_height="60dp"
             android:background="@drawable/edit_textbox_rounded"
@@ -113,6 +117,7 @@
             android:drawableStart="@drawable/location"
             android:drawablePadding="12dp"/>
         <EditText
+            android:id="@+id/reg3_edittext_province"
             android:layout_width="280dp"
             android:layout_height="60dp"
             android:background="@drawable/edit_textbox_rounded"
@@ -126,6 +131,7 @@
             android:drawableStart="@drawable/location"
             android:drawablePadding="12dp"/>
         <EditText
+            android:id="@+id/reg3_edittext_zipcode"
             android:layout_width="280dp"
             android:layout_height="60dp"
             android:background="@drawable/edit_textbox_rounded"
@@ -139,6 +145,7 @@
             android:drawableStart="@drawable/location"
             android:drawablePadding="12dp"/>
         <Button
+            android:id="@+id/reg3_button_create"
             android:layout_width="280dp"
             android:layout_height="60dp"
             android:background="@drawable/button_rounded"
@@ -147,5 +154,11 @@
             android:text="Create Account"
             android:textColor="@color/white"
             android:textSize="16sp"/>
+        <ProgressBar
+            android:id="@+id/reg_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
     </LinearLayout>
 </ScrollView>

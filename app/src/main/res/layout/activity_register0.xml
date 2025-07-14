@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.Register0Activity"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="500dp"
+        android:layout_height="250dp"
+        android:background="@drawable/bottom_curve"
+        android:backgroundTint="@color/yellowgreen"
+        android:layout_gravity="center"
+        android:layout_marginTop="-20dp"/>
+    <ImageView
+        android:id="@+id/reg0_arrow_back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/arrow_back"
+        android:layout_marginTop="-210dp"
+        android:layout_marginLeft="10dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:textColor="@color/black"
+        android:fontFamily="@font/league_spartan_bold"
+        android:textSize="40sp"
+        android:gravity="center"
+        android:layout_marginTop="30dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose Role"
+        android:textColor="@color/black"
+        android:fontFamily="@font/league_spartan"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button
+            android:id="@+id/reg0_button_owner"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:text="Owner"
+            android:layout_margin="10dp"/>
+        <Button
+            android:id="@+id/reg0_button_farmer"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:text="Farmer"
+            android:layout_margin="10dp"
+            android:backgroundTint="@color/yellowgreen"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+</LinearLayout>
