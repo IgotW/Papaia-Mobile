@@ -76,12 +76,14 @@ class Register1Activity : AppCompatActivity() {
                     putExtra("role", role)
                 }
             )
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         reg1_back.setOnClickListener {
             startActivity(
                 Intent(this, Register0Activity::class.java)
             )
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
 
     }

@@ -1,10 +1,13 @@
 package com.google.papaia.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import com.google.papaia.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,6 +39,25 @@ class ProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Here you can safely find your button:
+        val fullname = view.findViewById<TextView>(R.id.txtview_fullname)
+        val farmerId = view.findViewById<TextView>(R.id.txtview_farmerid)
+        val button_editprofile = view.findViewById<Button>(R.id.button_editprofile)
+        val button_settings = view.findViewById<Button>(R.id.button_settings)
+        val button_changepass = view.findViewById<Button>(R.id.button_changepassword)
+        val button_logout = view.findViewById<Button>(R.id.button_logout)
+
+        // Example: set a click listener
+        button_logout.setOnClickListener {
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
     }
 
     companion object {

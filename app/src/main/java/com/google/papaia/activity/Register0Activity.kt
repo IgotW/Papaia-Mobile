@@ -32,6 +32,7 @@ class Register0Activity : AppCompatActivity() {
                     putExtra("role", role)
                 }
             )
+
         }
 
         button_owner.setOnClickListener {

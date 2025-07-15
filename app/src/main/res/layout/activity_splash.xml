@@ -5,19 +5,46 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.SplashActivity"
     android:orientation="vertical"
-    android:gravity="center"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".activity.SplashActivity">
 
-    <Button
-        android:id="@+id/button_start"
-        android:layout_width="280dp"
-        android:layout_height="60dp"
-        android:text="Start"
-        android:background="@drawable/button_rounded"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:layout_gravity="center"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Background image -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/splashbackground" />
+
+        <!-- Centered content -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/papaialogo"
+                android:layout_marginBottom="24dp" />
+
+            <Button
+                android:id="@+id/button_start"
+                android:layout_width="280dp"
+                android:layout_height="60dp"
+                android:text="Get Started"
+                android:background="@drawable/button_rounded"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>
