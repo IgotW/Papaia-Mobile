@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
-    tools:context=".LoginActivity">
+    tools:context=".activity.LoginActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="500dp"
@@ -38,6 +38,7 @@
         android:textSize="18sp"
         android:layout_marginTop="10dp"/>
     <EditText
+        android:id="@+id/login_edittext_username"
         android:layout_width="280dp"
         android:layout_height="60dp"
         android:background="@drawable/edit_textbox_rounded"
@@ -52,6 +53,7 @@
         android:drawableStart="@drawable/emailsmall"
         android:drawablePadding="12dp"/>
     <EditText
+        android:id="@+id/login_edittext_password"
         android:layout_width="280dp"
         android:layout_height="60dp"
         android:background="@drawable/edit_textbox_rounded"
@@ -76,6 +78,7 @@
         android:fontFamily="@font/league_spartan"
         android:textSize="15sp"/>
     <Button
+        android:id="@+id/button_login"
         android:layout_width="280dp"
         android:layout_height="60dp"
         android:text="Login"
@@ -98,6 +101,7 @@
             android:fontFamily="@font/league_spartan"
             android:textSize="14sp"/>
         <TextView
+            android:id="@+id/txtview_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign Up"
@@ -106,4 +110,11 @@
             android:textSize="14sp"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
+    <ProgressBar
+        android:id="@+id/login_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"/>
+
 </LinearLayout>

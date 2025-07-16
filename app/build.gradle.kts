@@ -56,6 +56,23 @@ dependencies {
 
     implementation("com.google.android.material:material:1.12.0")
 
+    //retrofit2 and okhttp3 for database
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
+    //card-based layout
+    implementation("androidx.cardview:cardview:1.0.0")
+
+    //encrypt shared preferences
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+
+    //Line graph
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    //blur imageview
+    implementation("jp.wasabeef:blurry:4.0.1")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

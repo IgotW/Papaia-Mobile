@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".Register1Activity">
+    tools:context=".activity.Register1Activity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,6 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="-20dp"/>
         <ImageView
+            android:id="@+id/reg1_back"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/arrow_back"
@@ -75,6 +76,7 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/reg_edittext_username"
             android:layout_width="280dp"
             android:layout_height="60dp"
             android:background="@drawable/edit_textbox_rounded"
@@ -84,9 +86,11 @@
             android:fontFamily="@font/league_spartan"
             android:textSize="20sp"
             android:paddingLeft="20dp"
-            android:drawableStart="@drawable/user"
+            android:layout_marginTop="15dp"
+            android:drawableStart="@drawable/user_brown"
             android:drawablePadding="12dp"/>
         <EditText
+            android:id="@+id/reg_edittext_email"
             android:layout_width="280dp"
             android:layout_height="60dp"
             android:background="@drawable/edit_textbox_rounded"
@@ -100,6 +104,7 @@
             android:drawableStart="@drawable/emailsmall"
             android:drawablePadding="12dp"/>
         <EditText
+            android:id="@+id/reg_edittext_password"
             android:layout_width="280dp"
             android:layout_height="60dp"
             android:background="@drawable/edit_textbox_rounded"
@@ -111,8 +116,10 @@
             android:paddingLeft="20dp"
             android:layout_marginTop="15dp"
             android:drawableStart="@drawable/lock"
-            android:drawablePadding="12dp"/>
+            android:drawablePadding="12dp"
+            android:inputType="textPassword"/>
         <EditText
+            android:id="@+id/reg_edittext_confirm_password"
             android:layout_width="280dp"
             android:layout_height="60dp"
             android:background="@drawable/edit_textbox_rounded"
@@ -124,8 +131,10 @@
             android:paddingLeft="20dp"
             android:layout_marginTop="15dp"
             android:drawableStart="@drawable/lock"
-            android:drawablePadding="12dp"/>
+            android:drawablePadding="12dp"
+            android:inputType="textPassword"/>
         <Button
+            android:id="@+id/reg1_button_next"
             android:layout_width="280dp"
             android:layout_height="60dp"
             android:background="@drawable/button_rounded"

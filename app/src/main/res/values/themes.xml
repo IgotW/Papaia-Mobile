@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Papaia" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Papaia" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Override the default button color -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <!-- This helps control the background for buttons -->
+        <item name="buttonStyle">@style/Widget.AppCompat.Button</item>
+    </style>
 </resources>
