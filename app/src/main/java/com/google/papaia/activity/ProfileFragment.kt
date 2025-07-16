@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.google.papaia.R
+import com.google.papaia.utils.SecurePrefsHelper
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,11 +54,34 @@ class ProfileFragment : Fragment() {
         val button_changepass = view.findViewById<Button>(R.id.button_changepassword)
         val button_logout = view.findViewById<Button>(R.id.button_logout)
 
+        val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
+        val firstname = prefs.getString("firstname", "User")
+        val middlename = prefs.getString("middlename", "User")
+        val lastname = prefs.getString("lastname", "User")
+        val suffix = prefs.getString("suffix", "User")
+        val id = prefs.getString("id", "User")
+
+        fullname.setText("${firstname} ${middlename} ${lastname} ${suffix}")
+        farmerId.setText("${id}")
         // Example: set a click listener
         button_logout.setOnClickListener {
+            // 1. Clear SharedPreferences
+            prefs.edit().clear().apply()
+
+            // 2. Clear SecurePrefsHelper (the saved JWT token)
+            SecurePrefsHelper.clearToken(requireContext())
+
+            // 3. Finish all activities
+            requireActivity().finishAffinity()
+
+            // 4. Start LoginActivity
             val intent = Intent(requireContext(), LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+        }
+        button_editprofile.setOnClickListener {
+            startActivity(
+                Intent(requireContext(), EditProfileActivity::class.java)
+            )
         }
     }
 

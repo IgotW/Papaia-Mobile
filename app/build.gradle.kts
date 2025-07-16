@@ -67,7 +67,11 @@ dependencies {
     //encrypt shared preferences
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
+    //Line graph
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    //blur imageview
+    implementation("jp.wasabeef:blurry:4.0.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

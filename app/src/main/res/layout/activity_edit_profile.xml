@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.EditProfileActivity"
+    android:orientation="vertical"
+    android:background="@color/background">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- 🟢 This LinearLayout wraps everything inside ScrollView -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="500dp"
+                    android:layout_height="280dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bottom_curve"
+                    android:backgroundTint="@color/yellowgreen" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/league_spartan_bold"
+                        android:gravity="center"
+                        android:text="Profile"
+                        android:textColor="@color/black"
+                        android:textSize="32sp"
+                        android:textStyle="bold" />
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageview_edit_profilepic"
+                            android:layout_width="170dp"
+                            android:layout_height="170dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/userprofile" />
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/camera" />
+                    </FrameLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:fontFamily="@font/league_spartan"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Username"
+                    android:paddingLeft="10dp"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/quarternary"
+                    android:drawableStart="@drawable/user_brown_outline"
+                    android:drawablePadding="12dp"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:backgroundTint="@color/quarternary"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:fontFamily="@font/league_spartan"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Email"
+                    android:paddingLeft="10dp"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/quarternary"
+                    android:drawableStart="@drawable/user_brown_outline"
+                    android:drawablePadding="12dp"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:backgroundTint="@color/quarternary"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="First Name"
+                    android:fontFamily="@font/league_spartan"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="First Name"
+                    android:paddingLeft="10dp"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/quarternary"
+                    android:drawableStart="@drawable/user_brown_outline"
+                    android:drawablePadding="12dp"
+                    android:backgroundTint="@color/quarternary"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Middle Name"
+                    android:fontFamily="@font/league_spartan"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Middle Name"
+                    android:paddingLeft="10dp"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/quarternary"
+                    android:drawableStart="@drawable/user_brown_outline"
+                    android:drawablePadding="12dp"
+                    android:backgroundTint="@color/quarternary"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Last Name"
+                    android:fontFamily="@font/league_spartan"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Last Name"
+                    android:paddingLeft="10dp"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/quarternary"
+                    android:drawableStart="@drawable/user_brown_outline"
+                    android:drawablePadding="12dp"
+                    android:backgroundTint="@color/quarternary"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Suffix"
+                    android:fontFamily="@font/league_spartan"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Suffix"
+                    android:paddingLeft="10dp"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/quarternary"
+                    android:drawableStart="@drawable/user_brown_outline"
+                    android:drawablePadding="12dp"
+                    android:backgroundTint="@color/quarternary"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:fontFamily="@font/league_spartan"
+                    android:textSize="24sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Street"
+                    android:fontFamily="@font/league_spartan"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Street"
+                    android:paddingLeft="10dp"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/quarternary"
+                    android:drawableStart="@drawable/location_outline"
+                    android:drawablePadding="10dp"
+                    android:backgroundTint="@color/quarternary"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Barangay"
+                    android:fontFamily="@font/league_spartan"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Barangay"
+                    android:paddingLeft="10dp"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/quarternary"
+                    android:drawableStart="@drawable/location_outline"
+                    android:drawablePadding="10dp"
+                    android:backgroundTint="@color/quarternary"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Municipality"
+                    android:fontFamily="@font/league_spartan"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Municipality"
+                    android:paddingLeft="10dp"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/quarternary"
+                    android:drawableStart="@drawable/location_outline"
+                    android:drawablePadding="10dp"
+                    android:backgroundTint="@color/quarternary"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Province/City"
+                    android:fontFamily="@font/league_spartan"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Province/City"
+                    android:paddingLeft="10dp"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/quarternary"
+                    android:drawableStart="@drawable/location_outline"
+                    android:drawablePadding="10dp"
+                    android:backgroundTint="@color/quarternary"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Zip Code"
+                    android:fontFamily="@font/league_spartan"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Zip Code"
+                    android:paddingLeft="10dp"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/quarternary"
+                    android:drawableStart="@drawable/location_outline"
+                    android:drawablePadding="10dp"
+                    android:backgroundTint="@color/quarternary"/>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_editprofile"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_rounded"
+                android:fontFamily="@font/league_spartan"
+                android:text="Save Changes"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/primary"
+                app:cornerRadius="12dp"
+                android:layout_marginBottom="50dp"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

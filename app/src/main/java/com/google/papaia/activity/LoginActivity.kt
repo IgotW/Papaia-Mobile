@@ -27,15 +27,15 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         // Auto-login
-//        val token = SecurePrefsHelper.getToken(this)
-//        if (!token.isNullOrEmpty()) {
-//            // You could also decode the JWT to get the role if you want
-//            // For now, assume role stored separately or saved in SharedPreferences if needed
-//            val intent = Intent(this, DashboardActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//            return
-//        }
+        val token = SecurePrefsHelper.getToken(this)
+        if (!token.isNullOrEmpty()) {
+            // You could also decode the JWT to get the role if you want
+            // For now, assume role stored separately or saved in SharedPreferences if needed
+            val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
         setContentView(R.layout.activity_login)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -86,6 +86,17 @@ class LoginActivity : AppCompatActivity() {
                         getSharedPreferences("prefs", MODE_PRIVATE)
                             .edit()
                             .putString("role", user?.role)
+                            .putString("id", user?.id)
+                            .putString("username", user?.username)
+                            .putString("firstname", user?.firstName)
+                            .putString("middlename", user?.middleName)
+                            .putString("lastname", user?.lastName)
+                            .putString("suffix", user?.suffix)
+                            .putString("street", user?.street)
+                            .putString("barangay", user?.barangay)
+                            .putString("municipality", user?.municipality)
+                            .putString("province", user?.province)
+                            .putString("zipcode", user?.zipCode)
                             .apply()
 
                         Toast.makeText(
