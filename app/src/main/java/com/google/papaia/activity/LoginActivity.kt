@@ -47,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
         val button_login = findViewById<Button>(R.id.button_login)
         val txtview_register = findViewById<TextView>(R.id.txtview_register)
         val progressBar = findViewById<ProgressBar>(R.id.login_progress_bar)
+        val forgotPassword = findViewById<TextView>(R.id.txtview_login_forgotpass)
 
         button_login.setOnClickListener{
             val username = edittext_username.text.toString()
@@ -83,10 +84,11 @@ class LoginActivity : AppCompatActivity() {
 
                         // Save token securely (e.g., EncryptedSharedPreferences)
                         SecurePrefsHelper.saveToken(this@LoginActivity, token ?: "")
-                        getSharedPreferences("prefs", MODE_PRIVATE)
-                            .edit()
+                        getSharedPreferences("prefs", MODE_PRIVATE).edit()
+                            .putString("token", loginResponse?.token)
                             .putString("role", user?.role)
                             .putString("id", user?.id)
+                            .putString("email", user?.email)
                             .putString("username", user?.username)
                             .putString("firstname", user?.firstName)
                             .putString("middlename", user?.middleName)
@@ -99,17 +101,16 @@ class LoginActivity : AppCompatActivity() {
                             .putString("zipcode", user?.zipCode)
                             .apply()
 
-                        Toast.makeText(
-                            this@LoginActivity,
-                            "Welcome ${user?.firstName}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
                         // Proceed to next screen
                         if(user?.role == "farmer"){
                             startActivity(
                                 Intent(this@LoginActivity, DashboardActivity::class.java)
                             )
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Welcome ${user?.username}",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }else{
                             startActivity(
                                 Intent(this@LoginActivity, OwnerActivity::class.java)
@@ -117,12 +118,18 @@ class LoginActivity : AppCompatActivity() {
                         }
                         finish()
                     } else {
+                        val errorJson = response.errorBody()?.string()
+                        val errorMessage = try {
+                            org.json.JSONObject(errorJson).getString("error")
+                        } catch (e: Exception) {
+                            "Login failed"
+                        }
                         Toast.makeText(
                             this@LoginActivity,
-                            "${response.errorBody()?.string()}",
+                            errorMessage,
                             Toast.LENGTH_SHORT
                         ).show()
-                        Log.e("LOGIN_ERROR", response.errorBody()?.string().toString())
+                        Log.e("LOGIN_ERROR", "Invalid Password")
                     }
                 }
 
@@ -142,6 +149,11 @@ class LoginActivity : AppCompatActivity() {
         txtview_register.setOnClickListener {
             startActivity(
                 Intent(this, Register0Activity::class.java)
+            )
+        }
+        forgotPassword.setOnClickListener {
+            startActivity(
+                Intent(this, ForgotPassword1Activity::class.java)
             )
         }
     }

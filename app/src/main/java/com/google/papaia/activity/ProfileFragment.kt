@@ -27,6 +27,9 @@ class ProfileFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var fullname: TextView
+    private lateinit var farmerId: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -47,8 +50,8 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Here you can safely find your button:
-        val fullname = view.findViewById<TextView>(R.id.txtview_fullname)
-        val farmerId = view.findViewById<TextView>(R.id.txtview_farmerid)
+        fullname = view.findViewById(R.id.txtview_fullname)
+        farmerId = view.findViewById(R.id.txtview_farmerid)
         val button_editprofile = view.findViewById<Button>(R.id.button_editprofile)
         val button_settings = view.findViewById<Button>(R.id.button_settings)
         val button_changepass = view.findViewById<Button>(R.id.button_changepassword)
@@ -84,6 +87,28 @@ class ProfileFragment : Fragment() {
             )
         }
     }
+    override fun onResume() {
+        super.onResume()
+
+        val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
+        val firstname = prefs.getString("firstname", "User")
+        val middlename = prefs.getString("middlename", "")
+        val lastname = prefs.getString("lastname", "")
+        val suffix = prefs.getString("suffix", "")
+        val street = prefs.getString("street", "")
+        val barangay = prefs.getString("barangay", "")
+        val municipality = prefs.getString("municipality", "")
+        val province = prefs.getString("province", "")
+        val zipCode = prefs.getString("zipcode", "")
+        val id = prefs.getString("id", "User")
+
+        fullname?.text = listOfNotNull(firstname, middlename, lastname, suffix)
+            .filter { it.isNotBlank() }
+            .joinToString(" ")
+
+        farmerId?.text = id
+    }
+
 
     companion object {
         /**

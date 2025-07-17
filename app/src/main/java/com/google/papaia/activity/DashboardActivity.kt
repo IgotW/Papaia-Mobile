@@ -17,12 +17,23 @@ class DashboardActivity : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val bottomAppBar = findViewById<BottomAppBar>(R.id.bottomAppBar)
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
 
-        bottomNavigationView.selectedItemId = R.id.nav_home
+        val navigateTo = intent.getStringExtra("navigateTo")
+
+        if (navigateTo == "profile") {
+            bottomNavigationView.selectedItemId = R.id.nav_profile
+            loadFragment(ProfileFragment())
+        } else {
+            bottomNavigationView.selectedItemId = R.id.nav_home
+            loadFragment(HomeFragment())
+        }
+
+//        bottomNavigationView.selectedItemId = R.id.nav_home
 //        val badgeDrawable: BadgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.nav_profile)
 //        badgeDrawable.number = 99
 //        badgeDrawable.isVisible = true
-        loadFragment(HomeFragment())
+//        loadFragment(HomeFragment())
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -38,10 +49,10 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
 
-        val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
             // Handle FAB click
         }
+
     }
 
     private fun loadFragment(fragment: Fragment) {

@@ -83,12 +83,13 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
                 <EditText
+                    android:id="@+id/edittext_edit_username"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:hint="Username"
                     android:paddingLeft="10dp"
                     android:fontFamily="@font/league_spartan"
-                    android:textColor="@color/quarternary"
+                    android:textColor="#A8A7A7"
                     android:drawableStart="@drawable/user_brown_outline"
                     android:drawablePadding="12dp"
                     android:focusable="false"
@@ -104,12 +105,13 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
                 <EditText
+                    android:id="@+id/edittext_edit_email"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:hint="Email"
                     android:paddingLeft="10dp"
                     android:fontFamily="@font/league_spartan"
-                    android:textColor="@color/quarternary"
+                    android:textColor="#A8A7A7"
                     android:drawableStart="@drawable/user_brown_outline"
                     android:drawablePadding="12dp"
                     android:focusable="false"
@@ -125,6 +127,7 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
                 <EditText
+                    android:id="@+id/edittext_edit_firstname"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:hint="First Name"
@@ -144,6 +147,7 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
                 <EditText
+                    android:id="@+id/edittext_edit_middlename"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:hint="Middle Name"
@@ -163,6 +167,7 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
                 <EditText
+                    android:id="@+id/edittext_edit_lastname"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:hint="Last Name"
@@ -182,6 +187,7 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
                 <EditText
+                    android:id="@+id/edittext_edit_suffix"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:hint="Suffix"
@@ -212,6 +218,7 @@
                     android:textStyle="bold"
                     android:layout_marginTop="20dp"/>
                 <EditText
+                    android:id="@+id/edittext_edit_street"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:hint="Street"
@@ -230,6 +237,7 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
                 <EditText
+                    android:id="@+id/edittext_edit_barangay"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:hint="Barangay"
@@ -248,6 +256,7 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
                 <EditText
+                    android:id="@+id/edittext_edit_municipality"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:hint="Municipality"
@@ -266,6 +275,7 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
                 <EditText
+                    android:id="@+id/edittext_edit_province"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:hint="Province/City"
@@ -284,6 +294,7 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
                 <EditText
+                    android:id="@+id/edittext_edit_zipcode"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:hint="Zip Code"
