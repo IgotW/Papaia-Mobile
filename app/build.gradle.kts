@@ -70,6 +70,9 @@ dependencies {
     //Line graph
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
+    //Material Design library
+    implementation("androidx.cardview:cardview:1.0.0")
+
     //blur imageview
     implementation("jp.wasabeef:blurry:4.0.1")
 
