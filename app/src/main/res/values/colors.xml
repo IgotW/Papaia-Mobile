@@ -14,4 +14,10 @@
     <color name="tertiary">#FF9100</color>
     <color name="quarternary">#492F1A</color>
     <color name="background">#FFFBE6</color>
+
+<!--    subscription-->
+    <color name="gray">#999999</color>
+    <color name="green_gradient_start">#D0E9B4</color>
+    <color name="green_gradient_end">#E7F4C9</color>
+    <color name="light_beige">#FFF4DD</color>
 </resources>

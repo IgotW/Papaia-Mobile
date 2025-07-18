@@ -2,4 +2,36 @@
     <string name="app_name">Papaia</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about_description">
+    Papaia is a mobile and web application that helps papaya farmers detect diseases on leaves and fruits through AI-powered image scanning. By simply using a smartphone camera, farmers can scan affected areas, and the app will identify the disease and provide suggested treatments. Papaia aims to support early detection, reduce crop loss, and improve papaya production through accessible and easy-to-use technology.
+</string>
+
+    <string name="vision_text">
+    To empower papaya farmers through accessible, AI-driven technology that enables early disease detection, informed decision-making, and improved crop productivity—supporting sustainable farming and agricultural innovation.
+</string>
+
+    <string name="mission_text">
+    To become a leading digital tool in precision agriculture, revolutionizing how farmers protect and care for their papaya crops—one scan at a time.
+</string>
+
+    <string name="how_to_use">
+    Step 1: Open the App. Launch the Papaia app on your smartphone or tablet.
+    Step 2: Log In or Register.
+        New user? Tap Register to create an account.
+        Returning user? Enter your username and password to log in.
+    Step 3: Access the Scanner Feature
+        On the home screen, tap the scan icon
+    Step 4: Choose How to Scan
+    You can either:
+        Tap “Take a Photo” to capture a new image of a papaya leaf or fruit.
+            Or tap “Upload from Gallery” to select an existing photo from your device.
+    Step 5: Submit for Analysis
+        After choosing or capturing an image, the app will process the image using AI to detect any signs of disease.
+    Step 6: View the Result
+        The app will show the detected disease, a short explanation, and a suggested treatment.
+    Step 7: Save or Log the Result
+        After, the scan result will be automatically saved to the scan history log
+    Step 8: Scan Again Anytime
+        Return to the home screen to scan another leaf or fruit when needed.
+</string>
 </resources>
