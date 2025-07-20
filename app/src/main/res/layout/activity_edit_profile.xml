@@ -321,6 +321,21 @@
                 android:textStyle="bold"
                 app:backgroundTint="@color/primary"
                 app:cornerRadius="12dp"
+                android:layout_marginBottom="20dp"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_editprofile_cancel"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_rounded"
+                android:fontFamily="@font/league_spartan"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/tertiary"
+                app:cornerRadius="12dp"
                 android:layout_marginBottom="50dp"/>
         </LinearLayout>
     </ScrollView>
