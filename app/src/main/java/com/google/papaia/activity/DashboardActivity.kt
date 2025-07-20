@@ -1,5 +1,6 @@
 package com.google.papaia.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -50,7 +51,9 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         fab.setOnClickListener {
-            // Handle FAB click
+            startActivity(
+                Intent(this, ScanActivity::class.java)
+            )
         }
 
     }

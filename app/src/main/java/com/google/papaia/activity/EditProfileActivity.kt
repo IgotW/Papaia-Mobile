@@ -42,7 +42,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var province: EditText
     private lateinit var zipcode: EditText
     private lateinit var button_edit: Button
-    private lateinit var back: ImageView
+    private lateinit var cancel: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -65,6 +65,7 @@ class EditProfileActivity : AppCompatActivity() {
         province = findViewById(R.id.edittext_edit_province)
         zipcode = findViewById(R.id.edittext_edit_zipcode)
         button_edit = findViewById(R.id.button_editprofile)
+        cancel = findViewById(R.id.button_editprofile_cancel)
 
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.userprofile)
 
@@ -233,8 +234,6 @@ class EditProfileActivity : AppCompatActivity() {
                         intent.putExtra("navigateTo", "profile")
                         startActivity(intent)
                         finish()
-
-                        finish()
                     } else {
                         Log.e("UPDATE_USER", "Update failed: ${response.code()} ${response.message()}")
                         Toast.makeText(this@EditProfileActivity, "Failed to update profile", Toast.LENGTH_SHORT).show()
@@ -247,6 +246,13 @@ class EditProfileActivity : AppCompatActivity() {
                     Toast.makeText(this@EditProfileActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
+        }
+
+        cancel.setOnClickListener {
+            val intent = Intent(this@EditProfileActivity, DashboardActivity::class.java)
+            intent.putExtra("navigateTo", "profile")
+            startActivity(intent)
+            finish()
         }
     }
 
