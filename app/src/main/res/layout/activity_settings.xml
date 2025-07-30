@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background"
+    tools:context=".activity.SettingsActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Background image -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/settings_background" />
+
+        <!-- Centered content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+                <ImageView
+                    android:id="@+id/scan_back_arrow"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/arrow_back"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Settings"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/league_spartan_bold"
+                    android:textSize="28sp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="90dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ly_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Account"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:paddingLeft="20dp"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/arrow_forward"
+                    android:contentDescription="Arrow"
+                    android:layout_marginEnd="20dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ly_subscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Subscription"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:paddingLeft="20dp"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/arrow_forward"
+                    android:contentDescription="Arrow"
+                    android:layout_marginEnd="20dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ly_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contact Us"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:paddingLeft="20dp"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/arrow_forward"
+                    android:contentDescription="Arrow"
+                    android:layout_marginEnd="20dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ly_terms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Terms &amp; Condition"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:paddingLeft="20dp"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/arrow_forward"
+                    android:contentDescription="Arrow"
+                    android:layout_marginEnd="20dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ly_privacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Privacy Policy"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:paddingLeft="20dp"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/arrow_forward"
+                    android:contentDescription="Arrow"
+                    android:layout_marginEnd="20dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ly_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About"
+                    android:fontFamily="@font/league_spartan"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:paddingLeft="20dp"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/arrow_forward"
+                    android:contentDescription="Arrow"
+                    android:layout_marginEnd="20dp"/>
+            </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_deactivate"
+                android:layout_width="280dp"
+                android:layout_height="60dp"
+                android:text="Deactivate Account"
+                android:background="@drawable/button_rounded"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/tertiary"
+                app:cornerRadius="12dp"
+                android:layout_marginTop="50dp"/>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

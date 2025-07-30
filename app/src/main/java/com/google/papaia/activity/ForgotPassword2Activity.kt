@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.button.MaterialButton
 import com.google.papaia.R
 import com.google.papaia.request.OtpRequest
 import com.google.papaia.response.OtpResponse
@@ -35,7 +36,7 @@ class ForgotPassword2Activity : AppCompatActivity() {
         val edittext_code2 = findViewById<EditText>(R.id.edittext_code_2)
         val edittext_code3 = findViewById<EditText>(R.id.edittext_code_3)
         val edittext_code4 = findViewById<EditText>(R.id.edittext_code_4)
-        val button_verify = findViewById<Button>(R.id.button_fg2_verify)
+        val button_verify = findViewById<MaterialButton>(R.id.button_fg2_verify)
         var email = ""
 
         intent?.let {

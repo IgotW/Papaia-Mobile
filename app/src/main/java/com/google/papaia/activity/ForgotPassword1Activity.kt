@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.button.MaterialButton
 import com.google.papaia.R
 import com.google.papaia.request.ForgotPassword1Request
 import com.google.papaia.response.ApiResponse
@@ -32,7 +33,7 @@ class ForgotPassword1Activity : AppCompatActivity() {
 
         val back_arrow = findViewById<ImageView>(R.id.fg1_back_arrow)
         val edittext_email = findViewById<EditText>(R.id.edittext_fg1_email)
-        val button_send = findViewById<Button>(R.id.button_fg1_send)
+        val button_send = findViewById<MaterialButton>(R.id.button_fg1_send)
 
         button_send.setOnClickListener {
             val email = edittext_email.text.toString().trim()

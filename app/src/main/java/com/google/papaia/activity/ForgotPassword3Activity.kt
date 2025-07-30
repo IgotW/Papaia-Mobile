@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.button.MaterialButton
 import com.google.papaia.R
 import com.google.papaia.request.ResetPasswordRequest
 import com.google.papaia.response.ApiResponse
@@ -32,7 +33,7 @@ class ForgotPassword3Activity : AppCompatActivity() {
         val back_arrow = findViewById<ImageView>(R.id.fg3_back_arrow)
         val edittext_newpass = findViewById<EditText>(R.id.edittext_fg3_newpass)
         val edittext_confirmpass = findViewById<EditText>(R.id.edittext_fg3_confirmpass)
-        val button_reset = findViewById<Button>(R.id.button_fg3_reset)
+        val button_reset = findViewById<MaterialButton>(R.id.button_fg3_reset)
         var userId = ""
         intent?.let {
             it.getStringExtra("userId")?.let { id ->

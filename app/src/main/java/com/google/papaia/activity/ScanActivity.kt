@@ -1,17 +1,21 @@
 package com.google.papaia.activity
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -23,7 +27,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.papaia.R
+import com.google.papaia.response.PredictionResponse
+import com.google.papaia.utils.RetrofitClient
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
+import java.io.FileOutputStream
 import java.util.concurrent.Executors
 
 class ScanActivity : AppCompatActivity() {
@@ -37,6 +47,7 @@ class ScanActivity : AppCompatActivity() {
     private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
             imageGallery.setImageURI(uri)
+            sendImageToApi(uri)
         }
     }
 
@@ -115,15 +126,101 @@ class ScanActivity : AppCompatActivity() {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val savedUri = Uri.fromFile(photoFile)
                     Toast.makeText(applicationContext, "Photo saved!", Toast.LENGTH_SHORT).show()
-                    imageGallery.setImageURI(Uri.fromFile(photoFile)) // show thumbnail
+//                    imageGallery.setImageURI(Uri.fromFile(photoFile)) // show thumbnail
+//                    val savedUri: Uri = output.savedUri ?: Uri.fromFile(photoFile)
+                    imageGallery.setImageURI(savedUri)
+                    sendImageToApi(savedUri)
                 }
 
                 override fun onError(exception: ImageCaptureException) {
                     Log.e("CameraX", "Photo capture failed: ${exception.message}", exception)
+                    Toast.makeText(applicationContext, "Capture failed", Toast.LENGTH_SHORT).show()
                 }
             }
         )
+    }
+
+    private fun sendImageToApi(imageUri: Uri) {
+        try {
+            val file = uriToFile(imageUri)
+            val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+            val multipartBody = MultipartBody.Part.createFormData("image", file.name, requestFile)
+
+            val sharedPref = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+            val token = "Bearer " + (sharedPref.getString("token", "") ?: "")
+
+            val call = RetrofitClient.instance.predictDisease(multipartBody, token)
+            call.enqueue(object : retrofit2.Callback<PredictionResponse> {
+                override fun onResponse(
+                    call: retrofit2.Call<PredictionResponse>,
+                    response: retrofit2.Response<PredictionResponse>
+                ) {
+                    if (response.isSuccessful && response.body() != null) {
+                        val result = response.body()!!.predictedLabel
+                        Toast.makeText(applicationContext, "Predicted: $result", Toast.LENGTH_LONG).show()
+
+                        val remedy = when (result.lowercase()) {
+                            "anthracnose" -> "Apply copper-based fungicides. Avoid overhead watering."
+                            "blackspot" -> "Use neem oil weekly. Remove infected leaves immediately."
+                            "powdery mildew" -> "Improve air circulation. Use sulfur sprays."
+                            else -> "No specific remedy found. Consult local expert."
+                        }
+                        showScanDialog(result, remedy)
+
+//                        val builder = android.app.AlertDialog.Builder(this@ScanActivity)
+//                        builder.setTitle("Prediction Result")
+//                        builder.setMessage("Detected Disease: $result")
+//                        builder.setPositiveButton("OK") { dialog, _ ->
+//                            dialog.dismiss()
+//                        }
+//                        val dialog = builder.create()
+//                        dialog.show()
+
+                    } else {
+                        Toast.makeText(applicationContext, "Prediction failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: retrofit2.Call<PredictionResponse>, t: Throwable) {
+                    Toast.makeText(applicationContext, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } catch (e: Exception) {
+            Toast.makeText(this, "Failed to read image file", Toast.LENGTH_SHORT).show()
+            Log.e("ImageUpload", "Error: ${e.message}", e)
+        }
+    }
+
+    //dialog box pop up after sending image
+    private fun showScanDialog(predictedLabel: String, remedy: String) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_scan_result, null)
+        val tvPrediction = dialogView.findViewById<TextView>(R.id.tv_prediction)
+        val tvRemedy = dialogView.findViewById<TextView>(R.id.tv_remedy)
+        val btnOk = dialogView.findViewById<Button>(R.id.btn_ok)
+
+        tvPrediction.text = "Disease Detected: $predictedLabel"
+        tvRemedy.text = remedy
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        btnOk.setOnClickListener { dialog.dismiss() }
+
+        dialog.show()
+    }
+
+    private fun uriToFile(uri: Uri): File {
+        val inputStream = contentResolver.openInputStream(uri)!!
+        val file = File(cacheDir, "temp_image_${System.currentTimeMillis()}.jpg")
+        val outputStream = FileOutputStream(file)
+        inputStream.copyTo(outputStream)
+        inputStream.close()
+        outputStream.close()
+        return file
     }
 
     private val outputDirectory: File

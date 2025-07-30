@@ -35,16 +35,17 @@
                 android:src="@drawable/papaialogo"
                 android:layout_marginBottom="24dp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_start"
                 android:layout_width="280dp"
                 android:layout_height="60dp"
                 android:text="Get Started"
                 android:background="@drawable/button_rounded"
-                android:backgroundTint="@color/primary"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                app:backgroundTint="@color/primary"
+                app:cornerRadius="12dp"/>
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.button.MaterialButton
 import com.google.papaia.R
 import com.google.papaia.utils.SecurePrefsHelper
 
@@ -32,7 +33,7 @@ class SplashActivity : AppCompatActivity() {
             insets
         }
 
-        var btnStart = findViewById<Button>(R.id.button_start)
+        var btnStart = findViewById<MaterialButton>(R.id.button_start)
 
         btnStart.setOnClickListener{
             startActivity(

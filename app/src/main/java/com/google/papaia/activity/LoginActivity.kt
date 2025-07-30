@@ -13,6 +13,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.button.MaterialButton
 import com.google.papaia.R
 import com.google.papaia.request.LoginRequest
 import com.google.papaia.response.LoginResponse
@@ -44,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
         }
         val edittext_username = findViewById<EditText>(R.id.login_edittext_username)
         val edittext_password = findViewById<EditText>(R.id.login_edittext_password)
-        val button_login = findViewById<Button>(R.id.button_login)
+        val button_login = findViewById<MaterialButton>(R.id.button_login)
         val txtview_register = findViewById<TextView>(R.id.txtview_register)
         val progressBar = findViewById<ProgressBar>(R.id.login_progress_bar)
         val forgotPassword = findViewById<TextView>(R.id.txtview_login_forgotpass)
