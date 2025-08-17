@@ -91,6 +91,11 @@ class ProfileFragment : Fragment() {
                 Intent(requireContext(), ChangePasswordActivity::class.java)
             )
         }
+        button_settings.setOnClickListener {
+            startActivity(
+                Intent(requireContext(), SettingsActivity::class.java)
+            )
+        }
     }
     override fun onResume() {
         super.onResume()

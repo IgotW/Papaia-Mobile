@@ -32,6 +32,7 @@ import com.google.papaia.utils.RetrofitClient
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.util.concurrent.Executors
@@ -39,17 +40,10 @@ import java.util.concurrent.Executors
 class ScanActivity : AppCompatActivity() {
     private lateinit var previewView: PreviewView
     private lateinit var btnCapture: FrameLayout
-    private lateinit var imageGallery: ImageView  // Fixed this
+    private lateinit var imageGallery: ImageView
 
     private var imageCapture: ImageCapture? = null
     private val cameraExecutor by lazy { Executors.newSingleThreadExecutor() }
-
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        uri?.let {
-            imageGallery.setImageURI(uri)
-            sendImageToApi(uri)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +69,17 @@ class ScanActivity : AppCompatActivity() {
 
         btnCapture.setOnClickListener { takePhoto() }
         imageGallery.setOnClickListener {
-            galleryLauncher.launch("image/*")
+            val permission = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                Manifest.permission.READ_MEDIA_IMAGES
+            } else {
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            }
+
+            if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+                galleryLauncher.launch("image/*")
+            } else {
+                requestGalleryPermissionLauncher.launch(permission)
+            }
         }
 
         scan_back_arrow.setOnClickListener {
@@ -145,53 +149,50 @@ class ScanActivity : AppCompatActivity() {
     private fun sendImageToApi(imageUri: Uri) {
         try {
             val file = uriToFile(imageUri)
-            val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
             val multipartBody = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
             val sharedPref = getSharedPreferences("prefs", Context.MODE_PRIVATE)
-            val token = "Bearer " + (sharedPref.getString("token", "") ?: "")
+            val tokenValue = sharedPref.getString("token", null)
 
-            val call = RetrofitClient.instance.predictDisease(multipartBody, token)
-            call.enqueue(object : retrofit2.Callback<PredictionResponse> {
-                override fun onResponse(
-                    call: retrofit2.Call<PredictionResponse>,
-                    response: retrofit2.Response<PredictionResponse>
-                ) {
-                    if (response.isSuccessful && response.body() != null) {
-                        val result = response.body()!!.predictedLabel
-                        Toast.makeText(applicationContext, "Predicted: $result", Toast.LENGTH_LONG).show()
+            if (tokenValue.isNullOrEmpty()) {
+                Toast.makeText(this, "Authentication token missing", Toast.LENGTH_SHORT).show()
+                return
+            }
 
-                        val remedy = when (result.lowercase()) {
-                            "anthracnose" -> "Apply copper-based fungicides. Avoid overhead watering."
-                            "blackspot" -> "Use neem oil weekly. Remove infected leaves immediately."
-                            "powdery mildew" -> "Improve air circulation. Use sulfur sprays."
-                            else -> "No specific remedy found. Consult local expert."
+            val token = "Bearer $tokenValue"
+
+            RetrofitClient.instance.predictDisease(multipartBody, token)
+                .enqueue(object : retrofit2.Callback<PredictionResponse> {
+                    override fun onResponse(
+                        call: retrofit2.Call<PredictionResponse>,
+                        response: retrofit2.Response<PredictionResponse>
+                    ) {
+                        if (response.isSuccessful && response.body() != null) {
+                            val result = response.body()!!.prediction ?: "Unknown"
+                            val remedy = when (result.lowercase()) {
+                                "anthracnose" -> "Apply copper-based fungicides. Avoid overhead watering."
+                                "blackspot" -> "Use neem oil weekly. Remove infected leaves immediately."
+                                "powdery mildew" -> "Improve air circulation. Use sulfur sprays."
+                                else -> "No specific remedy found. Consult local expert."
+                            }
+                            showScanDialog(result, remedy)
+                        } else {
+                            Log.e("API_ERROR", "Code: ${response.code()} Body: ${response.errorBody()?.string()}")
+                            Toast.makeText(applicationContext, "Prediction failed", Toast.LENGTH_SHORT).show()
                         }
-                        showScanDialog(result, remedy)
-
-//                        val builder = android.app.AlertDialog.Builder(this@ScanActivity)
-//                        builder.setTitle("Prediction Result")
-//                        builder.setMessage("Detected Disease: $result")
-//                        builder.setPositiveButton("OK") { dialog, _ ->
-//                            dialog.dismiss()
-//                        }
-//                        val dialog = builder.create()
-//                        dialog.show()
-
-                    } else {
-                        Toast.makeText(applicationContext, "Prediction failed", Toast.LENGTH_SHORT).show()
                     }
-                }
 
-                override fun onFailure(call: retrofit2.Call<PredictionResponse>, t: Throwable) {
-                    Toast.makeText(applicationContext, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun onFailure(call: retrofit2.Call<PredictionResponse>, t: Throwable) {
+                        Toast.makeText(applicationContext, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
         } catch (e: Exception) {
             Toast.makeText(this, "Failed to read image file", Toast.LENGTH_SHORT).show()
             Log.e("ImageUpload", "Error: ${e.message}", e)
         }
     }
+
 
     //dialog box pop up after sending image
     private fun showScanDialog(predictedLabel: String, remedy: String) {
@@ -213,14 +214,74 @@ class ScanActivity : AppCompatActivity() {
         dialog.show()
     }
 
+//    private fun uriToFile(uri: Uri): File {
+//        val inputStream = contentResolver.openInputStream(uri)!!
+//        val file = File(cacheDir, "temp_image_${System.currentTimeMillis()}.jpg")
+//        val outputStream = FileOutputStream(file)
+//        inputStream.copyTo(outputStream)
+//        inputStream.close()
+//        outputStream.close()
+//        return file
+//    }
+
     private fun uriToFile(uri: Uri): File {
         val inputStream = contentResolver.openInputStream(uri)!!
-        val file = File(cacheDir, "temp_image_${System.currentTimeMillis()}.jpg")
+
+        // Use the same directory as camera captures for consistency
+        val file = File(outputDirectory, "temp_image_${System.currentTimeMillis()}.jpg")
+
         val outputStream = FileOutputStream(file)
         inputStream.copyTo(outputStream)
         inputStream.close()
         outputStream.close()
+
         return file
+    }
+
+    // Alternative approach using getExternalFilesDir directly:
+    private fun uriToFileAlternative(uri: Uri): File {
+        val inputStream = contentResolver.openInputStream(uri)!!
+
+        // Create file in external files directory (publicly accessible)
+        val externalDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val file = File(externalDir, "temp_image_${System.currentTimeMillis()}.jpg")
+
+        val outputStream = FileOutputStream(file)
+        inputStream.copyTo(outputStream)
+        inputStream.close()
+        outputStream.close()
+
+        return file
+    }
+
+    // Most robust approach with better error handling:
+    private fun uriToFileRobust(uri: Uri): File {
+        return try {
+            val inputStream = contentResolver.openInputStream(uri)
+                ?: throw IllegalStateException("Cannot open input stream from URI")
+
+            // Use external files directory which is accessible but app-specific
+            val externalDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                ?: throw IllegalStateException("External files directory not available")
+
+            val file = File(externalDir, "upload_${System.currentTimeMillis()}.jpg")
+
+            inputStream.use { input ->
+                FileOutputStream(file).use { output ->
+                    input.copyTo(output)
+                }
+            }
+
+            // Verify file was created and has content
+            if (!file.exists() || file.length() == 0L) {
+                throw IllegalStateException("File creation failed or file is empty")
+            }
+
+            file
+        } catch (e: Exception) {
+            Log.e("FileUpload", "Error converting URI to file: ${e.message}", e)
+            throw e
+        }
     }
 
     private val outputDirectory: File
@@ -243,6 +304,23 @@ class ScanActivity : AppCompatActivity() {
             }
         }
     }
+
+    private val requestGalleryPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                galleryLauncher.launch("image/*")
+            } else {
+                Toast.makeText(this, "Permission denied to access gallery", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+                imageGallery.setImageURI(uri)
+                sendImageToApi(uri)
+            }
+        }
 
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 10

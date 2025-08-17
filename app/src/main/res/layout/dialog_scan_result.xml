@@ -40,6 +40,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="OK"
-        android:backgroundTint="#4CAF50"
+        android:backgroundTint="@color/primary"
         android:textColor="#FFFFFF" />
 </LinearLayout>

@@ -1,9 +1,11 @@
 package com.google.papaia.response
 
 data class PredictionResponse(
-    val success: Boolean,
-    val predictedLabel: String,
-    val confidence: Double,
-    val imageUrl: String,
-    val userId: String
+    val success: Boolean?,
+    val userId: String?,
+    val farmId: String?,
+    val imageUrl: String?,
+    val prediction: String?,
+    val confidence: Double?,
+    val timestamp: Any?
 )

@@ -1,6 +1,5 @@
 package com.google.papaia.utils
 
-import com.google.papaia.model.User
 import com.google.papaia.request.ForgotPassword1Request
 import com.google.papaia.request.LoginRequest
 import com.google.papaia.request.OtpRequest
@@ -14,9 +13,11 @@ import com.google.papaia.response.OtpResponse
 import com.google.papaia.response.PredictionResponse
 import com.google.papaia.response.RegisterResponse
 import com.google.papaia.response.UserResponse
+import com.google.papaia.response.DailyAnalyticsResponse
+import com.google.papaia.response.DailyTipResponse
+import com.google.papaia.response.PredictionHistoryResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -35,6 +36,27 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") userId: String
     ): Call<UserResponse>
+
+    @GET("/api/farmer/weekly-analytics")
+    fun getWeeklyAnalytics(
+        @Header("Authorization") token: String
+    ): Call<DailyAnalyticsResponse>
+
+    @GET("/api/farmer/daily-analytics")
+    fun getDailyAnalytics(
+        @Header("Authorization") token: String
+    ): Call<DailyAnalyticsResponse>
+
+    @GET("/api/farmer/daily-tip")
+    fun getDailyTip(
+        @Header("Authorization") token: String
+    ): Call<DailyTipResponse>
+
+    @GET("/api/farmer/predict-history/{id}")
+    fun getPredictionHistory(
+        @Path("id") userId: String,
+        @Header("Authorization") bearerToken: String
+    ): Call<List<PredictionHistoryResponse>>
 
     @POST("/api/user")
     fun registerUser(
@@ -56,7 +78,7 @@ interface ApiService {
     fun resetPassword(@Body request: ResetPasswordRequest): Call<ApiResponse>
 
     @Multipart
-    @POST("/api/predict")
+    @POST("/api/farmer/predict")
     fun predictDisease(
         @Part image: MultipartBody.Part,
         @Header("Authorization") token: String
