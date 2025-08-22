@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".activity.ScanFragment">
+
+    <!-- Main Content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="80dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Disease Scanner"
+                android:textColor="@color/black"
+                android:fontFamily="@font/league_spartan_bold"
+                android:textSize="24sp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <!-- Instructions Text -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Point your camera at the papaya leaf or fruit and tap Scan."
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginBottom="32dp"
+            android:lineSpacingExtra="4dp"/>
+
+        <!-- Camera Preview Container -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginBottom="16dp">
+
+            <!-- Camera Preview -->
+            <androidx.camera.view.PreviewView
+                android:id="@+id/previewView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/camera_preview_background"/>
+
+            <!-- Flash Toggle -->
+            <ImageView
+                android:id="@+id/flash_toggle"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_flash_off"
+                android:background="@drawable/flash_button_background"
+                android:padding="12dp"
+                android:backgroundTint="#80000000"/>
+
+        </FrameLayout>
+
+        <!-- Bottom Actions with Safe Area -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingHorizontal="32dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="32dp">
+
+            <!-- Capture Button -->
+            <FrameLayout
+                android:id="@+id/btnCapture"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/scan_button_background"
+                android:backgroundTint="#FF5722"
+                android:elevation="4dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/camera"
+                    android:tint="@android:color/white"/>
+
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/scan_button_background"
+                android:backgroundTint="#FF5722"
+                android:elevation="4dp">
+
+                <ImageView
+                    android:id="@+id/imageGallery"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/upload"
+                    android:tint="@android:color/white"/>
+
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/loadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
+</FrameLayout>

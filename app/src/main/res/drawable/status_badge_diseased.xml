@@ -1,0 +1,7 @@
+<!-- status_badge_diseased.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- Orange (#F97316) with 20% opacity -->
+    <solid android:color="#33F97316"/>
+    <corners android:radius="16dp"/>
+</shape>

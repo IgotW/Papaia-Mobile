@@ -6,17 +6,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background"
+    android:background="@drawable/login_background"
     tools:context=".activity.LoginActivity">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="500dp"
+    <!-- Top Section with App Branding -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_gravity="center"
-        android:src="@drawable/image_3"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="-20dp"
-        app:shapeAppearanceOverlay="@style/BottomCurveShape"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/gradient_background">
+
+        <!-- App Icon -->
+        <FrameLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+
+            <!-- Background stays fixed -->
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/app_icon_background"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"/>
+
+            <!-- Logo can grow inside -->
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/papaialogo"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+
+        <!-- App Name -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Papaia"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/league_spartan_bold" />
+
+        <!-- Tagline -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agricultural AI Assistant"
+            android:textColor="#E8F5E8"
+            android:textSize="16sp"
+            android:fontFamily="@font/league_spartan"/>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -25,7 +65,7 @@
         android:fontFamily="@font/league_spartan_bold"
         android:gravity="center_horizontal"
         android:text="Welcome Back"
-        android:textColor="@color/black"
+        android:textColor="#FFFFFF"
         android:textSize="25sp"
         android:letterSpacing=".05"/>
     <TextView
@@ -34,7 +74,7 @@
         android:text="Log in you account"
         android:gravity="center_horizontal"
         android:fontFamily="@font/league_spartan"
-        android:textColor="@color/black"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:layout_marginTop="10dp"/>
     <EditText
@@ -42,6 +82,7 @@
         android:layout_width="280dp"
         android:layout_height="60dp"
         android:background="@drawable/edit_textbox_rounded"
+        android:backgroundTint="@color/white"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/league_spartan"
@@ -57,6 +98,7 @@
         android:layout_width="280dp"
         android:layout_height="60dp"
         android:background="@drawable/edit_textbox_rounded"
+        android:backgroundTint="@color/white"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/league_spartan"
@@ -73,7 +115,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Forgot Password?"
-        android:textColor="@color/black"
+        android:textColor="#FFFFFF"
         android:layout_marginTop="10dp"
         android:gravity="right"
         android:layout_marginRight="55dp"
@@ -90,19 +132,19 @@
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:textSize="16sp"
-        app:backgroundTint="@color/primary"
+        app:backgroundTint="@color/tertiary"
         app:cornerRadius="12dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Don't have an account?"
-            android:textColor="@color/black"
+            android:textColor="#FFFFFF"
             android:fontFamily="@font/league_spartan"
             android:textSize="14sp"/>
         <TextView
@@ -111,7 +153,7 @@
             android:layout_height="wrap_content"
             android:text="Sign Up"
             android:textColor="#FF9100"
-            android:fontFamily="@font/league_spartan"
+            android:fontFamily="@font/league_spartan_bold"
             android:textSize="14sp"
             android:layout_marginLeft="10dp"
             android:clickable="true"/>
@@ -122,5 +164,4 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_gravity="center"/>
-
 </LinearLayout>

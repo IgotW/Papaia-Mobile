@@ -77,103 +77,103 @@ class Register3Activity : AppCompatActivity() {
             }
         }
 
-        button_create.setOnClickListener {
-            val street = edittext_street.text.toString()
-            val barangay = edittext_barangay.text.toString()
-            val municipality = edittext_municipality.text.toString()
-            val province = edittext_province.text.toString()
-            val zipCode = edittext_zipcode.text.toString()
-
-            progressBar.visibility = View.VISIBLE
-            button_create.isEnabled = false
-
-            var hasError = false
-
-            if (street.isEmpty()) {
-                edittext_street.error = "Street is required"
-                hasError = true
-            }
-            if (barangay.isEmpty()) {
-                edittext_barangay.error = "Barangay is required"
-                hasError = true
-            }
-            if (municipality.isEmpty()) {
-                edittext_municipality.error = "Municipality is required"
-                hasError = true
-            }
-            if (province.isEmpty()) {
-                edittext_province.error = "Province is required"
-                hasError = true
-            }
-
-            if (hasError) return@setOnClickListener
-
-            try {
-                val register = RegisterRequest(
-                    username, email, password, role, firstname, middlename,
-                    lastname, suffix, street, barangay, municipality, province, zipCode
-                )
-                RetrofitClient.instance.registerUser(register).enqueue(object : Callback<RegisterResponse> {
-                    override fun onResponse(
-                        call: Call<RegisterResponse>,
-                        response: Response<RegisterResponse>
-                    ) {
-                        // Hide spinner
-                        progressBar.visibility = View.GONE
-                        button_create.isEnabled = true
-
-                        if (response.isSuccessful && response.body() != null) {
-                                // ✅ Registration successful
-                                runOnUiThread {
-                                    Toast.makeText(
-                                        this@Register3Activity,
-                                        "Registered Successfully",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                    Log.d("API_SUCCESS", response.body().toString())
-
-                                    startActivity(
-                                        Intent(this@Register3Activity, LoginActivity::class.java)
-                                    )
-                                }
-                        } else {
-                            runOnUiThread {
-                                Toast.makeText(
-                                    this@Register3Activity,
-                                    "Registration Failed",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                Log.e("API_ERROR", response.errorBody()?.string().toString())
-                            }
-                        }
-                    }
-
-                    override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                        progressBar.visibility = View.GONE
-                        button_create.isEnabled = true
-                        // Handle failure
-                        runOnUiThread {
-                            Toast.makeText(
-                                this@Register3Activity,
-                                "Error: ${t.message}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            Log.e("API_EXCEPTION", t.toString())
-                        }
-                    }
-                })
-            } catch (e: Exception) {
-                runOnUiThread {
-                    Toast.makeText(
-                        this@Register3Activity,
-                        "Error: ${e.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    Log.e("API_EXCEPTION", e.toString())
-                }
-            }
-
-        }
+//        button_create.setOnClickListener {
+//            val street = edittext_street.text.toString()
+//            val barangay = edittext_barangay.text.toString()
+//            val municipality = edittext_municipality.text.toString()
+//            val province = edittext_province.text.toString()
+//            val zipCode = edittext_zipcode.text.toString()
+//
+//            progressBar.visibility = View.VISIBLE
+//            button_create.isEnabled = false
+//
+//            var hasError = false
+//
+//            if (street.isEmpty()) {
+//                edittext_street.error = "Street is required"
+//                hasError = true
+//            }
+//            if (barangay.isEmpty()) {
+//                edittext_barangay.error = "Barangay is required"
+//                hasError = true
+//            }
+//            if (municipality.isEmpty()) {
+//                edittext_municipality.error = "Municipality is required"
+//                hasError = true
+//            }
+//            if (province.isEmpty()) {
+//                edittext_province.error = "Province is required"
+//                hasError = true
+//            }
+//
+//            if (hasError) return@setOnClickListener
+//
+//            try {
+////                val register = RegisterRequest(
+////                    username, email, password, role, firstname, middlename,
+////                    lastname, suffix, street, barangay, municipality, province, zipCode
+////                )
+//                RetrofitClient.instance.registerUser(register).enqueue(object : Callback<RegisterResponse> {
+//                    override fun onResponse(
+//                        call: Call<RegisterResponse>,
+//                        response: Response<RegisterResponse>
+//                    ) {
+//                        // Hide spinner
+//                        progressBar.visibility = View.GONE
+//                        button_create.isEnabled = true
+//
+//                        if (response.isSuccessful && response.body() != null) {
+//                                // ✅ Registration successful
+//                                runOnUiThread {
+//                                    Toast.makeText(
+//                                        this@Register3Activity,
+//                                        "Registered Successfully",
+//                                        Toast.LENGTH_LONG
+//                                    ).show()
+//                                    Log.d("API_SUCCESS", response.body().toString())
+//
+//                                    startActivity(
+//                                        Intent(this@Register3Activity, LoginActivity::class.java)
+//                                    )
+//                                }
+//                        } else {
+//                            runOnUiThread {
+//                                Toast.makeText(
+//                                    this@Register3Activity,
+//                                    "Registration Failed",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                                Log.e("API_ERROR", response.errorBody()?.string().toString())
+//                            }
+//                        }
+//                    }
+//
+//                    override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+//                        progressBar.visibility = View.GONE
+//                        button_create.isEnabled = true
+//                        // Handle failure
+//                        runOnUiThread {
+//                            Toast.makeText(
+//                                this@Register3Activity,
+//                                "Error: ${t.message}",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                            Log.e("API_EXCEPTION", t.toString())
+//                        }
+//                    }
+//                })
+//            } catch (e: Exception) {
+//                runOnUiThread {
+//                    Toast.makeText(
+//                        this@Register3Activity,
+//                        "Error: ${e.message}",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    Log.e("API_EXCEPTION", e.toString())
+//                }
+//            }
+//
+//        }
         back_arrow.setOnClickListener {
             startActivity(
                 Intent(this, Register2Activity::class.java)

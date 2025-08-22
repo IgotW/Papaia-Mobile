@@ -20,4 +20,8 @@
     <color name="green_gradient_start">#D0E9B4</color>
     <color name="green_gradient_end">#E7F4C9</color>
     <color name="light_beige">#FFF4DD</color>
+
+    <color name="selected_card_bg">#F8FFF8</color>
+    <color name="button_enabled">#4CAF50</color>
+    <color name="card_border">#E0E0E0</color>
 </resources>

@@ -1,145 +1,592 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/aboutScroll"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:fillViewport="true"
-    android:background="@color/white">
+    android:background="#F5F5F5">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Back + Title -->
+        <!-- Header Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:padding="16dp">
 
             <ImageView
-                android:id="@+id/backButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:id="@+id/btn_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/arrow_back"
-                android:contentDescription="Back" />
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="4dp" />
 
             <TextView
-                android:id="@+id/titleText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="About"
+                android:layout_weight="1"
+                android:text="About Papaya"
+                android:textColor="@color/black"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:textSize="24sp" />
+                android:fontFamily="@font/league_spartan_bold"
+                android:gravity="center" />
+
+            <View
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
         </LinearLayout>
 
-        <!-- About Paragraph -->
-        <TextView
-            android:id="@+id/aboutDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/about_description"
-            android:textSize="16sp" />
-
-        <!-- Vision Card -->
+        <!-- App Info Section -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            card_view:cardCornerRadius="12dp"
-            card_view:cardElevation="4dp"
-            card_view:cardBackgroundColor="#FFE082">
+            android:layout_margin="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:backgroundTint="@color/white">
 
             <LinearLayout
-                android:padding="16dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center_horizontal">
 
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/papaialogo"/>
+                <!-- App Name -->
                 <TextView
-                    android:text="Vision"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="Papaia"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/league_spartan_bold"
+                    android:layout_marginTop="5dp" />
 
+                <!-- App Description -->
                 <TextView
-                    android:text="@string/vision_text"
-                    android:layout_marginTop="8dp"
-                    android:textSize="14sp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="Papaia is your intelligent agricultural companion, designed to help farmers and gardeners identify plant diseases, optimize crop health, and make informed farming decisions using advanced AI technology."
+                    android:textColor="#6B7280"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/league_spartan"
+                    android:gravity="center"
+                    android:layout_marginTop="12dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Mission Card -->
+        <!-- Vision Section -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            card_view:cardCornerRadius="12dp"
-            card_view:cardElevation="4dp"
-            card_view:cardBackgroundColor="#FFD54F">
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:backgroundTint="#F97316">
 
             <LinearLayout
-                android:padding="16dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
                 <TextView
-                    android:text="Mission"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="👁️ Our Vision"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/league_spartan_bold"
+                    android:layout_marginBottom="8dp" />
 
                 <TextView
-                    android:text="@string/mission_text"
-                    android:layout_marginTop="8dp"
-                    android:textSize="14sp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="To provide intelligent plant disease detection and agricultural guidance, helping farmers increase yields while promoting environmentally conscious farming methods."
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/league_spartan"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- How to Use Header -->
-        <TextView
-            android:text="How to Use the Papaia App"
-            android:layout_marginTop="24dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <!-- How to Use List -->
-        <TextView
-            android:id="@+id/howToUseSteps"
+        <!-- Mission Section -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/how_to_use"
-            android:textSize="14sp" />
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:backgroundTint="#F97316">
 
-        <!-- Developers Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎯 Our Mission"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/league_spartan_bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Developing cutting-edge AI solutions that support intelligent farming, helping farmers make smarter decisions and create more environmentally beneficial farming methods."
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/league_spartan"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- How to Use Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:backgroundTint="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="How to Use Papaya"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/league_spartan_bold"
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="center"/>
+
+                <!-- Step 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/league_spartan_bold"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="#F97316"
+                        android:gravity="center" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Capture Plant Image"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Take clear photos of the affected plant or leaf using your smartphone camera."
+                            android:textColor="#6B7280"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/league_spartan"
+                            android:layout_marginTop="2dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Step 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:text="2"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/league_spartan_bold"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="#F97316"
+                        android:gravity="center" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="AI Analysis"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Our advanced AI analyzes the image to identify diseases, pests, or nutrient deficiencies."
+                            android:textColor="#6B7280"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/league_spartan"
+                            android:layout_marginTop="2dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Step 3 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:text="3"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/league_spartan_bold"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="#F97316"
+                        android:gravity="center" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Get Recommendations"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Receive specific treatment suggestions and care instructions tailored to your findings."
+                            android:textColor="#6B7280"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/league_spartan"
+                            android:layout_marginTop="2dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Step 4 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:text="4"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/league_spartan_bold"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="#F97316"
+                        android:gravity="center" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Track Progress"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Monitor your farm's health and maintain healthy growth over time."
+                            android:textColor="#6B7280"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/league_spartan"
+                            android:layout_marginTop="2dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Development Team Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:backgroundTint="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Development Team"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/league_spartan_bold"
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="center"/>
+
+                <!-- Team Member 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_background"
+                    android:backgroundTint="#00712D"
+                    android:layout_marginBottom="8dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/image_no_content"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="#4CAF50" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Jes Rodriguez"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Lead Developer"
+                            android:textColor="#E8F5E8"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/league_spartan" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Team Member 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_background"
+                    android:backgroundTint="#00712D"
+                    android:layout_marginBottom="8dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/image_no_content"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="#4CAF50" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Simon Chan"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="AI/ML Engineer"
+                            android:textColor="#E8F5E8"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/league_spartan" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Repeat for other team members -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_background"
+                    android:backgroundTint="#00712D"
+                    android:layout_marginBottom="8dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/image_no_content"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="#4CAF50" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Michael Johnson"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="UI/UX Designer"
+                            android:textColor="#E8F5E8"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/league_spartan" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_background"
+                    android:backgroundTint="#00712D">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/image_no_content"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="#4CAF50" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Michael Johnson"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Agricultural Specialist"
+                            android:textColor="#E8F5E8"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/league_spartan" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Version Section -->
         <TextView
-            android:text="The Developers"
-            android:layout_marginTop="24dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <!-- Repeat for each developer -->
-        <include layout="@layout/item_developer" />
-        <include layout="@layout/item_developer" />
-        <include layout="@layout/item_developer" />
-        <include layout="@layout/item_developer" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Version 1.0"
+            android:textColor="#6B7280"
+            android:textSize="12sp"
+            android:fontFamily="@font/league_spartan"
+            android:layout_marginBottom="32dp" />
 
     </LinearLayout>
 </ScrollView>

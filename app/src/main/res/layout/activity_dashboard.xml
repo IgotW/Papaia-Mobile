@@ -1,49 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res/auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background">
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="80dp"/>
+        android:layout_above="@id/bottomNavContainer"/>
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomAppBar"
+    <!-- Modern Bottom Navigation Container -->
+    <LinearLayout
+        android:id="@+id/bottomNavContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_gravity="bottom"
-        app:fabAlignmentMode="center"
-        app:fabAnchorMode="cradle"
-        app:fabCradleMargin="14dp"
-        app:fabCradleVerticalOffset="16dp"
-        app:fabCradleRoundedCornerRadius="6dp"
-        android:backgroundTint="#00712D">
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bottom_nav_modern_background"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="8dp"
+        android:elevation="12dp">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            app:elevation="0dp"
-            android:background="@android:color/transparent"
-            app:menu="@menu/bottom_nav_menu"
-            app:labelVisibilityMode="labeled"
-            app:itemIconTint="@color/bottom_nav_color"
-            app:itemTextColor="@color/bottom_nav_color"/>
-    </com.google.android.material.bottomappbar.BottomAppBar>
+        <!-- Home Navigation Item -->
+        <LinearLayout
+            android:id="@+id/nav_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/camera3"
-        app:layout_anchor="@id/bottomAppBar"
-        android:layout_margin="16dp"
-        android:backgroundTint="#D5ED9F"
-        app:borderWidth="0dp"/>
+            <ImageView
+                android:id="@+id/icon_home"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_home"
+                android:tint="#4CAF50"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/label_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textSize="12sp"
+                android:textColor="#4CAF50"
+                android:fontFamily="sans-serif-medium"/>
+
+        </LinearLayout>
+
+        <!-- Center Scan Button -->
+
+        <LinearLayout
+            android:id="@+id/nav_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <!-- Scan Button Background -->
+            <FrameLayout
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/scan_button_background"
+                android:layout_marginBottom="2dp">
+
+                <ImageView
+                    android:id="@+id/icon_scan"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/camera_svgrepo_com"
+                    android:tint="@android:color/white"/>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/label_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scan"
+                android:textSize="12sp"
+                android:textColor="#FF5722"
+                android:fontFamily="sans-serif-medium"/>
+
+        </LinearLayout>
+
+        <!-- Profile Navigation Item -->
+        <LinearLayout
+            android:id="@+id/nav_profile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icon_profile"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_person"
+                android:tint="#9E9E9E"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/label_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textSize="12sp"
+                android:textColor="#9E9E9E"
+                android:fontFamily="sans-serif-medium"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

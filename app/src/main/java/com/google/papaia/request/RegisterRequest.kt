@@ -9,6 +9,8 @@ data class RegisterRequest(
     val middleName: String?,
     val lastName: String,
     val suffix: String?,
+    val birthDate: String,
+    val contactNumber: String,
     val street: String,
     val barangay: String,
     val municipality: String,

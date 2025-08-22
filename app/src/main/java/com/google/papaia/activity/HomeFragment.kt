@@ -40,6 +40,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 private lateinit var lineChart: LineChart
+private lateinit var analytics_summary: TextView
 
 /**
  * A simple [Fragment] subclass.
@@ -77,7 +78,7 @@ class HomeFragment : Fragment() {
 
         val txtview_username = view.findViewById<TextView>(R.id.txtview_home_username)
         val txtview_dailytips = view.findViewById<TextView>(R.id.txtview_dailytips)
-        val button_seemore = view.findViewById<Button>(R.id.home_button_seemore)
+        val button_seemore = view.findViewById<TextView>(R.id.home_button_seemore)
         listView = view.findViewById<ListView>(R.id.listViewScanHistory)
 
         lineChart = view.findViewById(R.id.lineChart)

@@ -72,6 +72,7 @@ dependencies {
 
     //Material Design library
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
     //blur imageview
     implementation("jp.wasabeef:blurry:4.0.1")
