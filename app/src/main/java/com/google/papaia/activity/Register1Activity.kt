@@ -46,6 +46,7 @@ class Register1Activity : AppCompatActivity() {
     private lateinit var edittext_zipCode: TextInputEditText
     private lateinit var cbTerms: CheckBox
     private lateinit var button_signup: Button
+    private lateinit var button_back: Button
 
     // Role variable
     private lateinit var role: String
@@ -83,6 +84,7 @@ class Register1Activity : AppCompatActivity() {
         // Checkbox and Button
         cbTerms = findViewById(R.id.cbTerms)
         button_signup = findViewById(R.id.button_signup)
+        button_back = findViewById(R.id.btn_back)
 
         setupDropdowns()
         setupDatePicker()
@@ -98,6 +100,11 @@ class Register1Activity : AppCompatActivity() {
         login.setOnClickListener {
             startActivity(
                 Intent(this, LoginActivity::class.java)
+            )
+        }
+        button_back.setOnClickListener {
+            startActivity(
+                Intent(this, Register0Activity::class.java)
             )
         }
     }
