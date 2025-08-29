@@ -17,6 +17,7 @@ import com.google.papaia.response.DailyAnalyticsResponse
 import com.google.papaia.response.DailyTipResponse
 import com.google.papaia.response.FarmDetailsResponse
 import com.google.papaia.response.PredictionHistoryResponse
+import com.google.papaia.response.TodaysPredictionResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -63,6 +64,11 @@ interface ApiService {
     fun getFarmDetails(
         @Header("Authorization") token: String
     ): Call<FarmDetailsResponse>
+
+    @GET("/api/farmer/all-predictions")
+    fun getTodaysPredictionsCount(
+        @Header("Authorization") token: String
+    ): Call<TodaysPredictionResponse>
 
     @POST("/api/user")
     fun registerUser(

@@ -7,10 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.papaia.R
+import com.google.papaia.response.FarmDetailsResponse
+import com.google.papaia.utils.RetrofitClient
 import com.google.papaia.utils.SecurePrefsHelper
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,9 +35,15 @@ class ProfileFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private lateinit var profilePic: ImageView
     private lateinit var fullname: TextView
     private lateinit var farmerId: TextView
+    private lateinit var username: TextView
+    private lateinit var birthdate: TextView
+    private lateinit var email: TextView
+    private lateinit var contactNumber: TextView
+    private lateinit var farmName: TextView
+    private lateinit var farmLocation: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,14 +65,23 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Here you can safely find your button:
+        profilePic = view.findViewById(R.id.imageview_profile)
         fullname = view.findViewById(R.id.txtview_fullname)
         farmerId = view.findViewById(R.id.txtview_farmerid)
-        val button_editprofile = view.findViewById<Button>(R.id.button_editprofile)
-        val button_settings = view.findViewById<Button>(R.id.button_settings)
-        val button_changepass = view.findViewById<Button>(R.id.button_changepassword)
+        username = view.findViewById(R.id.txtview_username)
+        birthdate = view.findViewById(R.id.txtview_birthdate)
+        email = view.findViewById(R.id.txtview_email)
+        contactNumber = view.findViewById(R.id.txtview_contact)
+        farmName = view.findViewById(R.id.txtview_farmName)
+        farmLocation = view.findViewById(R.id.txtview_farmLocation)
+        val button_editprofile = view.findViewById<TextView>(R.id.button_editprofile)
+//        val button_settings = view.findViewById<Button>(R.id.button_settings)
+//        val button_changepass = view.findViewById<Button>(R.id.button_changepassword)
         val button_logout = view.findViewById<Button>(R.id.button_logout)
+        val button_about = view.findViewById<TextView>(R.id.aboutPapalaText)
 
         val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
+        val username = prefs.getString("username", "User")
         val firstname = prefs.getString("firstname", "User")
         val middlename = prefs.getString("middlename", "User")
         val lastname = prefs.getString("lastname", "User")
@@ -86,37 +110,89 @@ class ProfileFragment : Fragment() {
                 Intent(requireContext(), EditProfileActivity::class.java)
             )
         }
-        button_changepass.setOnClickListener {
+        button_about.setOnClickListener {
             startActivity(
-                Intent(requireContext(), ChangePasswordActivity::class.java)
+                Intent(requireContext(), AboutActivity::class.java)
             )
         }
-        button_settings.setOnClickListener {
-            startActivity(
-                Intent(requireContext(), SettingsActivity::class.java)
-            )
-        }
+//        button_changepass.setOnClickListener {
+//            startActivity(
+//                Intent(requireContext(), ChangePasswordActivity::class.java)
+//            )
+//        }
+//        button_settings.setOnClickListener {
+//            startActivity(
+//                Intent(requireContext(), SettingsActivity::class.java)
+//            )
+//        }
     }
     override fun onResume() {
         super.onResume()
 
         val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
-        val firstname = prefs.getString("firstname", "User")
+        val token = prefs.getString("token", "")
+        val profileImage = prefs.getString("profileImage", "")
+        val userName = prefs.getString("username", "")
+        val emailAdd = prefs.getString("email", "")
+        val firstname = prefs.getString("firstname", "")
         val middlename = prefs.getString("middlename", "")
         val lastname = prefs.getString("lastname", "")
         val suffix = prefs.getString("suffix", "")
+        val birthDate = prefs.getString("birthdate", "")
+        val contact = prefs.getString("contactNumber", "")
         val street = prefs.getString("street", "")
         val barangay = prefs.getString("barangay", "")
         val municipality = prefs.getString("municipality", "")
         val province = prefs.getString("province", "")
         val zipCode = prefs.getString("zipcode", "")
-        val id = prefs.getString("id", "User")
+        val idNum = prefs.getString("idNumber", "")
 
         fullname?.text = listOfNotNull(firstname, middlename, lastname, suffix)
             .filter { it.isNotBlank() }
             .joinToString(" ")
 
-        farmerId?.text = id
+        farmerId?.text = idNum
+        username?.text = userName
+        email?.text = emailAdd
+        birthdate?.text = birthDate
+        contactNumber?.text = contact
+
+        if (!profileImage.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(profileImage)
+                .placeholder(R.drawable.ic_person) // shown while loading
+                .error(R.drawable.ic_person) // fallback if loading fails
+                .circleCrop()
+                .into(profilePic)
+        } else {
+            // keep the default icon
+            profilePic.setImageResource(R.drawable.ic_person)
+        }
+
+        if (token != null) {
+            RetrofitClient.instance.getFarmDetails("Bearer $token")
+                .enqueue(object : Callback<FarmDetailsResponse> {
+                    override fun onResponse(
+                        call: Call<FarmDetailsResponse>,
+                        response: Response<FarmDetailsResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            val farm = response.body()
+                            if (farm != null) {
+                                // Show data in TextViews
+                                farmName.text = farm.farmName
+                                farmLocation.text = farm.farmLocation
+                            }
+                        } else {
+                            Toast.makeText(requireContext(), "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<FarmDetailsResponse>, t: Throwable) {
+                        Toast.makeText(requireContext(), "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
+        }
     }
 
 

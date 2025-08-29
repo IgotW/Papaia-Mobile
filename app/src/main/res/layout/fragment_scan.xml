@@ -80,10 +80,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
             android:paddingHorizontal="32dp"
             android:paddingTop="16dp"
-            android:paddingBottom="32dp">
+            android:paddingBottom="32dp"
+            android:gravity="center">
+
+            <FrameLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/circle_bg"
+                android:backgroundTint="@color/primary"
+                android:elevation="4dp"
+                android:layout_marginLeft="-90dp"
+                android:layout_marginRight="50dp">
+
+                <ImageView
+                    android:id="@+id/imageGallery"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/upload"
+                    android:tint="@android:color/white"/>
+
+            </FrameLayout>
 
             <!-- Capture Button -->
             <FrameLayout
@@ -99,22 +118,6 @@
                     android:layout_height="32dp"
                     android:layout_gravity="center"
                     android:src="@drawable/camera"
-                    android:tint="@android:color/white"/>
-
-            </FrameLayout>
-            <FrameLayout
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:background="@drawable/scan_button_background"
-                android:backgroundTint="#FF5722"
-                android:elevation="4dp">
-
-                <ImageView
-                    android:id="@+id/imageGallery"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/upload"
                     android:tint="@android:color/white"/>
 
             </FrameLayout>

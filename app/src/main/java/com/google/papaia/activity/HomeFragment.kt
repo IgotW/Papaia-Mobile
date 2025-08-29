@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -29,6 +30,7 @@ import com.google.papaia.request.AnalyticsStatRequest
 import com.google.papaia.response.DailyAnalyticsResponse
 import com.google.papaia.response.DailyTipResponse
 import com.google.papaia.response.PredictionHistoryResponse
+import com.google.papaia.response.TodaysPredictionResponse
 import com.google.papaia.utils.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -56,7 +58,13 @@ class HomeFragment : Fragment() {
 
     private lateinit var userId: String
 
-    private lateinit var listView: ListView
+    private lateinit var listViewScanHistory: ListView
+    private lateinit var emptyStateContainer: LinearLayout
+    private lateinit var button_seemore: TextView
+    private lateinit var todayScans: TextView
+    private lateinit var healthPercent: TextView
+    private lateinit var start_scanning: TextView
+    private var activeFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,8 +86,12 @@ class HomeFragment : Fragment() {
 
         val txtview_username = view.findViewById<TextView>(R.id.txtview_home_username)
         val txtview_dailytips = view.findViewById<TextView>(R.id.txtview_dailytips)
-        val button_seemore = view.findViewById<TextView>(R.id.home_button_seemore)
-        listView = view.findViewById<ListView>(R.id.listViewScanHistory)
+        button_seemore = view.findViewById<TextView>(R.id.home_button_seemore)
+        listViewScanHistory = view.findViewById<ListView>(R.id.listViewScanHistory)
+        emptyStateContainer = view.findViewById(R.id.empty_state_container)
+        todayScans = view.findViewById(R.id.scans_count)
+        healthPercent = view.findViewById(R.id.health_percent)
+        start_scanning = view.findViewById(R.id.btn_start_scanning)
 
         lineChart = view.findViewById(R.id.lineChart)
 
@@ -99,24 +111,32 @@ class HomeFragment : Fragment() {
                 Intent(context, HistoryActivity::class.java)
             )
         }
+        start_scanning.setOnClickListener {
+            (requireActivity() as DashboardActivity).changeTab(1)
+        }
 
-        RetrofitClient.instance.getDailyAnalytics(bearerToken).enqueue(object : Callback<DailyAnalyticsResponse> {
-            override fun onResponse(
-                call: Call<DailyAnalyticsResponse>,
-                response: Response<DailyAnalyticsResponse>
-            ) {
-                if (response.isSuccessful && response.body() != null) {
-                    val dailyStats = response.body()!!.dailyStats
-                    setupLineChart(dailyStats, requireContext())
-                }
-            }
-
-            override fun onFailure(call: Call<DailyAnalyticsResponse>, t: Throwable) {
-                Log.e("Chart", "API error: ${t.message}")
-            }
-        })
+        if(token != null){
+            getCountScans(bearerToken)
+            getDailyAnalytics(bearerToken)
+        }
 
         getPredictionHistory()
+
+//        RetrofitClient.instance.getDailyAnalytics(bearerToken).enqueue(object : Callback<DailyAnalyticsResponse> {
+//            override fun onResponse(
+//                call: Call<DailyAnalyticsResponse>,
+//                response: Response<DailyAnalyticsResponse>
+//            ) {
+//                if (response.isSuccessful && response.body() != null) {
+//                    val dailyStats = response.body()!!.dailyStats
+//                    setupLineChart(dailyStats, requireContext())
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<DailyAnalyticsResponse>, t: Throwable) {
+//                Log.e("Chart", "API error: ${t.message}")
+//            }
+//        })
 
 //        RetrofitClient.instance.getDailyTip(bearerToken).enqueue(object : Callback<DailyTipResponse>{
 //            override fun onResponse(
@@ -187,52 +207,24 @@ class HomeFragment : Fragment() {
 //        })
     }
 
-//    private fun setupLineChart(dailyStats: List<AnalyticsStatRequest>) {
-//        val diseaseMap = mutableMapOf<String, MutableList<Entry>>()
-//        val labels = mutableListOf<String>()
-//
-//        dailyStats.forEachIndexed { index, stat ->
-//            labels.add(stat.day)
-//            stat.predictions.forEach { (disease, count) ->
-//                if (!diseaseMap.containsKey(disease)) {
-//                    diseaseMap[disease] = mutableListOf()
-//                }
-//                diseaseMap[disease]?.add(Entry(index.toFloat(), count.toFloat()))
-//            }
-//        }
-//
-//        val colors = listOf(
-//            Color.RED, Color.BLUE, Color.GREEN, Color.MAGENTA, Color.CYAN, Color.YELLOW
-//        )
-//
-//        val lineDataSets = diseaseMap.entries.mapIndexed { index, entry ->
-//            val dataSet = LineDataSet(entry.value, entry.key)
-//            dataSet.color = colors[index % colors.size]
-//            dataSet.setCircleColor(dataSet.color)
-//            dataSet.circleRadius = 4f
-//            dataSet.lineWidth = 2f
-//            dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-//            dataSet.valueTextSize = 10f
-//            dataSet
-//        }
-//
-//        val data = LineData(lineDataSets)
-//        lineChart.data = data
-//
-//        lineChart.xAxis.apply {
-//            valueFormatter = IndexAxisValueFormatter(labels)
-//            position = XAxis.XAxisPosition.BOTTOM
-//            granularity = 1f
-//            setDrawGridLines(false)
-//            labelRotationAngle = -45f
-//        }
-//
-//        lineChart.axisRight.isEnabled = false
-//        lineChart.description.text = "Daily Prediction Analytics"
-//        lineChart.animateX(1000)
-//        lineChart.invalidate()
-//
-//    }
+
+    private fun getDailyAnalytics(token: String){
+        RetrofitClient.instance.getDailyAnalytics(token).enqueue(object : Callback<DailyAnalyticsResponse> {
+            override fun onResponse(
+                call: Call<DailyAnalyticsResponse>,
+                response: Response<DailyAnalyticsResponse>
+            ) {
+                if (response.isSuccessful && response.body() != null) {
+                    val dailyStats = response.body()!!.dailyStats
+                    setupLineChart(dailyStats, requireContext())
+                }
+            }
+
+            override fun onFailure(call: Call<DailyAnalyticsResponse>, t: Throwable) {
+                Log.e("Chart", "API error: ${t.message}")
+            }
+        })
+    }
 
     private fun setupLineChart(dailyStats: List<AnalyticsStatRequest>, context: Context) {
         val diseaseMap = mutableMapOf<String, MutableList<Entry>>()
@@ -459,9 +451,15 @@ class HomeFragment : Fragment() {
             ) {
                 if (response.isSuccessful && response.body() != null) {
                     val historyList = response.body()!!
-                    listView.adapter = HomeHistoryAdapter(requireContext(), historyList)
+                    listViewScanHistory.adapter = HomeHistoryAdapter(requireContext(), historyList)
+                    emptyStateContainer.setVisibility(View.GONE);
+                    listViewScanHistory.setVisibility(View.VISIBLE);
+                    button_seemore.setVisibility(View.VISIBLE);
                 } else {
                     Toast.makeText(requireContext(), "No history found or unauthorized.", Toast.LENGTH_SHORT).show()
+                    emptyStateContainer.setVisibility(View.VISIBLE);
+                    listViewScanHistory.setVisibility(View.GONE);
+                    button_seemore.setVisibility(View.GONE);
                 }
             }
 
@@ -469,6 +467,29 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun getCountScans(token: String){
+        RetrofitClient.instance.getTodaysPredictionsCount(bearerToken)
+            .enqueue(object : Callback<TodaysPredictionResponse> {
+                override fun onResponse(
+                    call: Call<TodaysPredictionResponse>,
+                    response: Response<TodaysPredictionResponse>
+                ) {
+                    if (response.isSuccessful && response.body() != null) {
+                        val todayCount = response.body()!!.count
+                        todayScans.text = todayCount.toString()
+                    } else {
+                        todayScans.text = "0"
+                        Log.e("TodayScans", "Error: ${response.code()} - ${response.message()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<TodaysPredictionResponse>, t: Throwable) {
+                    todayScans.text = "0"
+                    Log.e("TodayScans", "Network error: ${t.message}")
+                }
+            })
     }
 
 

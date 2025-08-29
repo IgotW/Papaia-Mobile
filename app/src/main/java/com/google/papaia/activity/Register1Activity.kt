@@ -3,6 +3,8 @@ package com.google.papaia.activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
 import android.view.View
@@ -10,10 +12,12 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.textfield.TextInputEditText
@@ -31,7 +35,9 @@ import java.util.*
 class Register1Activity : AppCompatActivity() {
     private lateinit var edittext_username: TextInputEditText
     private lateinit var edittext_email: TextInputEditText
+    private lateinit var tilPassword: TextInputLayout
     private lateinit var edittext_password: TextInputEditText
+    private lateinit var tilConfirmPass: TextInputLayout
     private lateinit var edittext_confirmPassword: TextInputEditText
     private lateinit var edittext_firstname: TextInputEditText
     private lateinit var edittext_middlename: TextInputEditText
@@ -46,7 +52,8 @@ class Register1Activity : AppCompatActivity() {
     private lateinit var edittext_zipCode: TextInputEditText
     private lateinit var cbTerms: CheckBox
     private lateinit var button_signup: Button
-    private lateinit var button_back: Button
+    private lateinit var button_back: ImageView
+    private lateinit var passwordStrengthBar: View
 
     // Role variable
     private lateinit var role: String
@@ -63,7 +70,9 @@ class Register1Activity : AppCompatActivity() {
         // TextInputLayouts
         edittext_username = findViewById(R.id.reg_edittext_username)
         edittext_email = findViewById(R.id.reg_edittext_email)
+        tilPassword = findViewById(R.id.til_password)
         edittext_password = findViewById(R.id.reg_edittext_password)
+        tilConfirmPass = findViewById(R.id.til_confirm_password)
         edittext_confirmPassword = findViewById(R.id.reg_edittext_confirm_password)
         edittext_firstname = findViewById(R.id.reg_edittext_firstname)
         edittext_middlename = findViewById(R.id.reg_edittext_middlename)
@@ -85,9 +94,11 @@ class Register1Activity : AppCompatActivity() {
         cbTerms = findViewById(R.id.cbTerms)
         button_signup = findViewById(R.id.button_signup)
         button_back = findViewById(R.id.btn_back)
+        passwordStrengthBar = findViewById(R.id.password_strength_bar)
 
         setupDropdowns()
         setupDatePicker()
+        setupPasswordValidation()
 
         // Initialize role from intent
         role = intent?.getStringExtra("role") ?: ""
@@ -400,5 +411,112 @@ class Register1Activity : AppCompatActivity() {
                 Log.e("API_EXCEPTION", e.toString())
             }
         }
+    }
+
+    private fun setupPasswordValidation() {
+        // Password strength validation
+        edittext_password.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val password = s.toString()
+                updatePasswordStrength(password)
+
+                // Clear confirm password error if passwords now match
+                val confirmPassword = edittext_confirmPassword.text.toString()
+                if (password.isNotEmpty() && confirmPassword.isNotEmpty() && password == confirmPassword) {
+                    tilConfirmPass.error = null
+                }
+            }
+        })
+
+        // Confirm password validation
+        edittext_confirmPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val confirmPassword = s.toString()
+                val password = edittext_password.text.toString()
+
+                if (confirmPassword.isNotEmpty() && password.isNotEmpty()) {
+                    if (password != confirmPassword) {
+                        tilConfirmPass.error = "Passwords do not match"
+                    } else {
+                        tilConfirmPass.error = null
+                    }
+                }
+            }
+        })
+    }
+
+    private fun updatePasswordStrength(password: String) {
+        if (password.isEmpty()) {
+            passwordStrengthBar.visibility = View.INVISIBLE
+            return
+        }
+
+        passwordStrengthBar.visibility = View.VISIBLE
+
+        val strength = calculatePasswordStrength(password)
+        val strengthDrawable = when (strength) {
+            PasswordStrength.WEAK -> R.drawable.password_strength_weak
+            PasswordStrength.MEDIUM -> R.drawable.password_strength_medium
+            PasswordStrength.STRONG -> R.drawable.password_strength_strong
+        }
+
+        passwordStrengthBar.background = ContextCompat.getDrawable(this, strengthDrawable)
+    }
+
+    private fun calculatePasswordStrength(password: String): PasswordStrength {
+        var score = 0
+
+        // Length check
+        if (password.length >= 8) score++
+        if (password.length >= 12) score++
+
+        // Character variety checks
+        if (password.any { it.isUpperCase() }) score++
+        if (password.any { it.isLowerCase() }) score++
+        if (password.any { it.isDigit() }) score++
+        if (password.any { !it.isLetterOrDigit() }) score++
+
+        return when {
+            score < 3 -> PasswordStrength.WEAK
+            score < 5 -> PasswordStrength.MEDIUM
+            else -> PasswordStrength.STRONG
+        }
+    }
+
+    private fun validateInputs(password: String, confirmPassword: String): Boolean {
+        var isValid = true
+
+        // Clear previous errors
+        tilPassword.error = null
+        tilConfirmPass.error = null
+
+        // Check if fields are empty
+        if (password.isEmpty()) {
+            tilPassword.error = "Password is required"
+            isValid = false
+        } else if (password.length < 8) {
+            tilPassword.error = "Password must be at least 8 characters"
+            isValid = false
+        }
+
+        if (confirmPassword.isEmpty()) {
+            tilConfirmPass.error = "Please confirm your password"
+            isValid = false
+        } else if (password != confirmPassword) {
+            tilConfirmPass.error = "Passwords do not match"
+            isValid = false
+        }
+
+        return isValid
+    }
+
+    enum class PasswordStrength {
+        WEAK, MEDIUM, STRONG
     }
 }

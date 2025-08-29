@@ -24,4 +24,5 @@
     <color name="selected_card_bg">#F8FFF8</color>
     <color name="button_enabled">#4CAF50</color>
     <color name="card_border">#E0E0E0</color>
+    <color name="disabled_gray">#C4C4C4</color>
 </resources>

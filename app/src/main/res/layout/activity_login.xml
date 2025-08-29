@@ -128,6 +128,38 @@
             android:inputType="textPassword"
             android:fontFamily="@font/league_spartan" />
 
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/til_new_password"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:boxBackgroundMode="outline"-->
+<!--            app:boxCornerRadiusBottomEnd="12dp"-->
+<!--            app:boxCornerRadiusBottomStart="12dp"-->
+<!--            app:boxCornerRadiusTopEnd="12dp"-->
+<!--            app:boxCornerRadiusTopStart="12dp"-->
+<!--            app:boxBackgroundColor="@android:color/white"-->
+<!--            app:boxStrokeColor="#E0E0E0"-->
+<!--            app:boxStrokeWidth="1dp"-->
+<!--            app:boxStrokeWidthFocused="2dp"-->
+<!--            app:hintTextColor="@color/primary"-->
+<!--            app:endIconTint="#9CA3AF"-->
+<!--            app:startIconDrawable="@drawable/emailsmall"-->
+<!--            app:startIconTint="#9CA3AF"-->
+<!--            android:padding="24dp">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/edittext_fg3_newpass"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Email/Username"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:fontFamily="@font/league_spartan"-->
+<!--                android:paddingStart="48dp"-->
+<!--                android:padding="18dp"/>-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
         <TextView
             android:id="@+id/txtview_login_forgotpass"
             android:layout_width="match_parent"
@@ -153,7 +185,8 @@
             app:backgroundTint="@color/tertiary"
             app:cornerRadius="12dp"
             android:textStyle="bold"
-            android:background="@drawable/button_rounded" />
+            android:background="@drawable/button_rounded"
+            app:rippleColor="#FF8A61"/>
 
         <LinearLayout
             android:layout_width="match_parent"

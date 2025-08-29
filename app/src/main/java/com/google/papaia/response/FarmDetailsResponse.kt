@@ -4,5 +4,6 @@ data class FarmDetailsResponse(
     val farmName: String,
     val farmOwnerName: String,
     val farmId: String,
+    val farmLocation: String,
     val ownerId: String
 )

@@ -41,8 +41,8 @@
             android:layout_marginBottom="8dp"
             android:text="Username"
             android:textColor="#333333"
-            android:textSize="14sp"
-            android:fontFamily="@font/inter"/>
+            android:textSize="16sp"
+            android:fontFamily="@font/league_spartan_semibold"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -54,13 +54,16 @@
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxBackgroundColor="@android:color/white"
-            app:boxStrokeColor="#E0E0E0">
+            app:boxStrokeColor="#E0E0E0"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_edittext_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter username"
+                android:fontFamily="@font/league_spartan"
+                android:textSize="16sp"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -70,10 +73,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:fontFamily="@font/inter"
             android:text="Email Address"
             android:textColor="#333333"
-            android:textSize="14sp" />
+            android:textSize="16sp"
+            android:fontFamily="@font/league_spartan_semibold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -85,14 +88,17 @@
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxBackgroundColor="@android:color/white">
+            app:boxBackgroundColor="@android:color/white"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_edittext_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter email address"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:fontFamily="@font/league_spartan"
+                android:textSize="16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,10 +109,11 @@
             android:layout_marginBottom="8dp"
             android:text="Password"
             android:textColor="#333333"
-            android:textSize="14sp"
-            android:fontFamily="@font/inter" />
+            android:textSize="16sp"
+            android:fontFamily="@font/league_spartan_semibold" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -117,16 +124,45 @@
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeColor="#E0E0E0"
             app:endIconMode="password_toggle"
-            app:boxBackgroundColor="@android:color/white">
+            app:boxBackgroundColor="@android:color/white"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_edittext_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:fontFamily="@font/league_spartan"
+                android:textSize="16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Password Strength Indicator -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password strength"
+                android:textColor="#9CA3AF"
+                android:textSize="12sp"
+                android:fontFamily="@font/league_spartan"/>
+
+            <View
+                android:id="@+id/password_strength_bar"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/password_strength_weak"
+                android:visibility="invisible"/>
+        </LinearLayout>
 
         <!-- Confirm Password -->
         <TextView
@@ -135,10 +171,11 @@
             android:layout_marginBottom="8dp"
             android:text="Confirm Password"
             android:textColor="#333333"
-            android:textSize="14sp"
-            android:fontFamily="@font/inter" />
+            android:textSize="16sp"
+            android:fontFamily="@font/league_spartan_semibold"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_confirm_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -149,14 +186,17 @@
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeColor="#E0E0E0"
             app:endIconMode="password_toggle"
-            app:boxBackgroundColor="@android:color/white">
+            app:boxBackgroundColor="@android:color/white"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_edittext_confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Confirm password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:fontFamily="@font/league_spartan"
+                android:textSize="16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -167,8 +207,8 @@
             android:layout_marginBottom="8dp"
             android:text="First Name"
             android:textColor="#333333"
-            android:textSize="14sp"
-            android:fontFamily="@font/inter" />
+            android:textSize="16sp"
+            android:fontFamily="@font/league_spartan_semibold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -180,14 +220,17 @@
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxBackgroundColor="@android:color/white">
+            app:boxBackgroundColor="@android:color/white"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_edittext_firstname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter first name"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:fontFamily="@font/league_spartan"
+                android:textSize="16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -204,8 +247,8 @@
                 android:layout_marginBottom="8dp"
                 android:text="Middle Name"
                 android:textColor="#333333"
-                android:textSize="14sp"
-                android:fontFamily="@font/inter" />
+                android:textSize="16sp"
+                android:fontFamily="@font/league_spartan_semibold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -214,7 +257,8 @@
                 android:layout_marginBottom="8dp"
                 android:text="(Optional)"
                 android:textColor="#999999"
-                android:textSize="12sp" />
+                android:textSize="14sp"
+                android:fontFamily="@font/league_spartan"/>
 
         </LinearLayout>
 
@@ -228,14 +272,17 @@
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxBackgroundColor="@android:color/white">
+            app:boxBackgroundColor="@android:color/white"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_edittext_middlename"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter middle name"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:fontFamily="@font/league_spartan"
+                android:textSize="16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -246,8 +293,8 @@
             android:layout_marginBottom="8dp"
             android:text="Last Name"
             android:textColor="#333333"
-            android:textSize="14sp"
-            android:fontFamily="@font/inter" />
+            android:textSize="16sp"
+            android:fontFamily="@font/league_spartan_semibold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -259,14 +306,17 @@
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxBackgroundColor="@android:color/white">
+            app:boxBackgroundColor="@android:color/white"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_edittext_lastname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter last name"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:fontFamily="@font/league_spartan"
+                android:textSize="16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -277,8 +327,8 @@
             android:layout_marginBottom="8dp"
             android:text="Suffix"
             android:textColor="#333333"
-            android:textSize="14sp"
-            android:fontFamily="@font/inter" />
+            android:textSize="16sp"
+            android:fontFamily="@font/league_spartan_semibold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -298,7 +348,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Select suffix"
-                android:inputType="none" />
+                android:inputType="none"
+                android:fontFamily="@font/league_spartan"
+                android:textSize="16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -309,8 +361,8 @@
             android:layout_marginBottom="8dp"
             android:text="Birth Date"
             android:textColor="#333333"
-            android:textSize="14sp"
-            android:fontFamily="@font/inter" />
+            android:textSize="16sp"
+            android:fontFamily="@font/league_spartan_semibold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -324,7 +376,8 @@
             app:boxStrokeColor="#E0E0E0"
             app:endIconMode="custom"
             app:endIconDrawable="@drawable/ic_calendar"
-            app:boxBackgroundColor="@android:color/white">
+            app:boxBackgroundColor="@android:color/white"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_edittext_birthdate"
@@ -333,7 +386,9 @@
                 android:hint="Select birth date"
                 android:inputType="none"
                 android:focusable="false"
-                android:clickable="true"/>
+                android:clickable="true"
+                android:fontFamily="@font/league_spartan"
+                android:textSize="16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -344,8 +399,8 @@
             android:layout_marginBottom="8dp"
             android:text="Contact Number"
             android:textColor="#333333"
-            android:textSize="14sp"
-            android:fontFamily="@font/inter" />
+            android:textSize="16sp"
+            android:fontFamily="@font/league_spartan_semibold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -357,14 +412,17 @@
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxBackgroundColor="@android:color/white">
+            app:boxBackgroundColor="@android:color/white"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_edittext_contactnumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter contact number"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:fontFamily="@font/league_spartan"
+                android:textSize="16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -375,8 +433,8 @@
             android:layout_marginBottom="8dp"
             android:text="Street Address"
             android:textColor="#333333"
-            android:textSize="14sp"
-            android:fontFamily="@font/inter" />
+            android:textSize="16sp"
+            android:fontFamily="@font/league_spartan_semibold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -388,14 +446,17 @@
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxBackgroundColor="@android:color/white">
+            app:boxBackgroundColor="@android:color/white"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_edittext_street"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter street address"
-                android:inputType="textPostalAddress" />
+                android:inputType="textPostalAddress"
+                android:fontFamily="@font/league_spartan"
+                android:textSize="16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -405,8 +466,8 @@
             android:layout_marginBottom="8dp"
             android:text="Barangay"
             android:textColor="#333333"
-            android:textSize="14sp"
-            android:fontFamily="@font/inter" />
+            android:textSize="16sp"
+            android:fontFamily="@font/league_spartan_semibold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -418,14 +479,17 @@
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxBackgroundColor="@android:color/white">
+            app:boxBackgroundColor="@android:color/white"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_edittext_barangay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter Barangay"
-                android:inputType="textPostalAddress" />
+                android:inputType="textPostalAddress"
+                android:fontFamily="@font/league_spartan"
+                android:textSize="16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -436,8 +500,8 @@
             android:layout_marginBottom="8dp"
             android:text="City/Municipality"
             android:textColor="#333333"
-            android:textSize="14sp"
-            android:fontFamily="@font/inter" />
+            android:textSize="16sp"
+            android:fontFamily="@font/league_spartan_semibold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -449,14 +513,17 @@
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxBackgroundColor="@android:color/white">
+            app:boxBackgroundColor="@android:color/white"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_edittext_municipality"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter city or municipality"
-                android:inputType="text" />
+                android:inputType="text"
+                android:fontFamily="@font/league_spartan"
+                android:textSize="16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -481,8 +548,8 @@
                     android:layout_marginBottom="8dp"
                     android:text="ZIP Code"
                     android:textColor="#333333"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/inter" />
+                    android:textSize="16sp"
+                    android:fontFamily="@font/league_spartan_semibold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -493,14 +560,17 @@
                     app:boxCornerRadiusTopEnd="8dp"
                     app:boxCornerRadiusTopStart="8dp"
                     app:boxStrokeColor="#E0E0E0"
-                    app:boxBackgroundColor="@android:color/white">
+                    app:boxBackgroundColor="@android:color/white"
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/reg_edittext_zipcode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="ZIP"
-                        android:inputType="number" />
+                        android:inputType="number"
+                        android:fontFamily="@font/league_spartan"
+                        android:textSize="16sp"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -520,8 +590,8 @@
                     android:layout_marginBottom="8dp"
                     android:text="Province"
                     android:textColor="#333333"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/inter" />
+                    android:textSize="16sp"
+                    android:fontFamily="@font/league_spartan_semibold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -540,7 +610,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Province"
-                        android:inputType="none" />
+                        android:inputType="none"
+                        android:fontFamily="@font/league_spartan"
+                        android:textSize="16sp"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -567,30 +639,32 @@
                 android:layout_height="wrap_content"
                 android:text="I agree to the"
                 android:textColor="#333333"
-                android:textSize="14sp"
-                android:fontFamily="@font/inter" />
+                android:textSize="16sp"
+                android:fontFamily="@font/league_spartan" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" Terms &amp; Conditions"
                 android:textColor="@color/primary"
-                android:textSize="14sp"
                 android:clickable="true"
-                android:fontFamily="@font/inter" />
+                android:textSize="16sp"
+                android:fontFamily="@font/league_spartan_semibold"/>
 
         </LinearLayout>
 
         <!-- Sign Up Button -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_signup"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@drawable/button_rounded"
+            android:layout_height="65dp"
+            android:layout_marginBottom="16dp"
             android:text="Sign Up"
-            android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
+            android:textColor="@android:color/white"
+            app:cornerRadius="12dp"
+            app:backgroundTint="@color/primary"
+            app:rippleColor="#004D1F" />
 
         <!-- Already have account -->
         <LinearLayout
@@ -604,17 +678,17 @@
                 android:layout_height="wrap_content"
                 android:text="Already have an account? "
                 android:textColor="#666666"
-                android:textSize="14sp"
-                android:fontFamily="@font/inter" />
+                android:textSize="16sp"
+                android:fontFamily="@font/league_spartan"/>
             <TextView
                 android:id="@+id/tvLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Log in"
                 android:textColor="@color/primary"
-                android:textSize="14sp"
                 android:layout_marginLeft="5dp"
-                android:fontFamily="@font/inter" />
+                android:textSize="16sp"
+                android:fontFamily="@font/league_spartan_semibold"/>
         </LinearLayout>
 
     </LinearLayout>
