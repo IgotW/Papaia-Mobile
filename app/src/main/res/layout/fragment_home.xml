@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.HomeFragment"
-    android:background="@color/background">
+    android:background="#F5F5F5">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -45,17 +45,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Good Morning"
-                        android:textSize="14sp"
-                        android:textColor="#6B7280"/>
+                        android:textSize="16sp"
+                        android:textColor="#6B7280"
+                        android:fontFamily="@font/league_spartan"/>
 
                     <TextView
                         android:id="@+id/txtview_home_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="John Farmer"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textColor="#111827" />
+                        android:textColor="#111827"
+                        android:fontFamily="@font/league_spartan_semibold"/>
                 </LinearLayout>
 
                 <ImageView
@@ -88,7 +90,8 @@
                         android:paddingTop="10dp"
                         android:paddingLeft="20dp"
                         android:paddingBottom="5dp"
-                        android:paddingRight="10dp"/>
+                        android:paddingRight="10dp"
+                        android:fontFamily="@font/league_spartan_semibold"/>
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -100,9 +103,11 @@
                             android:layout_height="20dp"
                             android:src="@drawable/location"/>
                         <TextView
+                            android:id="@+id/txtview_farm_location"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Farm Location"/>
+                            android:text="Farm Location"
+                            android:fontFamily="@font/league_spartan"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -115,7 +120,8 @@
                             android:paddingLeft="20dp"
                             android:paddingBottom="10dp"
                             android:textStyle="bold"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/league_spartan_semibold"/>
                         <TextView
                             android:id="@+id/txtview_owner_name"
                             android:layout_width="wrap_content"
@@ -123,7 +129,8 @@
                             android:text="Owner Name"
                             android:paddingLeft="10dp"
                             android:paddingBottom="10dp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/league_spartan"/>
                     </LinearLayout>
                     <androidx.cardview.widget.CardView
                         android:layout_width="280dp"
@@ -146,7 +153,8 @@
                                 android:paddingTop="10dp"
                                 android:paddingLeft="20dp"
                                 android:paddingBottom="5dp"
-                                android:paddingRight="10dp"/>
+                                android:paddingRight="10dp"
+                                android:fontFamily="@font/league_spartan_semibold"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -175,7 +183,8 @@
                                         android:layout_height="wrap_content"
                                         android:text="5 Healthy"
                                         android:textColor="@color/black"
-                                        android:textSize="14sp"/>
+                                        android:textSize="14sp"
+                                        android:fontFamily="@font/league_spartan"/>
                                 </LinearLayout>
 
                                 <!-- Disease Section -->
@@ -197,7 +206,8 @@
                                         android:layout_height="wrap_content"
                                         android:text="5 Diseased"
                                         android:textColor="@color/black"
-                                        android:textSize="14sp"/>
+                                        android:textSize="14sp"
+                                        android:fontFamily="@font/league_spartan"/>
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
@@ -299,7 +309,8 @@
                             android:text="Scans"
                             android:textSize="16sp"
                             android:textColor="#6B7280"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:fontFamily="@font/league_spartan"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -308,7 +319,8 @@
                             android:text="Healthy"
                             android:textSize="16sp"
                             android:textColor="#6B7280"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:fontFamily="@font/league_spartan"/>
                     </LinearLayout>
                     <!-- Add count each disease scanned to identify -->
                     <com.github.mikephil.charting.charts.LineChart

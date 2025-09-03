@@ -10,7 +10,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import com.bumptech.glide.Glide
 import com.google.papaia.R
 import com.google.papaia.response.FarmDetailsResponse
@@ -44,6 +46,7 @@ class ProfileFragment : Fragment() {
     private lateinit var contactNumber: TextView
     private lateinit var farmName: TextView
     private lateinit var farmLocation: TextView
+    private lateinit var settings: CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +77,7 @@ class ProfileFragment : Fragment() {
         contactNumber = view.findViewById(R.id.txtview_contact)
         farmName = view.findViewById(R.id.txtview_farmName)
         farmLocation = view.findViewById(R.id.txtview_farmLocation)
+        settings = view.findViewById(R.id.card_settings)
         val button_editprofile = view.findViewById<TextView>(R.id.button_editprofile)
 //        val button_settings = view.findViewById<Button>(R.id.button_settings)
 //        val button_changepass = view.findViewById<Button>(R.id.button_changepassword)
@@ -92,18 +96,40 @@ class ProfileFragment : Fragment() {
         farmerId.setText("${id}")
         // Example: set a click listener
         button_logout.setOnClickListener {
-            // 1. Clear SharedPreferences
-            prefs.edit().clear().apply()
+//            // 1. Clear SharedPreferences
+//            prefs.edit().clear().apply()
+//
+//            // 2. Clear SecurePrefsHelper (the saved JWT token)
+//            SecurePrefsHelper.clearToken(requireContext())
+//
+//            // 3. Finish all activities
+//            requireActivity().finishAffinity()
+//
+//            // 4. Start LoginActivity
+//            val intent = Intent(requireContext(), LoginActivity::class.java)
+//            startActivity(intent)
 
-            // 2. Clear SecurePrefsHelper (the saved JWT token)
-            SecurePrefsHelper.clearToken(requireContext())
+            AlertDialog.Builder(requireContext())
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout?")
+                .setPositiveButton("Yes") { _, _ ->
+                    // Handle logout logic
+                    Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
+                    // 1. Clear SharedPreferences
+                    prefs.edit().clear().apply()
 
-            // 3. Finish all activities
-            requireActivity().finishAffinity()
+                    // 2. Clear SecurePrefsHelper (the saved JWT token)
+                    SecurePrefsHelper.clearToken(requireContext())
 
-            // 4. Start LoginActivity
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
+                    // 3. Finish all activities
+                    requireActivity().finishAffinity()
+
+                    // 4. Start LoginActivity
+                    val intent = Intent(requireContext(), LoginActivity::class.java)
+                    startActivity(intent)
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
         }
         button_editprofile.setOnClickListener {
             startActivity(
@@ -113,6 +139,11 @@ class ProfileFragment : Fragment() {
         button_about.setOnClickListener {
             startActivity(
                 Intent(requireContext(), AboutActivity::class.java)
+            )
+        }
+        settings.setOnClickListener {
+            startActivity(
+                Intent(requireContext(), SettingsActivity::class.java)
             )
         }
 //        button_changepass.setOnClickListener {

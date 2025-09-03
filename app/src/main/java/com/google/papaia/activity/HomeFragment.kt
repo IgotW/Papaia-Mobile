@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +17,8 @@ import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -29,6 +33,7 @@ import com.google.papaia.adapter.HomeHistoryAdapter
 import com.google.papaia.request.AnalyticsStatRequest
 import com.google.papaia.response.DailyAnalyticsResponse
 import com.google.papaia.response.DailyTipResponse
+import com.google.papaia.response.FarmDetailsResponse
 import com.google.papaia.response.PredictionHistoryResponse
 import com.google.papaia.response.TodaysPredictionResponse
 import com.google.papaia.utils.RetrofitClient
@@ -64,6 +69,16 @@ class HomeFragment : Fragment() {
     private lateinit var todayScans: TextView
     private lateinit var healthPercent: TextView
     private lateinit var start_scanning: TextView
+    private lateinit var farmName: TextView
+    private lateinit var farmLocation: TextView
+
+//    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+//
+//    // Auto-refresh variables
+//    private val refreshHandler = Handler(Looper.getMainLooper())
+//    private val refreshInterval = 30000L // 30 seconds
+//    private var refreshRunnable: Runnable? = null
+
     private var activeFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,6 +99,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val txtview_username = view.findViewById<TextView>(R.id.txtview_home_username)
         val txtview_dailytips = view.findViewById<TextView>(R.id.txtview_dailytips)
         button_seemore = view.findViewById<TextView>(R.id.home_button_seemore)
@@ -92,6 +108,8 @@ class HomeFragment : Fragment() {
         todayScans = view.findViewById(R.id.scans_count)
         healthPercent = view.findViewById(R.id.health_percent)
         start_scanning = view.findViewById(R.id.btn_start_scanning)
+        farmName = view.findViewById(R.id.txtview_farm_name)
+        farmLocation = view.findViewById(R.id.txtview_farm_location)
 
         lineChart = view.findViewById(R.id.lineChart)
 
@@ -118,25 +136,10 @@ class HomeFragment : Fragment() {
         if(token != null){
             getCountScans(bearerToken)
             getDailyAnalytics(bearerToken)
+//            getFarmDetails(bearerToken)
         }
 
         getPredictionHistory()
-
-//        RetrofitClient.instance.getDailyAnalytics(bearerToken).enqueue(object : Callback<DailyAnalyticsResponse> {
-//            override fun onResponse(
-//                call: Call<DailyAnalyticsResponse>,
-//                response: Response<DailyAnalyticsResponse>
-//            ) {
-//                if (response.isSuccessful && response.body() != null) {
-//                    val dailyStats = response.body()!!.dailyStats
-//                    setupLineChart(dailyStats, requireContext())
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<DailyAnalyticsResponse>, t: Throwable) {
-//                Log.e("Chart", "API error: ${t.message}")
-//            }
-//        })
 
 //        RetrofitClient.instance.getDailyTip(bearerToken).enqueue(object : Callback<DailyTipResponse>{
 //            override fun onResponse(
@@ -207,7 +210,92 @@ class HomeFragment : Fragment() {
 //        })
     }
 
+//    private fun initViews(view: View) {
+//        val txtview_username = view.findViewById<TextView>(R.id.txtview_home_username)
+//        val txtview_dailytips = view.findViewById<TextView>(R.id.txtview_dailytips)
+//        button_seemore = view.findViewById<TextView>(R.id.home_button_seemore)
+//        listViewScanHistory = view.findViewById<ListView>(R.id.listViewScanHistory)
+//        emptyStateContainer = view.findViewById(R.id.empty_state_container)
+//        todayScans = view.findViewById(R.id.scans_count)
+//        healthPercent = view.findViewById(R.id.health_percent)
+//        start_scanning = view.findViewById(R.id.btn_start_scanning)
+//        lineChart = view.findViewById(R.id.lineChart)
+//
+//        // Add SwipeRefreshLayout - make sure to add this to your XML layout
+//        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
+//
+//        // Setup pull-to-refresh
+//        swipeRefreshLayout.setOnRefreshListener {
+//            refreshData()
+//        }
+//
+//        // Customize refresh indicator colors
+//        swipeRefreshLayout.setColorSchemeResources(
+//            R.color.primary,
+//            R.color.secondary,
+//            R.color.tertiary
+//        )
+//    }
 
+
+    override fun onResume() {
+        super.onResume()
+
+        val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
+        val token = prefs.getString("token", "")
+
+        if (token != null) {
+            RetrofitClient.instance.getFarmDetails("Bearer $token")
+                .enqueue(object : Callback<FarmDetailsResponse> {
+                    override fun onResponse(
+                        call: Call<FarmDetailsResponse>,
+                        response: Response<FarmDetailsResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            val farm = response.body()
+                            if (farm != null) {
+                                // Show data in TextViews
+                                farmName.text = farm.farmName
+                                farmLocation.text = farm.farmLocation
+                            }
+                        } else {
+                            Toast.makeText(requireContext(), "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<FarmDetailsResponse>, t: Throwable) {
+                        Toast.makeText(requireContext(), "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
+        }
+    }
+
+//    private fun getFarmDetails(token: String){
+//        if (token != null) {
+//            RetrofitClient.instance.getFarmDetails("Bearer $token")
+//                .enqueue(object : Callback<FarmDetailsResponse> {
+//                    override fun onResponse(
+//                        call: Call<FarmDetailsResponse>,
+//                        response: Response<FarmDetailsResponse>
+//                    ) {
+//                        if (response.isSuccessful) {
+//                            val farm = response.body()
+//                            if (farm != null) {
+//                                // Show data in TextViews
+//                                farmName.text = farm.farmName
+//                                farmLocation.text = farm.farmLocation
+//                            }
+//                        } else {
+//                            Toast.makeText(requireContext(), "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//
+//                    override fun onFailure(call: Call<FarmDetailsResponse>, t: Throwable) {
+//                        Toast.makeText(requireContext(), "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
+//                    }
+//                })
+//        }
+//    }
     private fun getDailyAnalytics(token: String){
         RetrofitClient.instance.getDailyAnalytics(token).enqueue(object : Callback<DailyAnalyticsResponse> {
             override fun onResponse(
@@ -491,6 +579,64 @@ class HomeFragment : Fragment() {
                 }
             })
     }
+
+//    private fun setupAutoRefresh() {
+//        refreshRunnable = object : Runnable {
+//            override fun run() {
+//                // Only refresh if fragment is visible and attached
+//                if (isAdded && !isDetached && view != null && userVisibleHint) {
+//                    Log.d("HomeFragment", "Auto-refreshing data...")
+//                    loadAllData()
+//                }
+//
+//                // Schedule next refresh
+//                refreshHandler.postDelayed(this, refreshInterval)
+//            }
+//        }
+//
+//        // Start the auto-refresh cycle
+//        refreshHandler.postDelayed(refreshRunnable!!, refreshInterval)
+//    }
+//
+//    private fun stopAutoRefresh() {
+//        refreshRunnable?.let {
+//            refreshHandler.removeCallbacks(it)
+//        }
+//    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        // Resume auto-refresh when fragment becomes visible
+//        if (::bearerToken.isInitialized && bearerToken.isNotEmpty()) {
+//            setupAutoRefresh()
+//        }
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        // Pause auto-refresh when fragment is not visible
+//        stopAutoRefresh()
+//    }
+//
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        // Clean up to prevent memory leaks
+//        stopAutoRefresh()
+//    }
+//
+//    // Method to manually refresh (can be called from parent activity)
+//    fun manualRefresh() {
+//        if (::bearerToken.isInitialized && bearerToken.isNotEmpty()) {
+//            swipeRefreshLayout.isRefreshing = true
+//            refreshData()
+//        }
+//    }
+//
+//    // Method to change refresh interval
+//    fun setRefreshInterval(intervalMs: Long) {
+//        stopAutoRefresh()
+//        refreshHandler.postDelayed(refreshRunnable!!, intervalMs)
+//    }
 
 
 

@@ -14,213 +14,233 @@
         android:scaleType="centerCrop"
         android:src="@drawable/login_background" />
 
-    <!-- Foreground content -->
-    <LinearLayout
+    <!-- Foreground content inside ScrollView -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:fillViewport="true">
 
-        <!-- Top Section with App Branding -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center"
-            android:background="@drawable/gradient_background"
-            android:fitsSystemWindows="true">
+            android:gravity="center_horizontal">
 
-            <!-- App Icon -->
+            <!-- Top Section with App Branding -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/gradient_background"
+                android:fitsSystemWindows="true">
+
+                <!-- App Icon -->
+                <FrameLayout
+                    android:layout_width="100dp"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/app_icon_background"
+                        android:scaleType="centerCrop"
+                        android:layout_gravity="center" />
+
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/papaialogo"
+                        android:layout_gravity="center" />
+                </FrameLayout>
+
+                <!-- App Name -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Papaia"
+                    android:textColor="@color/white"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/league_spartan_bold" />
+
+                <!-- Tagline -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agricultural AI Assistant"
+                    android:textColor="#E8F5E8"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/league_spartan" />
+            </LinearLayout>
+
+            <!-- Body Content -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:gravity="center_horizontal"
+                android:text="Welcome Back"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                android:letterSpacing=".05"
+                android:fontFamily="@font/league_spartan_bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log in your account"
+                android:gravity="center_horizontal"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/league_spartan" />
+
+            <!-- Username/Email -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_username"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                app:boxBackgroundMode="filled"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxStrokeColor="@color/quarternary"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:hintTextColor="@color/quarternary"
+                app:startIconDrawable="@drawable/emailsmall"
+                app:startIconTint="@color/quarternary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login_edittext_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Email/Username"
+                    android:textColor="@color/quarternary"
+                    android:textColorHint="@color/quarternary"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/league_spartan"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="48dp"
+                    android:paddingEnd="16dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Password -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_password"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:boxBackgroundMode="filled"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxStrokeColor="@color/quarternary"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:hintTextColor="@color/quarternary"
+                app:startIconDrawable="@drawable/lock"
+                app:startIconTint="@color/quarternary"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/quarternary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login_edittext_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Password"
+                    android:textColor="@color/quarternary"
+                    android:textColorHint="@color/quarternary"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/league_spartan"
+                    android:inputType="textPassword"
+                    android:paddingStart="48dp"
+                    android:paddingEnd="16dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/txtview_login_forgotpass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Forgot Password?"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:layout_marginEnd="35dp"
+                android:textSize="15sp"
+                android:clickable="true"
+                android:fontFamily="@font/league_spartan" />
+
             <FrameLayout
-                android:layout_width="100dp"
-                android:layout_height="100dp">
+                android:id="@+id/button_login_container"
+                android:layout_width="280dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp">
 
-                <!-- Background stays fixed -->
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/app_icon_background"
-                    android:scaleType="centerCrop"
-                    android:layout_gravity="center" />
+                <!-- Button Background + Text -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Login"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/button_rounded"
+                    app:cornerRadius="12dp"
+                    app:rippleColor="#FF8A61"
+                    app:backgroundTint="@color/tertiary" />
 
-                <!-- Logo -->
-                <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:src="@drawable/papaialogo"
-                    android:layout_gravity="center" />
+                <!-- ProgressBar on top of button -->
+                <ProgressBar
+                    android:id="@+id/login_progress_bar"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:visibility="gone"/>
             </FrameLayout>
 
-            <!-- App Name -->
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Papaia"
-                android:textColor="@color/white"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/league_spartan_bold" />
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="40dp">
 
-            <!-- Tagline -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Agricultural AI Assistant"
-                android:textColor="#E8F5E8"
-                android:textSize="16sp"
-                android:fontFamily="@font/league_spartan" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Don't have an account?"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/league_spartan" />
+
+                <TextView
+                    android:id="@+id/txtview_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sign Up"
+                    android:textColor="#FF9100"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="10dp"
+                    android:clickable="true"
+                    android:fontFamily="@font/league_spartan_bold" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginBottom="60dp"/>
         </LinearLayout>
-
-        <!-- Body Content -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:gravity="center_horizontal"
-            android:text="Welcome Back"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp"
-            android:letterSpacing=".05"
-            android:fontFamily="@font/league_spartan_bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Log in your account"
-            android:gravity="center_horizontal"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/league_spartan" />
-
-        <EditText
-            android:id="@+id/login_edittext_username"
-            android:layout_width="280dp"
-            android:layout_height="60dp"
-            android:background="@drawable/edit_textbox_rounded"
-            android:backgroundTint="@color/white"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:hint="Email/Username"
-            android:textColorHint="@color/quarternary"
-            android:textColor="@color/quarternary"
-            android:textSize="16sp"
-            android:paddingLeft="20dp"
-            android:drawableStart="@drawable/emailsmall"
-            android:drawablePadding="12dp"
-            android:fontFamily="@font/league_spartan" />
-
-        <EditText
-            android:id="@+id/login_edittext_password"
-            android:layout_width="280dp"
-            android:layout_height="60dp"
-            android:background="@drawable/edit_textbox_rounded"
-            android:backgroundTint="@color/white"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:hint="Password"
-            android:textColorHint="@color/quarternary"
-            android:textColor="@color/quarternary"
-            android:textSize="16sp"
-            android:paddingLeft="20dp"
-            android:drawableStart="@drawable/lock"
-            android:drawablePadding="12dp"
-            android:inputType="textPassword"
-            android:fontFamily="@font/league_spartan" />
-
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            android:id="@+id/til_new_password"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:boxBackgroundMode="outline"-->
-<!--            app:boxCornerRadiusBottomEnd="12dp"-->
-<!--            app:boxCornerRadiusBottomStart="12dp"-->
-<!--            app:boxCornerRadiusTopEnd="12dp"-->
-<!--            app:boxCornerRadiusTopStart="12dp"-->
-<!--            app:boxBackgroundColor="@android:color/white"-->
-<!--            app:boxStrokeColor="#E0E0E0"-->
-<!--            app:boxStrokeWidth="1dp"-->
-<!--            app:boxStrokeWidthFocused="2dp"-->
-<!--            app:hintTextColor="@color/primary"-->
-<!--            app:endIconTint="#9CA3AF"-->
-<!--            app:startIconDrawable="@drawable/emailsmall"-->
-<!--            app:startIconTint="#9CA3AF"-->
-<!--            android:padding="24dp">-->
-
-<!--            <com.google.android.material.textfield.TextInputEditText-->
-<!--                android:id="@+id/edittext_fg3_newpass"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="Email/Username"-->
-<!--                android:textSize="16sp"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:fontFamily="@font/league_spartan"-->
-<!--                android:paddingStart="48dp"-->
-<!--                android:padding="18dp"/>-->
-
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
-
-        <TextView
-            android:id="@+id/txtview_login_forgotpass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Forgot Password?"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="10dp"
-            android:gravity="end"
-            android:layout_marginEnd="35dp"
-            android:textSize="15sp"
-            android:clickable="true"
-            android:fontFamily="@font/league_spartan" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_login"
-            android:layout_width="280dp"
-            android:layout_height="60dp"
-            android:text="Login"
-            android:textColor="@color/white"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:textSize="16sp"
-            app:backgroundTint="@color/tertiary"
-            app:cornerRadius="12dp"
-            android:textStyle="bold"
-            android:background="@drawable/button_rounded"
-            app:rippleColor="#FF8A61"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="40dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Don't have an account?"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:fontFamily="@font/league_spartan" />
-
-            <TextView
-                android:id="@+id/txtview_register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sign Up"
-                android:textColor="#FF9100"
-                android:textSize="14sp"
-                android:layout_marginLeft="10dp"
-                android:clickable="true"
-                android:fontFamily="@font/league_spartan_bold" />
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/login_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_gravity="center" />
-
-    </LinearLayout>
+    </ScrollView>
 </FrameLayout>

@@ -6,5 +6,6 @@ data class PredictionHistoryResponse(
     val imageUrl: String,
     val prediction: String,
     val confidence: Double,
+    val suggestion: String?,
     val timestamp: String // Already formatted as "MM/dd/yyyy hh:mm a"
 )

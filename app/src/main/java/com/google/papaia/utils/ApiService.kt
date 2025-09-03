@@ -17,6 +17,7 @@ import com.google.papaia.response.DailyAnalyticsResponse
 import com.google.papaia.response.DailyTipResponse
 import com.google.papaia.response.FarmDetailsResponse
 import com.google.papaia.response.PredictionHistoryResponse
+import com.google.papaia.response.ScanResult
 import com.google.papaia.response.TodaysPredictionResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -59,6 +60,12 @@ interface ApiService {
         @Path("id") userId: String,
         @Header("Authorization") bearerToken: String
     ): Call<List<PredictionHistoryResponse>>
+
+    @GET("/api/farmer/prediction/{id}")
+    fun getPredictionById(
+        @Path("id") predictionId: String,
+        @Header("Authorization") token: String
+    ): Call<ScanResult>
 
     @GET("/api/farmer/farmer-farm")
     fun getFarmDetails(

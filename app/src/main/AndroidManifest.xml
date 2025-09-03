@@ -23,9 +23,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         <activity
-            android:name=".activity.HistoryDetailActivity"
+            android:name=".activity.ScanResultDetailsActivity"
             android:exported="false" />
-        <!-- <activity -->
+        <activity
+            android:name=".activity.HistoryDetailActivity"
+            android:exported="false" /> <!-- <activity -->
         <!-- android:name=".activity.HomeHistoryActivity" -->
         <!-- android:exported="false" /> -->
         <activity

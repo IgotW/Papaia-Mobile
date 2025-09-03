@@ -3,6 +3,7 @@ package com.google.papaia.activity
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -185,13 +186,7 @@ class ScanFragment : Fragment() {
                         hideLoading()
                         if (response.isSuccessful && response.body() != null) {
                             val result = response.body()!!.prediction ?: "Unknown"
-                            val remedy = when (result.lowercase()) {
-                                "anthracnose" -> "Apply copper-based fungicides. Avoid overhead watering."
-                                "ring spot" -> "Use neem oil weekly. Remove infected leaves immediately."
-                                "powdery mildew" -> "Improve air circulation. Use sulfur sprays."
-                                "healthy" -> "Your crop is healthy"
-                                else -> "No specific remedy found. Consult local expert."
-                            }
+                            val remedy = response.body()!!.suggestions ?: "No specific remedy found. Consult local expert."
                             showScanDialog(result, remedy)
                         } else {
                             Log.e("API_ERROR", "Code: ${response.code()} Body: ${response.errorBody()?.string()}")
@@ -218,6 +213,13 @@ class ScanFragment : Fragment() {
 
         tvPrediction.text = "Disease Detected: $predictedLabel"
         tvRemedy.text = remedy
+
+        // ✅ Set custom colors
+        if (predictedLabel.equals("Healthy", ignoreCase = true)) {
+            tvPrediction.setTextColor(Color.parseColor("#00712D")) // Green
+        } else {
+            tvPrediction.setTextColor(Color.parseColor("#FF9100")) // Orange
+        }
 
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)

@@ -63,8 +63,9 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Show spinner
+            // Show loading inside button
             progressBar.visibility = View.VISIBLE
+            button_login.text = ""  // hide text
             button_login.isEnabled = false
 
             val loginRequest = LoginRequest(username, password)
@@ -74,8 +75,9 @@ class LoginActivity : AppCompatActivity() {
                     call: Call<LoginResponse>,
                     response: Response<LoginResponse>
                 ) {
-                    // Hide spinner
+                    // Reset button state
                     progressBar.visibility = View.GONE
+                    button_login.text = "Login"
                     button_login.isEnabled = true
 
                     if (response.isSuccessful  && response.body() != null) {
@@ -141,7 +143,9 @@ class LoginActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     // Hide spinner
                     progressBar.visibility = View.GONE
+                    button_login.text = "Login"
                     button_login.isEnabled = true
+
                     Toast.makeText(
                         this@LoginActivity,
                         "Error: ${t.message}",

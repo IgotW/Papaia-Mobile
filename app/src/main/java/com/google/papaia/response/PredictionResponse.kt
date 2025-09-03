@@ -7,5 +7,7 @@ data class PredictionResponse(
     val imageUrl: String?,
     val prediction: String?,
     val confidence: Double?,
+    val suggestions: String?,
+    val id: String?,
     val timestamp: Any?
 )

@@ -1,6 +1,7 @@
 package com.google.papaia.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.google.papaia.R
+import com.google.papaia.activity.ScanResultDetailsActivity
 import com.google.papaia.response.PredictionHistoryResponse
 import java.text.SimpleDateFormat
 import java.util.*
@@ -56,7 +58,20 @@ class HistoryAdapter(
         btnViewDetails.setOnClickListener {
             // TODO: Navigate to detailed view or show more info
             Log.d("HistoryAdapter", "View details clicked for: ${item.prediction}")
+
+            // Create intent to navigate
+            val intent = Intent(context, ScanResultDetailsActivity::class.java)
+
+            // Pass the ID (or any other data you need)
+            intent.putExtra("analysis_id", item.id)
+
+            // Important: if context is not an Activity, add this flag
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+            // Start activity
+            context.startActivity(intent)
         }
+
 
         // Load image with Glide
         val fullUrl = "https://papaiaapi.onrender.com${item.imageUrl}"
@@ -78,10 +93,9 @@ class HistoryAdapter(
         }
 
         try {
-            // Assuming timestamp format is something like "2024-12-18T14:34:00Z"
-            // Adjust the pattern based on your actual timestamp format
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-            val timeFormat = SimpleDateFormat("'Today', h:mm a", Locale.getDefault())
+            // Server sends "08/27/2025 04:25 PM"
+            val inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.getDefault())
+            val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
             val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
 
             val date = inputFormat.parse(timestamp)
@@ -95,10 +109,9 @@ class HistoryAdapter(
                         now.get(Calendar.DAY_OF_YEAR) == itemDate.get(Calendar.DAY_OF_YEAR)
 
                 if (isToday) {
-                    txtTimestamp.text = timeFormat.format(date)
+                    txtTimestamp.text = "Today, ${timeFormat.format(date)}"
                 } else {
-                    val pastTimeFormat = SimpleDateFormat("MMM dd, h:mm a", Locale.getDefault())
-                    txtTimestamp.text = pastTimeFormat.format(date)
+                    txtTimestamp.text = timeFormat.format(date)
                 }
 
                 txtDate.text = dateFormat.format(date)
