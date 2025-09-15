@@ -34,4 +34,5 @@
     Step 8: Scan Again Anytime
         Return to the home screen to scan another leaf or fruit when needed.
 </string>
+    <string name="login">Login</string>
 </resources>

@@ -77,6 +77,7 @@
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
+                android:backgroundTint="#FFFFFF"
                 android:foreground="?android:attr/selectableItemBackground">
 
                 <LinearLayout
@@ -137,6 +138,7 @@
                 android:layout_marginBottom="24dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
+                android:backgroundTint="#FFFFFF"
                 android:foreground="?android:attr/selectableItemBackground">
 
                 <LinearLayout
@@ -313,6 +315,7 @@
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
+                android:backgroundTint="#FFFFFF"
                 android:foreground="?android:attr/selectableItemBackground">
 
                 <LinearLayout
@@ -373,6 +376,7 @@
                 android:layout_marginBottom="32dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
+                android:backgroundTint="#FFFFFF"
                 android:foreground="?android:attr/selectableItemBackground">
 
                 <LinearLayout

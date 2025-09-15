@@ -1,7 +1,9 @@
 package com.google.papaia.activity
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -17,7 +19,11 @@ import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
@@ -27,19 +33,26 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.papaia.R
 import com.google.papaia.adapter.HistoryAdapter
 import com.google.papaia.adapter.HomeHistoryAdapter
 import com.google.papaia.request.AnalyticsStatRequest
+import com.google.papaia.request.LatLonRequest
 import com.google.papaia.response.DailyAnalyticsResponse
 import com.google.papaia.response.DailyTipResponse
 import com.google.papaia.response.FarmDetailsResponse
 import com.google.papaia.response.PredictionHistoryResponse
+import com.google.papaia.response.TipResponse
 import com.google.papaia.response.TodaysPredictionResponse
+import com.google.papaia.utils.DailyTipWorker
 import com.google.papaia.utils.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Calendar
+import java.util.concurrent.TimeUnit
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,6 +84,8 @@ class HomeFragment : Fragment() {
     private lateinit var start_scanning: TextView
     private lateinit var farmName: TextView
     private lateinit var farmLocation: TextView
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
 
 //    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 //
@@ -99,6 +114,29 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Calculate delay until next 6AM
+//        val now = Calendar.getInstance()
+//        val target = Calendar.getInstance().apply {
+//            set(Calendar.HOUR_OF_DAY, 6)
+//            set(Calendar.MINUTE, 0)
+//            set(Calendar.SECOND, 0)
+//            if (before(now)) {
+//                add(Calendar.DAY_OF_YEAR, 1)
+//            }
+//        }
+//        val initialDelay = target.timeInMillis - now.timeInMillis
+//
+//        // Schedule daily job
+//        val workRequest = PeriodicWorkRequestBuilder<DailyTipWorker>(1, TimeUnit.DAYS)
+//            .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
+//            .build()
+//
+//        WorkManager.getInstance(requireContext())
+//            .enqueueUniquePeriodicWork(
+//                "DailyTipWork",
+//                ExistingPeriodicWorkPolicy.UPDATE,
+//                workRequest
+//            )
 
         val txtview_username = view.findViewById<TextView>(R.id.txtview_home_username)
         val txtview_dailytips = view.findViewById<TextView>(R.id.txtview_dailytips)
@@ -112,6 +150,9 @@ class HomeFragment : Fragment() {
         farmLocation = view.findViewById(R.id.txtview_farm_location)
 
         lineChart = view.findViewById(R.id.lineChart)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
 
         // Get username from SharedPreferences
         val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
@@ -133,31 +174,9 @@ class HomeFragment : Fragment() {
             (requireActivity() as DashboardActivity).changeTab(1)
         }
 
-        if(token != null){
-            getCountScans(bearerToken)
-            getDailyAnalytics(bearerToken)
-//            getFarmDetails(bearerToken)
+        if(token.isNullOrEmpty()){
+            loadDashboardData()
         }
-
-        getPredictionHistory()
-
-//        RetrofitClient.instance.getDailyTip(bearerToken).enqueue(object : Callback<DailyTipResponse>{
-//            override fun onResponse(
-//                call: Call<DailyTipResponse>,
-//                response: Response<DailyTipResponse>
-//            ) {
-//                if (response.isSuccessful) {
-//                    val tipText = response.body()?.tip?.text
-//                    txtview_dailytips.text = tipText
-//                } else {
-//                    Log.e("DailyTip", "Error: ${response.code()} - ${response.message()}")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<DailyTipResponse>, t: Throwable) {
-//                Log.e("DailyTip", "Failed to get tip: ${t.message}")
-//            }
-//        })
 
 
 //        RetrofitClient.instance.getWeeklyAnalytics(bearerToken).enqueue(object :
@@ -240,38 +259,20 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+//        val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
+//        val token = prefs.getString("token", "")
 
-        val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
-        val token = prefs.getString("token", "")
+        if (bearerToken.isNotEmpty()) {
+            //test
+            getFarmDetails(bearerToken)
 
-        if (token != null) {
-            RetrofitClient.instance.getFarmDetails("Bearer $token")
-                .enqueue(object : Callback<FarmDetailsResponse> {
-                    override fun onResponse(
-                        call: Call<FarmDetailsResponse>,
-                        response: Response<FarmDetailsResponse>
-                    ) {
-                        if (response.isSuccessful) {
-                            val farm = response.body()
-                            if (farm != null) {
-                                // Show data in TextViews
-                                farmName.text = farm.farmName
-                                farmLocation.text = farm.farmLocation
-                            }
-                        } else {
-                            Toast.makeText(requireContext(), "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-
-                    override fun onFailure(call: Call<FarmDetailsResponse>, t: Throwable) {
-                        Toast.makeText(requireContext(), "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
-                    }
-                })
+            updateAnalytics(bearerToken)
+            fetchLocationAndGenerateTip(bearerToken)
+            fetchDailyTip(bearerToken)
         }
-    }
 
-//    private fun getFarmDetails(token: String){
 //        if (token != null) {
+            //test below for getFarmDetails
 //            RetrofitClient.instance.getFarmDetails("Bearer $token")
 //                .enqueue(object : Callback<FarmDetailsResponse> {
 //                    override fun onResponse(
@@ -286,16 +287,134 @@ class HomeFragment : Fragment() {
 //                                farmLocation.text = farm.farmLocation
 //                            }
 //                        } else {
-//                            Toast.makeText(requireContext(), "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+////                            Toast.makeText(requireContext(), "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+//                            Log.e("DailyTip", "Error: ${response.code()}")
 //                        }
 //                    }
 //
 //                    override fun onFailure(call: Call<FarmDetailsResponse>, t: Throwable) {
-//                        Toast.makeText(requireContext(), "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
+//                        Log.e("DailyTip", "Failed: ${t.message}")
+////                        Toast.makeText(requireContext(), "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
 //                    }
 //                })
+
+            //test
+//            getFarmDetails(bearerToken)
+//
+//            updateAnalytics("Bearer $token")
+//            fetchLocationAndGenerateTip("Bearer $token")
+//            fetchDailyTip("Bearer $token")
 //        }
-//    }
+    }
+
+    //testing
+    private fun loadDashboardData() {
+        getCountScans(bearerToken)
+        getDailyAnalytics(bearerToken)
+        getPredictionHistory()
+    }
+
+    private fun getFarmDetails(token: String) {
+        if (token != null) {
+            RetrofitClient.instance.getFarmDetails(token)
+                .enqueue(object : Callback<FarmDetailsResponse> {
+                    override fun onResponse(
+                        call: Call<FarmDetailsResponse>,
+                        response: Response<FarmDetailsResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            val farm = response.body()
+                            if (farm != null) {
+                                // Show data in TextViews
+                                farmName.text = farm.farmName
+                                farmLocation.text = farm.farmLocation
+                            }
+                        } else {
+//                            Toast.makeText(requireContext(), "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                            Log.e("DailyTip", "Error: ${response.code()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<FarmDetailsResponse>, t: Throwable) {
+                        Log.e("DailyTip", "Failed: ${t.message}")
+//                        Toast.makeText(requireContext(), "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
+        }
+    }
+
+    private fun fetchLocationAndGenerateTip(token: String) {
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 100)
+            return
+        }
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
+                val lat = location.latitude
+                val lon = location.longitude
+
+                // Save location for Worker
+                val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
+                prefs.edit()
+                    .putFloat("last_lat", lat.toFloat())
+                    .putFloat("last_lon", lon.toFloat())
+                    .apply()
+
+                Log.d("DailyTip", "Saved location lat=$lat, lon=$lon")
+
+                generateDailyTip(token, lat, lon)
+            } else {
+                Log.e("DailyTip", "Location is null")
+            }
+        }
+    }
+    private fun generateDailyTip(token: String, lat: Double, lon: Double) {
+        val request = LatLonRequest(lat, lon)
+
+        RetrofitClient.instance.generateDailyTip(token, request)
+            .enqueue(object : Callback<TipResponse> {
+                override fun onResponse(call: Call<TipResponse>, response: Response<TipResponse>) {
+                    if (response.isSuccessful) {
+                        val tipText = response.body()?.tip?.text ?: "No tip for today"
+                        view?.findViewById<TextView>(R.id.txtview_dailytips)?.text = tipText
+                    } else {
+                        Log.e("DailyTip", "Error: ${response.code()} - ${response.message()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<TipResponse>, t: Throwable) {
+                    Log.e("DailyTip", "Failed to get tip: ${t.message}")
+                }
+            })
+    }
+
+    private fun fetchDailyTip(token: String) {
+        RetrofitClient.instance.getDailyTip(token)
+            .enqueue(object : Callback<TipResponse> {
+                override fun onResponse(
+                    call: Call<TipResponse>,
+                    response: Response<TipResponse>
+                ) {
+                    if (response.isSuccessful && response.body() != null) {
+                        val tip = response.body()!!.tip?.text?:"No tip for today"
+                        // Example: show in a TextView
+                        view?.findViewById<TextView>(R.id.txtview_dailytips)?.text = tip
+                    } else {
+                        Log.e("DailyTip", "Failed: ${response.code()} - ${response.message()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<TipResponse>, t: Throwable) {
+                    Log.e("DailyTip", "Error: ${t.message}")
+                }
+            })
+    }
+
+
     private fun getDailyAnalytics(token: String){
         RetrofitClient.instance.getDailyAnalytics(token).enqueue(object : Callback<DailyAnalyticsResponse> {
             override fun onResponse(
@@ -314,6 +433,7 @@ class HomeFragment : Fragment() {
         })
     }
 
+    /** ---------------- CHART SETUP ---------------- **/
     private fun setupLineChart(dailyStats: List<AnalyticsStatRequest>, context: Context) {
         val diseaseMap = mutableMapOf<String, MutableList<Entry>>()
         val labels = mutableListOf<String>()
@@ -544,7 +664,7 @@ class HomeFragment : Fragment() {
                     listViewScanHistory.setVisibility(View.VISIBLE);
                     button_seemore.setVisibility(View.VISIBLE);
                 } else {
-                    Toast.makeText(requireContext(), "No history found or unauthorized.", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(requireContext(), "No history found or unauthorized.", Toast.LENGTH_SHORT).show()
                     emptyStateContainer.setVisibility(View.VISIBLE);
                     listViewScanHistory.setVisibility(View.GONE);
                     button_seemore.setVisibility(View.GONE);
@@ -579,6 +699,14 @@ class HomeFragment : Fragment() {
                 }
             })
     }
+
+
+    fun updateAnalytics(bearerToken: String) {
+        getCountScans(bearerToken)
+        getDailyAnalytics(bearerToken)
+        getPredictionHistory()
+    }
+
 
 //    private fun setupAutoRefresh() {
 //        refreshRunnable = object : Runnable {

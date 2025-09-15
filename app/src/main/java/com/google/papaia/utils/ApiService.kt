@@ -1,6 +1,7 @@
 package com.google.papaia.utils
 
 import com.google.papaia.request.ForgotPassword1Request
+import com.google.papaia.request.LatLonRequest
 import com.google.papaia.request.LoginRequest
 import com.google.papaia.request.OtpRequest
 import com.google.papaia.request.PasswordChangeRequest
@@ -18,9 +19,11 @@ import com.google.papaia.response.DailyTipResponse
 import com.google.papaia.response.FarmDetailsResponse
 import com.google.papaia.response.PredictionHistoryResponse
 import com.google.papaia.response.ScanResult
+import com.google.papaia.response.TipResponse
 import com.google.papaia.response.TodaysPredictionResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -50,10 +53,10 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<DailyAnalyticsResponse>
 
-    @GET("/api/farmer/daily-tip")
-    fun getDailyTip(
-        @Header("Authorization") token: String
-    ): Call<DailyTipResponse>
+//    @GET("/api/farmer/daily-tip")
+//    fun getDailyTip(
+//        @Header("Authorization") token: String
+//    ): Call<DailyTipResponse>
 
     @GET("/api/farmer/predict-history/{id}")
     fun getPredictionHistory(
@@ -76,6 +79,17 @@ interface ApiService {
     fun getTodaysPredictionsCount(
         @Header("Authorization") token: String
     ): Call<TodaysPredictionResponse>
+
+    @GET("/api/farmer/daily-tip")
+    fun getDailyTip(
+        @Header("Authorization") bearerToken: String
+    ): Call<TipResponse>
+
+    @POST("/api/farmer/daily-tip")
+    fun generateDailyTip(
+        @Header("Authorization") bearerToken: String,
+        @Body body: LatLonRequest
+    ): Call<TipResponse>
 
     @POST("/api/user")
     fun registerUser(

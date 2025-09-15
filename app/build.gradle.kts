@@ -87,6 +87,12 @@ dependencies {
     implementation(libs.androidx.swiperefreshlayout)
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 
+    //for set time
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
+    // Play Services Location
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

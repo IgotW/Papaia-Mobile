@@ -104,30 +104,34 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 app:boxBackgroundMode="filled"
-                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundColor="#FFFFFF"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
+                android:textColorHint="#A8A7A7"
                 app:boxStrokeColor="@color/quarternary"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="2dp"
                 app:hintTextColor="@color/quarternary"
                 app:startIconDrawable="@drawable/emailsmall"
-                app:startIconTint="@color/quarternary">
+                app:startIconTint="@color/quarternary"
+                app:expandedHintEnabled="true"
+                app:hintEnabled="true"
+                app:hintAnimationEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/login_edittext_username"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:hint="Email/Username"
                     android:textColor="@color/quarternary"
-                    android:textColorHint="@color/quarternary"
+                    android:textColorHint="#757575"
                     android:textSize="16sp"
                     android:fontFamily="@font/league_spartan"
                     android:inputType="textEmailAddress"
                     android:paddingStart="48dp"
-                    android:paddingEnd="16dp" />
+                    android:paddingEnd="16dp"
+                    android:hint="Email/Username"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Password -->
@@ -138,7 +142,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 app:boxBackgroundMode="filled"
-                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundColor="#FFFFFF"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
@@ -146,24 +150,28 @@
                 app:boxStrokeColor="@color/quarternary"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="2dp"
+                android:textColorHint="#A8A7A7"
                 app:hintTextColor="@color/quarternary"
                 app:startIconDrawable="@drawable/lock"
                 app:startIconTint="@color/quarternary"
                 app:endIconMode="password_toggle"
-                app:endIconTint="@color/quarternary">
+                app:endIconTint="@color/quarternary"
+                app:expandedHintEnabled="true"
+                app:hintEnabled="true"
+                app:hintAnimationEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/login_edittext_password"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:hint="Password"
                     android:textColor="@color/quarternary"
-                    android:textColorHint="@color/quarternary"
+                    android:textColorHint="#A8A7A7"
                     android:textSize="16sp"
                     android:fontFamily="@font/league_spartan"
                     android:inputType="textPassword"
                     android:paddingStart="48dp"
-                    android:paddingEnd="16dp" />
+                    android:paddingEnd="16dp"
+                    android:hint="Password"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment
 import com.google.papaia.R
 import com.google.papaia.response.PredictionResponse
 import com.google.papaia.utils.RetrofitClient
+import com.google.papaia.utils.SecurePrefsHelper
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -188,6 +189,10 @@ class ScanFragment : Fragment() {
                             val result = response.body()!!.prediction ?: "Unknown"
                             val remedy = response.body()!!.suggestions ?: "No specific remedy found. Consult local expert."
                             showScanDialog(result, remedy)
+                            val token = SecurePrefsHelper.getToken(requireContext())
+                            if (!token.isNullOrEmpty()) {
+                                (activity as? DashboardActivity)?.refreshAnalytics(token)
+                            }
                         } else {
                             Log.e("API_ERROR", "Code: ${response.code()} Body: ${response.errorBody()?.string()}")
                             Toast.makeText(requireContext(), "Prediction failed", Toast.LENGTH_SHORT).show()

@@ -1,11 +1,15 @@
 package com.google.papaia.activity
 
+import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -16,9 +20,17 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.google.papaia.R
+import com.google.papaia.utils.DailyTipWorker
+import java.util.Calendar
+import java.util.concurrent.TimeUnit
 
 class DashboardActivity : AppCompatActivity() {
     private lateinit var navHome: LinearLayout
@@ -51,6 +63,22 @@ class DashboardActivity : AppCompatActivity() {
         setupClickListeners()
 
         selectTab(0) // Select Home by default
+
+        // Ask notification permission (Android 13+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    101
+                )
+            }
+        }
+//        scheduleDailyTip(this)
     }
 
     private fun initViews() {
@@ -273,12 +301,72 @@ class DashboardActivity : AppCompatActivity() {
         // startActivityForResult(intent, CAMERA_REQUEST_CODE)
     }
 
+    fun refreshAnalytics(bearerToken: String) {
+        val fragment = supportFragmentManager.findFragmentByTag("HomeFragment") as? HomeFragment
+        fragment?.updateAnalytics(bearerToken)
+    }
+
     // Method to programmatically change tabs
     fun changeTab(tabIndex: Int) {
         if (tabIndex in 0..2) {
             selectTab(tabIndex)
         }
     }
+
+//    fun scheduleDailyTip(context: Context) {
+//        val dailyWorkRequest = PeriodicWorkRequestBuilder<DailyTipWorker>(1, TimeUnit.DAYS)
+//            .setInitialDelay(calculateDelayUntil6AM(), TimeUnit.MILLISECONDS)
+//            .build()
+//
+//        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+//            "DailyTipWork",
+//            ExistingPeriodicWorkPolicy.UPDATE,
+//            dailyWorkRequest
+//        )
+//    }
+//
+//    private fun calculateDelayUntil6AM(): Long {
+//        val now = Calendar.getInstance()
+//        val target = Calendar.getInstance().apply {
+//            set(Calendar.HOUR_OF_DAY, 6)
+//            set(Calendar.MINUTE, 0)
+//            set(Calendar.SECOND, 0)
+//            set(Calendar.MILLISECOND, 0)
+//        }
+//        if (target.before(now)) {
+//            target.add(Calendar.DAY_OF_MONTH, 1) // schedule next day
+//        }
+//        return target.timeInMillis - now.timeInMillis
+//    }
+
+//    fun scheduleDailyTip(context: Context) {
+//        // Get current time
+//        val calendar = Calendar.getInstance().apply {
+//            set(Calendar.HOUR_OF_DAY, 6)
+//            set(Calendar.MINUTE, 0)
+//            set(Calendar.SECOND, 0)
+//        }
+//
+//        // Calculate initial delay
+//        var delay = calendar.timeInMillis - System.currentTimeMillis()
+//        if (delay < 0) {
+//            // If 6 AM already passed, schedule for tomorrow
+//            delay += TimeUnit.DAYS.toMillis(1)
+//        }
+//
+//        // Create a periodic work request for every 24 hours
+//        val dailyWork = PeriodicWorkRequestBuilder<DailyTipWorker>(24, TimeUnit.HOURS)
+//            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+//            .build()
+//
+//        // Enqueue as unique periodic work to prevent duplicates
+//        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+//            "daily_tip",
+//            ExistingPeriodicWorkPolicy.REPLACE,
+//            dailyWork
+//        )
+//    }
+
 
     // Getter for current selected tab
     fun getSelectedTab(): Int = selectedTab

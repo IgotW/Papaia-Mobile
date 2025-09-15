@@ -7,4 +7,27 @@
         <item name="cornerSizeBottomLeft">180dp</item>
         <item name="cornerSizeBottomRight">180dp</item>
     </style>
+    <style name="CustomAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!-- Background -->
+        <item name="android:background">@android:color/white</item>
+
+        <!-- Title + Message text color -->
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorSecondary">@android:color/black</item>
+
+        <!-- Button colors -->
+        <item name="android:buttonBarPositiveButtonStyle">@style/DialogButtonPositive</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/DialogButtonNegative</item>
+    </style>
+
+    <!-- Positive button style -->
+    <style name="DialogButtonPositive" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@android:color/holo_blue_dark</item>
+    </style>
+
+    <!-- Negative button style -->
+    <style name="DialogButtonNegative" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+
 </resources>

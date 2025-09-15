@@ -93,8 +93,10 @@ class HistoryAdapter(
         }
 
         try {
-            // Server sends "08/27/2025 04:25 PM"
-            val inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.getDefault())
+            // Parse ISO format
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+            inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+
             val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
             val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
 

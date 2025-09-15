@@ -141,7 +141,10 @@ class EditProfileActivity : AppCompatActivity() {
     private fun setupClickListeners(bearerToken: String, userId: String) {
         // Back button click listener
         backButton.setOnClickListener {
-            navigateBackToDashboard()
+            val intent = Intent()
+            intent.putExtra("navigateTo", "profile")
+            setResult(RESULT_OK, intent)
+            finish()
         }
 
         // Change photo button click listener
