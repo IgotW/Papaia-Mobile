@@ -64,7 +64,6 @@
                     android:id="@+id/notification_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/notification"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:padding="4dp"
                     android:layout_marginRight="20dp"/>
@@ -79,59 +78,61 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/txtview_farm_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Farm Name"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:paddingTop="10dp"
-                        android:paddingLeft="20dp"
-                        android:paddingBottom="5dp"
-                        android:paddingRight="10dp"
-                        android:fontFamily="@font/league_spartan_semibold"/>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginBottom="5dp">
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/location"/>
-                        <TextView
-                            android:id="@+id/txtview_farm_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Farm Location"
-                            android:textColor="#A8A7A7"
-                            android:fontFamily="@font/league_spartan"/>
-                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="20dp"
+                        android:gravity="center_vertical">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Owned By:"
-                            android:paddingLeft="20dp"
-                            android:paddingBottom="10dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/league_spartan_semibold"/>
-                        <TextView
-                            android:id="@+id/txtview_owner_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Owner Name"
-                            android:paddingLeft="10dp"
-                            android:paddingBottom="10dp"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/league_spartan"/>
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txtview_farm_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Green Valley Farm"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary"
+                                android:fontFamily="@font/league_spartan_bold"
+                                android:layout_marginBottom="4dp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:src="@drawable/ic_location"
+                                    android:tint="@color/tertiary"
+                                    android:layout_marginEnd="4dp" />
+
+                                <TextView
+                                    android:id="@+id/txtview_farm_location"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Maui, Hawaii"
+                                    android:textSize="14sp"
+                                    android:textColor="#6B7280"
+                                    android:fontFamily="@font/league_spartan" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="42dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_leaf"
+                            android:tint="@color/primary"
+                            android:background="@drawable/oval_background_leaf"
+                            android:padding="6dp"/>
                     </LinearLayout>
                     <androidx.cardview.widget.CardView
                         android:layout_width="280dp"
@@ -180,6 +181,7 @@
                                         android:layout_marginRight="8dp"
                                         android:tint="@color/primary"/>
                                     <TextView
+                                        android:id="@+id/txtview_count_healthy"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="5 Healthy"
@@ -203,6 +205,7 @@
                                         android:layout_marginRight="8dp"
                                         android:tint="@color/tertiary"/>
                                     <TextView
+                                        android:id="@+id/txtview_count_diseased"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="5 Diseased"
@@ -222,7 +225,6 @@
                 android:layout_gravity="center"
                 android:backgroundTint="#FFFFFF"
                 app:cardCornerRadius="12dp"
-                android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp">
 
                 <LinearLayout
@@ -237,93 +239,88 @@
                         android:text="Today's Analytics"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:layout_marginBottom="16dp"/>
 
-                    <!-- Icons Row -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_marginBottom="2dp">
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="60dp"
-                            android:layout_weight="1"
-                            android:src="@drawable/camera_icon_dash"
-                            android:layout_gravity="center"/>
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="60dp"
-                            android:layout_weight="1"
-                            android:src="@drawable/health_icon_dash"
-                            android:layout_gravity="center"/>
-
-                    </LinearLayout>
-
-                    <!-- Values Row -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/scans_count"
-                            android:layout_width="0dp"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="0"
-                            android:fontFamily="@font/league_spartan_bold"
-                            android:textSize="32sp"
-                            android:textColor="@color/black"
-                            android:gravity="center"/>
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/health_percent"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="0%"
-                            android:fontFamily="@font/league_spartan_bold"
-                            android:textSize="32sp"
-                            android:textColor="@color/black"
-                            android:gravity="center"/>
+                            <!-- Scans -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
 
+                                <ImageView
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:src="@drawable/ic_camera"
+                                    android:background="@drawable/oval_background_leaf"
+                                    android:padding="14dp"
+                                    android:tint="@color/primary"
+                                    android:layout_marginBottom="8dp" />
 
-                    </LinearLayout>
+                                <TextView
+                                    android:id="@+id/scans_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="12"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold"
+                                    android:textColor="#111827"
+                                    android:fontFamily="@font/league_spartan_bold" />
 
-                    <!-- Labels Row -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Scans"
+                                    android:textSize="12sp"
+                                    android:textColor="#6B7280"
+                                    android:fontFamily="@font/league_spartan" />
+                            </LinearLayout>
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Scans"
-                            android:textSize="16sp"
-                            android:textColor="#6B7280"
-                            android:gravity="center"
-                            android:fontFamily="@font/league_spartan"/>
+                            <!-- Healthy -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Healthy"
-                            android:textSize="16sp"
-                            android:textColor="#6B7280"
-                            android:gravity="center"
-                            android:fontFamily="@font/league_spartan"/>
-                    </LinearLayout>
-                    <!-- Add count each disease scanned to identify -->
+                                <ImageView
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:src="@drawable/ic_heart"
+                                    android:background="@drawable/oval_background_leaf"
+                                    android:padding="14dp"
+                                    android:tint="@color/primary"
+                                    android:layout_marginBottom="8dp" />
+
+                                <TextView
+                                    android:id="@+id/health_percent"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="83%"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold"
+                                    android:textColor="#111827"
+                                    android:fontFamily="@font/league_spartan_bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Healthy"
+                                    android:textSize="12sp"
+                                    android:textColor="#6B7280"
+                                    android:fontFamily="@font/league_spartan" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    <!-- Chart -->
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/lineChart"
                         android:layout_width="match_parent"
@@ -333,6 +330,8 @@
                         android:background="@color/white"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -346,15 +345,6 @@
                     android:layout_height="wrap_content"
                     android:padding="16dp"
                     android:background="@color/white">
-
-                    <TextView
-                        android:text="📈 Daily Analytics"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
 <!--                    <com.github.mikephil.charting.charts.LineChart-->
 <!--                        android:id="@+id/lineChart"-->
 <!--                        android:layout_width="match_parent"-->
@@ -367,14 +357,16 @@
                         android:textStyle="bold"
                         android:layout_marginTop="12dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"/>
 
                     <TextView
                         android:id="@+id/txtview_analytics_summary"
                         android:text="Here goes your summary description."
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"/>
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/black"/>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

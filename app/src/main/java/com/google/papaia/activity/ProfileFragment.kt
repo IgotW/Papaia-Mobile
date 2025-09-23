@@ -321,22 +321,29 @@ class ProfileFragment : Fragment() {
                     call: Call<FarmDetailsResponse>,
                     response: Response<FarmDetailsResponse>
                 ) {
-                    if (response.isSuccessful) {
-                        response.body()?.let { farm ->
+//                    if (response.isSuccessful) {
+//                        response.body()?.let { farm ->
+//                            farmName.text = farm.farmName
+//                            farmLocation.text = farm.farmLocation
+//                        }
+//                    } else {
+//                        Toast.makeText(
+//                            context,
+//                            "Error: ${response.code()}",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    }
+                    if (!isAdded) return
+                    response.body()?.let { farm ->
+                        view?.post {
                             farmName.text = farm.farmName
                             farmLocation.text = farm.farmLocation
                         }
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Error: ${response.code()}",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                 }
 
                 override fun onFailure(call: Call<FarmDetailsResponse>, t: Throwable) {
-                    Toast.makeText(requireContext(), "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
     }

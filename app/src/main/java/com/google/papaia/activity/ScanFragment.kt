@@ -51,6 +51,7 @@ class ScanFragment : Fragment() {
     private var camera: Camera? = null
     private var isFlashOn = false
     private val cameraExecutor by lazy { Executors.newSingleThreadExecutor() }
+    private var cameraProvider: ProcessCameraProvider? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -110,7 +111,7 @@ class ScanFragment : Fragment() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
         cameraProviderFuture.addListener({
-            val cameraProvider = cameraProviderFuture.get()
+            cameraProvider = cameraProviderFuture.get() // ✅ keep reference
 
             val preview = Preview.Builder().build().also {
                 it.setSurfaceProvider(previewView.surfaceProvider)
@@ -120,8 +121,8 @@ class ScanFragment : Fragment() {
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
-                cameraProvider.unbindAll()
-                camera = cameraProvider.bindToLifecycle(
+                cameraProvider?.unbindAll()
+                camera = cameraProvider?.bindToLifecycle(
                     viewLifecycleOwner, cameraSelector, preview, imageCapture
                 )
             } catch (e: Exception) {
@@ -150,6 +151,10 @@ class ScanFragment : Fragment() {
                     val savedUri = Uri.fromFile(photoFile)
                     Toast.makeText(requireContext(), "Photo saved!", Toast.LENGTH_SHORT).show()
                     imageGallery.setImageURI(savedUri)
+
+                    // ✅ Disable camera preview
+                    cameraProvider?.unbindAll()
+
                     sendImageToApi(savedUri)
                 }
 
@@ -231,7 +236,12 @@ class ScanFragment : Fragment() {
             .setCancelable(false)
             .create()
 
-        btnOk.setOnClickListener { dialog.dismiss() }
+        btnOk.setOnClickListener {
+            dialog.dismiss()
+            // Restart camera for next scan
+            previewView.visibility = View.VISIBLE
+            startCamera()
+        }
 
         dialog.show()
     }
@@ -278,6 +288,11 @@ class ScanFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
                 imageGallery.setImageURI(uri)
+
+                // ✅ Disable camera preview
+                cameraProvider?.unbindAll()
+                previewView.visibility = View.GONE
+
                 sendImageToApi(uri)
             }
         }

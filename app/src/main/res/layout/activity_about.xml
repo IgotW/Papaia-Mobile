@@ -273,7 +273,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Our advanced AI analyzes the image to identify diseases, pests, or nutrient deficiencies."
+                            android:text="Our advanced AI analyzes the image to identify diseases."
                             android:textColor="#6B7280"
                             android:textSize="12sp"
                             android:fontFamily="@font/league_spartan"
@@ -429,7 +429,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Jes Rodriguez"
+                            android:text="John Michael Eborda"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -438,7 +438,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Lead Developer"
+                            android:text="Hustler"
                             android:textColor="#E8F5E8"
                             android:textSize="12sp"
                             android:fontFamily="@font/league_spartan" />
@@ -473,7 +473,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Simon Chan"
+                            android:text="Francine Mecolle Duarte"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -482,7 +482,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="AI/ML Engineer"
+                            android:text="Hipster"
                             android:textColor="#E8F5E8"
                             android:textSize="12sp"
                             android:fontFamily="@font/league_spartan" />
@@ -517,7 +517,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Michael Johnson"
+                            android:text="Went Ruzel Igot"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -526,7 +526,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="UI/UX Designer"
+                            android:text="Hacker"
                             android:textColor="#E8F5E8"
                             android:textSize="12sp"
                             android:fontFamily="@font/league_spartan" />
@@ -559,7 +559,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Michael Johnson"
+                            android:text="Erika Estomo"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -568,7 +568,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Agricultural Specialist"
+                            android:text="Writer"
                             android:textColor="#E8F5E8"
                             android:textSize="12sp"
                             android:fontFamily="@font/league_spartan" />

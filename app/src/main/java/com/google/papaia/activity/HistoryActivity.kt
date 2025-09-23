@@ -57,7 +57,7 @@ class HistoryActivity : AppCompatActivity() {
         }
     }
     private fun getPredictionHistory() {
-        RetrofitClient.instance.getPredictionHistory(userId, bearerToken).enqueue(object :
+        RetrofitClient.instance.getPredictionHistory(bearerToken).enqueue(object :
             Callback<List<PredictionHistoryResponse>> {
             override fun onResponse(
                 call: Call<List<PredictionHistoryResponse>>,

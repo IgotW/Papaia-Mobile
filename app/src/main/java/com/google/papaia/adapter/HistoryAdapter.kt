@@ -21,6 +21,10 @@ class HistoryAdapter(
     private val items: List<PredictionHistoryResponse>
 ) : BaseAdapter() {
 
+    private val inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.US)
+    private val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
+    private val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+
     override fun getCount(): Int = items.size
 
     override fun getItem(position: Int): Any = items[position]
@@ -74,7 +78,12 @@ class HistoryAdapter(
 
 
         // Load image with Glide
-        val fullUrl = "https://papaiaapi.onrender.com${item.imageUrl}"
+        val fullUrl = if (item.imageUrl.startsWith("http")) {
+            item.imageUrl
+        } else {
+            "https://papaiaapi.onrender.com${item.imageUrl}"
+        }
+
         Glide.with(context)
             .load(fullUrl)
             .placeholder(R.drawable.image_no_content) // fallback while loading
@@ -93,27 +102,18 @@ class HistoryAdapter(
         }
 
         try {
-            // Parse ISO format
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
-            inputFormat.timeZone = TimeZone.getTimeZone("UTC")
-
-            val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
-            val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-
             val date = inputFormat.parse(timestamp)
-
             if (date != null) {
                 val now = Calendar.getInstance()
                 val itemDate = Calendar.getInstance().apply { time = date }
 
-                // Check if it's today
                 val isToday = now.get(Calendar.YEAR) == itemDate.get(Calendar.YEAR) &&
                         now.get(Calendar.DAY_OF_YEAR) == itemDate.get(Calendar.DAY_OF_YEAR)
 
-                if (isToday) {
-                    txtTimestamp.text = "Today, ${timeFormat.format(date)}"
+                txtTimestamp.text = if (isToday) {
+                    "Today, ${timeFormat.format(date)}"
                 } else {
-                    txtTimestamp.text = timeFormat.format(date)
+                    timeFormat.format(date)
                 }
 
                 txtDate.text = dateFormat.format(date)

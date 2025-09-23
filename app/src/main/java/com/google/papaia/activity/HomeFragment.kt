@@ -43,6 +43,7 @@ import com.google.papaia.request.LatLonRequest
 import com.google.papaia.response.DailyAnalyticsResponse
 import com.google.papaia.response.DailyTipResponse
 import com.google.papaia.response.FarmDetailsResponse
+import com.google.papaia.response.IdentificationStatsResponse
 import com.google.papaia.response.PredictionHistoryResponse
 import com.google.papaia.response.TipResponse
 import com.google.papaia.response.TodaysPredictionResponse
@@ -53,6 +54,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
+import kotlin.math.roundToInt
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,6 +86,9 @@ class HomeFragment : Fragment() {
     private lateinit var start_scanning: TextView
     private lateinit var farmName: TextView
     private lateinit var farmLocation: TextView
+
+    private lateinit var countHealthy: TextView
+    private lateinit var countDiseased: TextView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
@@ -148,6 +153,8 @@ class HomeFragment : Fragment() {
         start_scanning = view.findViewById(R.id.btn_start_scanning)
         farmName = view.findViewById(R.id.txtview_farm_name)
         farmLocation = view.findViewById(R.id.txtview_farm_location)
+        countHealthy = view.findViewById(R.id.txtview_count_healthy)
+        countDiseased = view.findViewById(R.id.txtview_count_diseased)
 
         lineChart = view.findViewById(R.id.lineChart)
 
@@ -269,6 +276,10 @@ class HomeFragment : Fragment() {
             updateAnalytics(bearerToken)
             fetchLocationAndGenerateTip(bearerToken)
             fetchDailyTip(bearerToken)
+//            getCountScans(bearerToken)
+//            getDailyAnalytics(bearerToken)
+            getStats()
+//            getPredictionHistory()
         }
 
 //        if (token != null) {
@@ -310,7 +321,7 @@ class HomeFragment : Fragment() {
     //testing
     private fun loadDashboardData() {
         getCountScans(bearerToken)
-        getDailyAnalytics(bearerToken)
+//        getDailyAnalytics(bearerToken)
         getPredictionHistory()
     }
 
@@ -651,7 +662,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getPredictionHistory() {
-        RetrofitClient.instance.getPredictionHistory(userId, bearerToken).enqueue(object :
+        RetrofitClient.instance.getPredictionHistory(bearerToken).enqueue(object :
             Callback<List<PredictionHistoryResponse>> {
             override fun onResponse(
                 call: Call<List<PredictionHistoryResponse>>,
@@ -707,6 +718,36 @@ class HomeFragment : Fragment() {
         getPredictionHistory()
     }
 
+    private fun getStats(){
+        RetrofitClient.instance.getFarmerIdentificationStats(bearerToken)
+            .enqueue(object : Callback<IdentificationStatsResponse> {
+                override fun onResponse(
+                    call: Call<IdentificationStatsResponse>,
+                    response: Response<IdentificationStatsResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val stats = response.body()
+                        stats?.let {
+                            countHealthy.text = "${it.healthy} Healthy"
+                            countDiseased.text = "${it.diseased} Diseased"
+
+                            val percentValue = it.healthyPercentage
+                                ?.replace("%", "")   // remove %
+                                ?.toDoubleOrNull()  // convert to double
+                                ?.roundToInt()       // round to nearest int
+                                ?: 0
+                            healthPercent.text = "$percentValue%"
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), "Failed: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<IdentificationStatsResponse>, t: Throwable) {
+                    Toast.makeText(requireContext(), "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
 
 //    private fun setupAutoRefresh() {
 //        refreshRunnable = object : Runnable {

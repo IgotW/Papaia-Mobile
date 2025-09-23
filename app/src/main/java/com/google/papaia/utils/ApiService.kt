@@ -17,6 +17,7 @@ import com.google.papaia.response.UserResponse
 import com.google.papaia.response.DailyAnalyticsResponse
 import com.google.papaia.response.DailyTipResponse
 import com.google.papaia.response.FarmDetailsResponse
+import com.google.papaia.response.IdentificationStatsResponse
 import com.google.papaia.response.PredictionHistoryResponse
 import com.google.papaia.response.ScanResult
 import com.google.papaia.response.TipResponse
@@ -58,9 +59,8 @@ interface ApiService {
 //        @Header("Authorization") token: String
 //    ): Call<DailyTipResponse>
 
-    @GET("/api/farmer/predict-history/{id}")
+    @GET("/api/farmer/predict-history")
     fun getPredictionHistory(
-        @Path("id") userId: String,
         @Header("Authorization") bearerToken: String
     ): Call<List<PredictionHistoryResponse>>
 
@@ -84,6 +84,11 @@ interface ApiService {
     fun getDailyTip(
         @Header("Authorization") bearerToken: String
     ): Call<TipResponse>
+
+    @GET("/api/farmer/stats")
+    fun getFarmerIdentificationStats(
+        @Header("Authorization") token: String
+    ): Call<IdentificationStatsResponse>
 
     @POST("/api/farmer/daily-tip")
     fun generateDailyTip(
