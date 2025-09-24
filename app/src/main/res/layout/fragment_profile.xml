@@ -54,13 +54,11 @@
                     android:padding="16dp">
                     <ImageView
                         android:id="@+id/imageview_profile"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/circle_bg"
-                        android:backgroundTint="#E8F5E8"
-                        android:padding="16dp"
-                        android:src="@drawable/ic_person"
-                        app:tint="#666666" />
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/default_profile"
+                        android:contentDescription="Profile picture" />
 
                     <LinearLayout
                         android:layout_width="0dp"

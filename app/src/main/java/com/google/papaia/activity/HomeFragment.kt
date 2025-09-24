@@ -49,6 +49,7 @@ import com.google.papaia.response.TipResponse
 import com.google.papaia.response.TodaysPredictionResponse
 import com.google.papaia.utils.DailyTipWorker
 import com.google.papaia.utils.RetrofitClient
+import de.hdodenhof.circleimageview.CircleImageView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -78,6 +79,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var userId: String
 
+    private lateinit var imageProfile: CircleImageView
     private lateinit var listViewScanHistory: ListView
     private lateinit var emptyStateContainer: LinearLayout
     private lateinit var button_seemore: TextView
@@ -155,6 +157,7 @@ class HomeFragment : Fragment() {
         farmLocation = view.findViewById(R.id.txtview_farm_location)
         countHealthy = view.findViewById(R.id.txtview_count_healthy)
         countDiseased = view.findViewById(R.id.txtview_count_diseased)
+        imageProfile = view.findViewById(R.id.profile_image)
 
         lineChart = view.findViewById(R.id.lineChart)
 
@@ -280,6 +283,20 @@ class HomeFragment : Fragment() {
 //            getDailyAnalytics(bearerToken)
             getStats()
 //            getPredictionHistory()
+        }
+
+        val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
+        val profileImage = prefs.getString("profileImage", "")
+
+        if (!profileImage.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(profileImage)
+                .placeholder(R.drawable.ic_person) // shown while loading
+                .error(R.drawable.ic_person)       // fallback if URL fails
+                .circleCrop()                      // round profile
+                .into(imageProfile)
+        } else {
+            imageProfile.setImageResource(R.drawable.ic_person)
         }
 
 //        if (token != null) {

@@ -103,19 +103,20 @@
                     android:layout_height="120dp"
                     android:src="@drawable/userprofile"
                     android:scaleType="centerCrop"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:clickable="true"/>
 
                 <!-- Change Photo Button -->
-                <ImageView
-                    android:id="@+id/btn_change_photo"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="bottom|end"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/camera_button_selector"
-                    android:padding="6dp"
-                    android:src="@drawable/camera"
-                    android:tint="@android:color/white" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/btn_change_photo"-->
+<!--                    android:layout_width="32dp"-->
+<!--                    android:layout_height="32dp"-->
+<!--                    android:layout_gravity="bottom|end"-->
+<!--                    android:layout_margin="4dp"-->
+<!--                    android:background="@drawable/camera_button_selector"-->
+<!--                    android:padding="6dp"-->
+<!--                    android:src="@drawable/camera"-->
+<!--                    android:tint="@android:color/white" />-->
             </FrameLayout>
 
             <TextView

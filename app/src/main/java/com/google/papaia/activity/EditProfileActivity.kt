@@ -37,7 +37,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var prefs: SharedPreferences
     private lateinit var profilePic: ImageView
     private lateinit var backButton: ImageView
-    private lateinit var changePhotoButton: ImageView
+//    private lateinit var changePhotoButton: ImageView
     private lateinit var username: EditText
     private lateinit var email: EditText
     private lateinit var firstname: EditText
@@ -121,7 +121,7 @@ class EditProfileActivity : AppCompatActivity() {
     private fun initializeViews() {
         profilePic = findViewById(R.id.imageview_edit_profilepic)
         backButton = findViewById(R.id.btn_back)
-        changePhotoButton = findViewById(R.id.btn_change_photo)
+//        changePhotoButton = findViewById(R.id.btn_change_photo)
         username = findViewById(R.id.edittext_edit_username)
         email = findViewById(R.id.edittext_edit_email)
         firstname = findViewById(R.id.edittext_edit_firstname)
@@ -214,7 +214,7 @@ class EditProfileActivity : AppCompatActivity() {
             finish()
         }
 
-        changePhotoButton.setOnClickListener {
+        profilePic.setOnClickListener {
             // 🔹 Toggle blur instead of immediately launching picker
             isBlurred = !isBlurred
             val url = prefs.getString("profileImageUrl", null)
@@ -284,7 +284,7 @@ class EditProfileActivity : AppCompatActivity() {
 //                                        .placeholder(R.drawable.userprofile)
 //                                        .into(profilePic)
 
-                                    prefs.edit().putString("profileImageUrl", newImageUrl).apply()
+                                    prefs.edit().putString("profileImage", newImageUrl).apply()
                                     showProfilePicture(newImageUrl, blur = false)
                                     Toast.makeText(this@EditProfileActivity, "Photo updated!", Toast.LENGTH_SHORT).show()
 

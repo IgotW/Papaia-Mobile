@@ -1,5 +1,6 @@
 package com.google.papaia.activity
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -213,6 +214,16 @@ class ProfileFragment : Fragment() {
         loadUserProfile()
         loadFarmDetails()
 
+        val prefs = requireActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val url = prefs.getString("profileImageUrl", null)
+        if (!url.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(url)
+                .placeholder(R.drawable.userprofile)
+                .circleCrop()
+                .into(profilePic)
+        }
+
 //        val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
 //        val token = prefs.getString("token", "")
 //        val profileImage = prefs.getString("profileImage", "")
@@ -299,12 +310,13 @@ class ProfileFragment : Fragment() {
         contactNumber.text = prefs.getString("contactNumber", "")
 
         val profileImage = prefs.getString("profileImage", "")
+
         if (!profileImage.isNullOrEmpty()) {
             Glide.with(this)
                 .load(profileImage)
-                .placeholder(R.drawable.ic_person)
-                .error(R.drawable.ic_person)
-                .circleCrop()
+                .placeholder(R.drawable.ic_person) // shown while loading
+                .error(R.drawable.ic_person)       // fallback if URL fails
+                .circleCrop()                      // round profile
                 .into(profilePic)
         } else {
             profilePic.setImageResource(R.drawable.ic_person)
