@@ -181,57 +181,57 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/league_spartan_bold"
                     android:text="How to Use Papaya"
                     android:textColor="@color/primary"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/league_spartan_bold"
-                    android:layout_marginBottom="16dp"
-                    android:layout_gravity="center"/>
+                    android:textStyle="bold" />
 
                 <!-- Step 1 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="12dp">
+                    android:layout_marginBottom="12dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="#F97316"
+                        android:fontFamily="@font/league_spartan_bold"
+                        android:gravity="center"
                         android:text="1"
                         android:textColor="@color/white"
                         android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/league_spartan_bold"
-                        android:background="@drawable/circle"
-                        android:backgroundTint="#F97316"
-                        android:gravity="center" />
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="12dp">
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/league_spartan_bold"
                             android:text="Capture Plant Image"
                             android:textColor="@color/black"
                             android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/league_spartan_bold" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/league_spartan"
                             android:text="Take clear photos of the affected plant or leaf using your smartphone camera."
                             android:textColor="#6B7280"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/league_spartan"
-                            android:layout_marginTop="2dp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -239,45 +239,45 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="12dp">
+                    android:layout_marginBottom="12dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="#F97316"
+                        android:fontFamily="@font/league_spartan_bold"
+                        android:gravity="center"
                         android:text="2"
                         android:textColor="@color/white"
                         android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/league_spartan_bold"
-                        android:background="@drawable/circle"
-                        android:backgroundTint="#F97316"
-                        android:gravity="center" />
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="12dp">
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/league_spartan_bold"
                             android:text="AI Analysis"
                             android:textColor="@color/black"
                             android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/league_spartan_bold" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/league_spartan"
                             android:text="Our advanced AI analyzes the image to identify diseases."
                             android:textColor="#6B7280"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/league_spartan"
-                            android:layout_marginTop="2dp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -285,45 +285,45 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="12dp">
+                    android:layout_marginBottom="12dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="#F97316"
+                        android:fontFamily="@font/league_spartan_bold"
+                        android:gravity="center"
                         android:text="3"
                         android:textColor="@color/white"
                         android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/league_spartan_bold"
-                        android:background="@drawable/circle"
-                        android:backgroundTint="#F97316"
-                        android:gravity="center" />
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="12dp">
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/league_spartan_bold"
                             android:text="Get Recommendations"
                             android:textColor="@color/black"
                             android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/league_spartan_bold" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/league_spartan"
                             android:text="Receive specific treatment suggestions and care instructions tailored to your findings."
                             android:textColor="#6B7280"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/league_spartan"
-                            android:layout_marginTop="2dp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -336,39 +336,39 @@
                     <TextView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="#F97316"
+                        android:fontFamily="@font/league_spartan_bold"
+                        android:gravity="center"
                         android:text="4"
                         android:textColor="@color/white"
                         android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/league_spartan_bold"
-                        android:background="@drawable/circle"
-                        android:backgroundTint="#F97316"
-                        android:gravity="center" />
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="12dp">
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/league_spartan_bold"
                             android:text="Track Progress"
                             android:textColor="@color/black"
                             android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/league_spartan_bold" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/league_spartan"
                             android:text="Monitor your farm's health and maintain healthy growth over time."
                             android:textColor="#6B7280"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/league_spartan"
-                            android:layout_marginTop="2dp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -438,7 +438,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Hustler"
+                            android:text="Project Manager"
                             android:textColor="#E8F5E8"
                             android:textSize="12sp"
                             android:fontFamily="@font/league_spartan" />
@@ -482,7 +482,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Hipster"
+                            android:text="UI/UX Designer"
                             android:textColor="#E8F5E8"
                             android:textSize="12sp"
                             android:fontFamily="@font/league_spartan" />
@@ -526,7 +526,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Hacker"
+                            android:text="Lead Programmer"
                             android:textColor="#E8F5E8"
                             android:textSize="12sp"
                             android:fontFamily="@font/league_spartan" />
@@ -568,7 +568,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Writer"
+                            android:text="Technical Writer"
                             android:textColor="#E8F5E8"
                             android:textSize="12sp"
                             android:fontFamily="@font/league_spartan" />

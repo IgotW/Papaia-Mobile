@@ -22,6 +22,7 @@ import com.google.papaia.response.PredictionHistoryResponse
 import com.google.papaia.response.ScanResult
 import com.google.papaia.response.TipResponse
 import com.google.papaia.response.TodaysPredictionResponse
+import com.google.papaia.response.UploadResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Response
@@ -38,10 +39,10 @@ import retrofit2.http.Path
 interface ApiService {
     @Headers("Content-Type: application/json")
 
-    @GET("/api/user/{id}")
+    @GET("/api/user/{idNumber}")
     fun getUserById(
         @Header("Authorization") token: String,
-        @Path("id") userId: String
+        @Path("idNumber") userId: String
     ): Call<UserResponse>
 
     @GET("/api/farmer/weekly-analytics")
@@ -134,4 +135,11 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body passwordChangeRequest: PasswordChangeRequest
     ): Call<ChangePasswordResponse>
+
+    @Multipart
+    @PUT("profile-picture")
+    fun updateProfilePicture(
+        @Header("Authorization") token: String,
+        @Part profilePicture: MultipartBody.Part
+    ): Call<UploadResponse>
 }

@@ -181,9 +181,9 @@ class HomeFragment : Fragment() {
             (requireActivity() as DashboardActivity).changeTab(1)
         }
 
-        if(token.isNullOrEmpty()){
-            loadDashboardData()
-        }
+//        if(token.isNullOrEmpty()){
+//            loadDashboardData()
+//        }
 
 
 //        RetrofitClient.instance.getWeeklyAnalytics(bearerToken).enqueue(object :
@@ -319,11 +319,11 @@ class HomeFragment : Fragment() {
     }
 
     //testing
-    private fun loadDashboardData() {
-        getCountScans(bearerToken)
-//        getDailyAnalytics(bearerToken)
-        getPredictionHistory()
-    }
+//    private fun loadDashboardData() {
+//        getCountScans(bearerToken)
+////        getDailyAnalytics(bearerToken)
+//        getPredictionHistory()
+//    }
 
     private fun getFarmDetails(token: String) {
         if (token != null) {
@@ -432,6 +432,8 @@ class HomeFragment : Fragment() {
                 call: Call<DailyAnalyticsResponse>,
                 response: Response<DailyAnalyticsResponse>
             ) {
+                if (!isAdded) return  // prevent crash if fragment is detached
+
                 if (response.isSuccessful && response.body() != null) {
                     val dailyStats = response.body()!!.dailyStats
                     setupLineChart(dailyStats, requireContext())
@@ -668,6 +670,11 @@ class HomeFragment : Fragment() {
                 call: Call<List<PredictionHistoryResponse>>,
                 response: Response<List<PredictionHistoryResponse>>
             ) {
+
+                if (!isAdded || context == null) {
+                    return  // Fragment not attached anymore, just ignore result
+                }
+
                 if (response.isSuccessful && response.body() != null) {
                     val historyList = response.body()!!
                     listViewScanHistory.adapter = HomeHistoryAdapter(requireContext(), historyList)
@@ -725,6 +732,8 @@ class HomeFragment : Fragment() {
                     call: Call<IdentificationStatsResponse>,
                     response: Response<IdentificationStatsResponse>
                 ) {
+                    if (!isAdded) return  // prevent crash if fragment is detached
+
                     if (response.isSuccessful) {
                         val stats = response.body()
                         stats?.let {

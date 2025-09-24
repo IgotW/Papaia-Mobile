@@ -93,6 +93,14 @@ dependencies {
     // Play Services Location
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
+    // For circular image view
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    // For cropping & rotating
+    implementation("com.github.yalantis:ucrop:2.2.8")
+
+    implementation("jp.wasabeef:glide-transformations:4.3.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

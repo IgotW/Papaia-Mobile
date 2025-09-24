@@ -2,30 +2,36 @@ package com.google.papaia.activity
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.papaia.R
 import com.google.papaia.response.ApiResponse
+import com.google.papaia.response.UploadResponse
 import com.google.papaia.response.UserResponse
 import com.google.papaia.utils.RetrofitClient
-import com.google.papaia.utils.RetrofitClient.instance
-import jp.wasabeef.blurry.Blurry
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.yalantis.ucrop.UCrop
+import jp.wasabeef.glide.transformations.BlurTransformation
+import jp.wasabeef.glide.transformations.ColorFilterTransformation
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
+import java.util.UUID
 
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var prefs: SharedPreferences
@@ -43,9 +49,50 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var street: EditText
     private lateinit var barangay: EditText
     private lateinit var municipality: EditText
-    private lateinit var province: EditText
+    private lateinit var province: AutoCompleteTextView
     private lateinit var zipcode: EditText
     private lateinit var saveButton: Button
+
+    private var bearerToken: String? = null
+    private var idNumber: String? = null
+    private var isBlurred = false  // 🔹 NEW: track blur state
+
+    // 🔹 Photo picker launcher
+    // Replace existing launcher with UCrop integration
+    private val pickImageLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                startCrop(it) // start UCrop instead of direct upload
+            }
+        }
+    // UCrop launcher
+    private val cropLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val resultUri = UCrop.getOutput(result.data!!)
+                resultUri?.let { uploadProfilePicture(it) }
+            } else if (result.resultCode == UCrop.RESULT_ERROR) {
+                val cropError = UCrop.getError(result.data!!)
+                Toast.makeText(this, "Crop error: ${cropError?.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    private fun startCrop(uri: Uri) {
+        val destinationUri = Uri.fromFile(File(cacheDir, "${UUID.randomUUID()}.jpg"))
+
+        val options = UCrop.Options().apply {
+            setCircleDimmedLayer(true) // crop frame is circle
+            setFreeStyleCropEnabled(true) // allow rotation/freestyle
+            setShowCropFrame(true)
+            setShowCropGrid(true)
+        }
+
+        val uCrop = UCrop.of(uri, destinationUri)
+            .withAspectRatio(1f, 1f) // force square
+            .withOptions(options)
+
+        cropLauncher.launch(uCrop.getIntent(this))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,23 +104,18 @@ class EditProfileActivity : AppCompatActivity() {
             insets
         }
 
-        // Initialize views
         initializeViews()
 
-        // Setup blur effect for profile picture
-        setupProfilePicture()
-
-        // Get shared preferences and tokens
         prefs = getSharedPreferences("prefs", MODE_PRIVATE)
         val token = prefs.getString("token", null)
-        val userId = prefs.getString("id", null)
-        val bearerToken = "Bearer $token"
+        idNumber = prefs.getString("idNumber", null)
+        bearerToken = "Bearer $token"
 
-        // Load user data
-        loadUserData(bearerToken, userId!!)
+        setupDropdowns()
 
-        // Setup click listeners
-        setupClickListeners(bearerToken, userId)
+        loadUserData()
+
+        setupClickListeners()
     }
 
     private fun initializeViews() {
@@ -96,50 +138,75 @@ class EditProfileActivity : AppCompatActivity() {
         saveButton = findViewById(R.id.btn_save_changes)
     }
 
-    private fun setupProfilePicture() {
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.userprofile)
-        Blurry.with(this)
-            .radius(15)
-            .from(bitmap)
-            .into(profilePic)
+    // 🔹 Load normal vs blurred image
+    private fun showProfilePicture(url: String, blur: Boolean = false) {
+        val glideRequest = Glide.with(this)
+            .load(url)
+            .placeholder(R.drawable.userprofile)
+
+        if (blur) {
+            glideRequest
+                .transform(CenterCrop(), BlurTransformation(25, 3))
+                .into(profilePic)
+        } else {
+            glideRequest
+                .circleCrop()
+                .into(profilePic)
+        }
     }
 
-    private fun loadUserData(bearerToken: String, userId: String) {
-        RetrofitClient.instance.getUserById(bearerToken, userId).enqueue(object : Callback<UserResponse> {
-            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                if (response.isSuccessful && response.body()?.success == true) {
-                    val user = response.body()!!.user
+    private fun loadUserData() {
+        bearerToken?.let { token ->
+            idNumber?.let { id ->
+                RetrofitClient.instance.getUserById(token, id)
+                    .enqueue(object : Callback<UserResponse> {
+                        override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                            if (response.isSuccessful && response.body()?.success == true) {
+                                val user = response.body()!!.user
 
-                    // Safely update UI
-                    username.setText(user.username)
-                    email.setText(user.email)
-                    firstname.setText(user.firstName)
-                    middlename.setText(user.middleName)
-                    lastname.setText(user.lastName)
-                    suffix.setText(user.suffix)
-                     contactnumber.setText(user.contactNumber)
-                     birthdate.setText(user.birthDate)
-                    street.setText(user.street)
-                    barangay.setText(user.barangay)
-                    municipality.setText(user.municipality)
-                    province.setText(user.province)
-                    zipcode.setText(user.zipCode)
+                                username.setText(user.username)
+                                email.setText(user.email)
+                                firstname.setText(user.firstName)
+                                middlename.setText(user.middleName)
+                                lastname.setText(user.lastName)
+                                suffix.setText(user.suffix)
+                                contactnumber.setText(user.contactNumber)
+                                birthdate.setText(user.birthDate)
+                                street.setText(user.street)
+                                barangay.setText(user.barangay)
+                                municipality.setText(user.municipality)
+                                province.setText(user.province, false)
+                                zipcode.setText(user.zipCode)
 
-                } else {
-                    Log.e("GET_USER", "Failed to load user data: ${response.code()} ${response.message()}")
-                    Toast.makeText(this@EditProfileActivity, "Failed to load user data", Toast.LENGTH_SHORT).show()
-                }
+                                // Load profile picture
+                                user.profilePicture?.let { url ->
+                                    Glide.with(this@EditProfileActivity)
+                                        .load(url)
+                                        .placeholder(R.drawable.userprofile)
+                                        .transform(
+                                            MultiTransformation(
+                                                BlurTransformation(2, 1), // 🔹 blur
+                                                ColorFilterTransformation(Color.parseColor("#80000000")), // 🔹 dark overlay
+                                                CircleCrop() // 🔹 circular crop
+                                            )
+                                        )
+                                        .into(profilePic)
+                                }
+
+                            } else {
+                                Toast.makeText(this@EditProfileActivity, "Failed to load user", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                            Toast.makeText(this@EditProfileActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    })
             }
-
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                Log.e("GET_USER", "Exception: ${t.message}")
-                Toast.makeText(this@EditProfileActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+        }
     }
 
-    private fun setupClickListeners(bearerToken: String, userId: String) {
-        // Back button click listener
+    private fun setupClickListeners() {
         backButton.setOnClickListener {
             val intent = Intent()
             intent.putExtra("navigateTo", "profile")
@@ -147,62 +214,96 @@ class EditProfileActivity : AppCompatActivity() {
             finish()
         }
 
-        // Change photo button click listener
         changePhotoButton.setOnClickListener {
-            // TODO: Implement photo picker functionality
-            Toast.makeText(this, "Photo picker coming soon!", Toast.LENGTH_SHORT).show()
+            // 🔹 Toggle blur instead of immediately launching picker
+            isBlurred = !isBlurred
+            val url = prefs.getString("profileImageUrl", null)
+            if (!url.isNullOrEmpty()) {
+                showProfilePicture(url, blur = isBlurred)
+            } else {
+                pickImageLauncher.launch("image/*") // fallback if no saved photo
+            }
         }
 
-        // Birth date field click listener
-        birthdate.setOnClickListener {
-            // TODO: Implement date picker functionality
-            Toast.makeText(this, "Date picker coming soon!", Toast.LENGTH_SHORT).show()
-        }
-
-        // Save button click listener
         saveButton.setOnClickListener {
-            updateUserProfile(bearerToken, userId)
+            updateUserProfile()
         }
     }
 
-    private fun updateUserProfile(bearerToken: String, userId: String) {
+    private fun updateUserProfile() {
         val updatedUser = mutableMapOf<String, String>()
-
         updatedUser["firstName"] = firstname.text.toString()
         updatedUser["middleName"] = middlename.text.toString()
         updatedUser["lastName"] = lastname.text.toString()
         updatedUser["suffix"] = suffix.text.toString()
-         updatedUser["contactNumber"] = contactnumber.text.toString()
-         updatedUser["birthDate"] = birthdate.text.toString()
+        updatedUser["contactNumber"] = contactnumber.text.toString()
+        updatedUser["birthDate"] = birthdate.text.toString()
         updatedUser["street"] = street.text.toString()
         updatedUser["barangay"] = barangay.text.toString()
         updatedUser["municipality"] = municipality.text.toString()
         updatedUser["province"] = province.text.toString()
         updatedUser["zipCode"] = zipcode.text.toString()
 
-        val call = RetrofitClient.instance.updateUser(bearerToken, userId, updatedUser)
+        bearerToken?.let { token ->
+            idNumber?.let { id ->
+                RetrofitClient.instance.updateUser(token, id, updatedUser)
+                    .enqueue(object : Callback<ApiResponse> {
+                        override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+                            if (response.isSuccessful && response.body()?.success == true) {
+                                Toast.makeText(this@EditProfileActivity, "Profile updated!", Toast.LENGTH_SHORT).show()
+                                updateSharedPreferences()
+                                navigateBackToDashboard()
+                            } else {
+                                Toast.makeText(this@EditProfileActivity, "Update failed", Toast.LENGTH_SHORT).show()
+                            }
+                        }
 
-        call.enqueue(object : Callback<ApiResponse> {
-            override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
-                if (response.isSuccessful && response.body()?.success == true) {
-                    Log.d("UPDATE_USER", "Successfully updated user.")
-                    Toast.makeText(this@EditProfileActivity, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
-
-                    // Update SharedPreferences with latest values
-                    updateSharedPreferences()
-
-                    navigateBackToDashboard()
-                } else {
-                    Log.e("UPDATE_USER", "Update failed: ${response.code()} ${response.message()}")
-                    Toast.makeText(this@EditProfileActivity, "Failed to update profile", Toast.LENGTH_SHORT).show()
-                }
+                        override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                            Toast.makeText(this@EditProfileActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    })
             }
+        }
+    }
 
-            override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
-                Log.e("UPDATE_USER", "Error: ${t.message}")
-                Toast.makeText(this@EditProfileActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+    private fun uploadProfilePicture(uri: Uri) {
+        val file = File(uri.path!!)
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+        bearerToken?.let { token ->
+            idNumber?.let { id ->
+                RetrofitClient.instance.updateProfilePicture(token, body)
+                    .enqueue(object : Callback<UploadResponse> {
+                        override fun onResponse(call: Call<UploadResponse>, response: Response<UploadResponse>) {
+                            if (response.isSuccessful) {
+                                val newImageUrl = response.body()?.profilePicture
+                                if (!newImageUrl.isNullOrEmpty()) {
+//                                    Glide.with(this@EditProfileActivity)
+//                                        .load(newImageUrl)
+//                                        .placeholder(R.drawable.userprofile)
+//                                        .into(profilePic)
+
+                                    prefs.edit().putString("profileImageUrl", newImageUrl).apply()
+                                    showProfilePicture(newImageUrl, blur = false)
+                                    Toast.makeText(this@EditProfileActivity, "Photo updated!", Toast.LENGTH_SHORT).show()
+
+                                    // Save to prefs
+//                                    prefs.edit().putString("profileImageUrl", newImageUrl).apply()
+//
+//                                    Toast.makeText(this@EditProfileActivity, "Photo updated!", Toast.LENGTH_SHORT).show()
+                                }
+                            } else {
+                                Toast.makeText(this@EditProfileActivity, "Upload failed", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
+                            Toast.makeText(this@EditProfileActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    })
             }
-        })
+        }
     }
 
     private fun updateSharedPreferences() {
@@ -211,14 +312,46 @@ class EditProfileActivity : AppCompatActivity() {
         editor.putString("middlename", middlename.text.toString())
         editor.putString("lastname", lastname.text.toString())
         editor.putString("suffix", suffix.text.toString())
-         editor.putString("contactnumber", contactnumber.text.toString())
-         editor.putString("birthdate", birthdate.text.toString())
+        editor.putString("contactnumber", contactnumber.text.toString())
+        editor.putString("birthdate", birthdate.text.toString())
         editor.putString("street", street.text.toString())
         editor.putString("barangay", barangay.text.toString())
         editor.putString("municipality", municipality.text.toString())
         editor.putString("province", province.text.toString())
         editor.putString("zipcode", zipcode.text.toString())
         editor.apply()
+    }
+
+    private fun setupDropdowns() {
+        // Philippines provinces dropdown
+        val provinces = arrayOf(
+            "Abra", "Agusan del Norte", "Agusan del Sur", "Aklan", "Albay", "Antique",
+            "Apayao", "Aurora", "Basilan", "Bataan", "Batanes", "Batangas", "Benguet",
+            "Biliran", "Bohol", "Bukidnon", "Bulacan", "Cagayan", "Camarines Norte",
+            "Camarines Sur", "Camiguin", "Capiz", "Catanduanes", "Cavite", "Cebu",
+            "Compostela Valley", "Cotabato", "Davao del Norte", "Davao del Sur",
+            "Davao Oriental", "Dinagat Islands", "Eastern Samar", "Guimaras", "Ifugao",
+            "Ilocos Norte", "Ilocos Sur", "Iloilo", "Isabela", "Kalinga", "Laguna",
+            "Lanao del Norte", "Lanao del Sur", "La Union", "Leyte", "Maguindanao",
+            "Marinduque", "Masbate", "Metro Manila", "Misamis Occidental", "Misamis Oriental",
+            "Mountain Province", "Negros Occidental", "Negros Oriental", "Northern Samar",
+            "Nueva Ecija", "Nueva Vizcaya", "Occidental Mindoro", "Oriental Mindoro",
+            "Palawan", "Pampanga", "Pangasinan", "Quezon", "Quirino", "Rizal", "Romblon",
+            "Samar", "Sarangani", "Siquijor", "Sorsogon", "South Cotabato", "Southern Leyte",
+            "Sultan Kudarat", "Sulu", "Surigao del Norte", "Surigao del Sur", "Tarlac",
+            "Tawi-Tawi", "Zambales", "Zamboanga del Norte", "Zamboanga del Sur",
+            "Zamboanga Sibugay"
+        )
+        val provinceAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, provinces)
+        province.setAdapter(provinceAdapter)
+
+        // show all options when clicked or focused
+        province.setOnClickListener { province.showDropDown() }
+        province.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) province.showDropDown()
+        }
+
+        province.threshold = 0
     }
 
     private fun navigateBackToDashboard() {
