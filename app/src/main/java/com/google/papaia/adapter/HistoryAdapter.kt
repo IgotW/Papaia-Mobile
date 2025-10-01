@@ -21,14 +21,12 @@ class HistoryAdapter(
     private val items: List<PredictionHistoryResponse>
 ) : BaseAdapter() {
 
-    private val inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.US)
     private val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
     private val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+    private val parser = SimpleDateFormat("M/d/yyyy, h:mm:ss a", Locale.getDefault()) // backend format
 
     override fun getCount(): Int = items.size
-
     override fun getItem(position: Int): Any = items[position]
-
     override fun getItemId(position: Int): Long = position.toLong()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -37,47 +35,38 @@ class HistoryAdapter(
 
         val item = items[position]
 
-        // Find all the new views
+        // Find views
         val txtPrediction = view.findViewById<TextView>(R.id.txtPrediction)
-        val txtTimestamp = view.findViewById<TextView>(R.id.txtTimestamp)
-        val txtDate = view.findViewById<TextView>(R.id.txtDate)
+        val txtTime = view.findViewById<TextView>(R.id.txtTimestamp) // now shows only time
+        val txtDate = view.findViewById<TextView>(R.id.txtDate)      // now shows Today/Yesterday/Date
         val txtStatus = view.findViewById<TextView>(R.id.txtStatus)
         val txtDescription = view.findViewById<TextView>(R.id.txtDescription)
         val btnViewDetails = view.findViewById<TextView>(R.id.btnViewDetails)
         val imgDisease = view.findViewById<ImageView>(R.id.imageview_disease_pic)
 
-        // Set basic data
+        // Prediction
         txtPrediction.text = item.prediction
 
-        // Format timestamp to show time and date separately
-        formatTimestamp(item.timestamp, txtTimestamp, txtDate)
+        // Format timestamp into separate date & time
+        formatTimestamp(item.timestamp, txtTime, txtDate)
 
-        // Set status badge based on prediction
+        // Status badge
         setStatusBadge(item.prediction, txtStatus)
 
-        // Set description based on prediction
-        setDescription(item.prediction, txtDescription)
+        // Description / suggestions
+        txtDescription.text = getShortSuggestion(item.suggestions)
 
-        // Handle view details click
+        // View details button
         btnViewDetails.setOnClickListener {
-            // TODO: Navigate to detailed view or show more info
             Log.d("HistoryAdapter", "View details clicked for: ${item.prediction}")
-
-            // Create intent to navigate
             val intent = Intent(context, ScanResultDetailsActivity::class.java)
-
-            // Pass the ID (or any other data you need)
             intent.putExtra("analysis_id", item.id)
-
-            // Important: if context is not an Activity, add this flag
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-            // Start activity
             context.startActivity(intent)
         }
 
 
-        // Load image with Glide
+        // Image with Glide
         val fullUrl = if (item.imageUrl.startsWith("http")) {
             item.imageUrl
         } else {
@@ -86,23 +75,23 @@ class HistoryAdapter(
 
         Glide.with(context)
             .load(fullUrl)
-            .placeholder(R.drawable.image_no_content) // fallback while loading
-            .error(R.drawable.image_no_content) // if loading fails
+            .placeholder(R.drawable.image_no_content)
+            .error(R.drawable.image_no_content)
             .centerCrop()
             .into(imgDisease)
 
         return view
     }
 
-    private fun formatTimestamp(timestamp: String?, txtTimestamp: TextView, txtDate: TextView) {
+    private fun formatTimestamp(timestamp: String?, txtTime: TextView, txtDate: TextView) {
         if (timestamp.isNullOrEmpty()) {
-            txtTimestamp.text = "Unknown time"
+            txtTime.text = "Unknown time"
             txtDate.text = "Unknown date"
             return
         }
 
         try {
-            val date = inputFormat.parse(timestamp)
+            val date = parser.parse(timestamp)
             if (date != null) {
                 val now = Calendar.getInstance()
                 val itemDate = Calendar.getInstance().apply { time = date }
@@ -110,20 +99,24 @@ class HistoryAdapter(
                 val isToday = now.get(Calendar.YEAR) == itemDate.get(Calendar.YEAR) &&
                         now.get(Calendar.DAY_OF_YEAR) == itemDate.get(Calendar.DAY_OF_YEAR)
 
-                txtTimestamp.text = if (isToday) {
-                    "Today, ${timeFormat.format(date)}"
-                } else {
-                    timeFormat.format(date)
-                }
+                now.add(Calendar.DAY_OF_YEAR, -1)
+                val isYesterday = now.get(Calendar.YEAR) == itemDate.get(Calendar.YEAR) &&
+                        now.get(Calendar.DAY_OF_YEAR) == itemDate.get(Calendar.DAY_OF_YEAR)
 
-                txtDate.text = dateFormat.format(date)
+                txtTime.text = timeFormat.format(date)
+
+                txtDate.text = when {
+                    isToday -> "Today"
+                    isYesterday -> "Yesterday"
+                    else -> dateFormat.format(date)
+                }
             } else {
-                txtTimestamp.text = timestamp
-                txtDate.text = ""
+                txtTime.text = "Invalid"
+                txtDate.text = "Invalid"
             }
         } catch (e: Exception) {
             Log.e("HistoryAdapter", "Error parsing timestamp: $timestamp", e)
-            txtTimestamp.text = timestamp
+            txtTime.text = timestamp
             txtDate.text = ""
         }
     }
@@ -135,23 +128,32 @@ class HistoryAdapter(
         if (isHealthy) {
             txtStatus.text = "Healthy"
             txtStatus.setBackgroundResource(R.drawable.status_badge_healthy)
-            txtStatus.setTextColor(context.getColor(R.color.white))
+            txtStatus.setTextColor(context.getColor(R.color.primary))
         } else {
-            txtStatus.text = "Disease Detected"
+            txtStatus.text = "Diseased"
             txtStatus.setBackgroundResource(R.drawable.status_badge_diseased)
-            txtStatus.setTextColor(context.getColor(R.color.white))
+            txtStatus.setTextColor(context.getColor(R.color.tertiary))
         }
     }
 
-    //need change for AI generated that stored on database
-    private fun setDescription(prediction: String?, txtDescription: TextView) {
-        val description = when (prediction?.lowercase()) {
-            "anthracnose" -> "Apply copper-based fungicides. Avoid overhead watering."
-            "ring spot" -> "Use neem oil weekly. Remove infected leaves immediately."
-            "powdery mildew" -> "Improve air circulation. Use sulfur sprays."
-            "healthy" -> "Your crop is healthy"
-            else -> "Monitor plant condition and consult agricultural expert if needed."
+    private fun getShortSuggestion(suggestion: String?): String {
+        if (suggestion.isNullOrBlank()) return "No suggestion available"
+
+        // 1. Remove "*" bullets and clean newlines/spaces
+        var clean = suggestion.replace("*", "")
+            .replace("\n", " ")
+            .replace("\\s+".toRegex(), " ")
+            .trim()
+
+        // Get first sentence or limit to 80 chars
+        val firstSentence = clean.split(".").firstOrNull()?.trim()
+        val short = if (!firstSentence.isNullOrBlank()) {
+            firstSentence
+        } else {
+            clean
         }
-        txtDescription.text = description
+
+        return if (short.length > 60) short.take(60) + "..." else short
     }
+
 }

@@ -23,7 +23,6 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var cardChangePassword: CardView
     private lateinit var cardViewPlan: CardView
     private lateinit var cardManageBilling: CardView
-    private lateinit var logout: CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +39,6 @@ class SettingsActivity : AppCompatActivity() {
         cardChangePassword =  findViewById(R.id.card_change_password)
         cardViewPlan = findViewById(R.id.card_view_plan)
         cardManageBilling = findViewById(R.id.card_manage_billing)
-        logout = findViewById(R.id.card_logout)
     }
 
     private fun setupClickListeners() {
@@ -85,11 +83,6 @@ class SettingsActivity : AppCompatActivity() {
         cardManageBilling.setOnClickListener {
             showToast("Manage Billing clicked")
             // Navigate to BillingActivity
-        }
-
-        // Logout card (if using the new design)
-        logout.setOnClickListener {
-            showLogoutDialog()
         }
     }
 

@@ -1,11 +1,13 @@
 package com.google.papaia.response
 
+import com.google.gson.annotations.SerializedName
+
 data class PredictionHistoryResponse(
     val id: String,
     val userId: String,
     val imageUrl: String,
     val prediction: String,
     val confidence: Double,
-    val suggestion: String?,
-    val timestamp: String // Already formatted as "MM/dd/yyyy hh:mm a"
+    val suggestions: String?,
+    val timestamp: String?,            // raw ISO string
 )

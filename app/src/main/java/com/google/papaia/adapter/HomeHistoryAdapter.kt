@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.papaia.R
 import com.google.papaia.response.PredictionHistoryResponse
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class HomeHistoryAdapter(private val context: Context, private val items: List<PredictionHistoryResponse>)
     : BaseAdapter() {
@@ -39,13 +42,11 @@ class HomeHistoryAdapter(private val context: Context, private val items: List<P
 
         val item = items[position]
 
-//        val diseaseName = view.findViewById<TextView>(R.id.textview_disease_name)
-//        val timestamp = view.findViewById<TextView>(R.id.textview_timestamp)
-//        val statusView = view.findViewById<TextView>(R.id.textview_status)
-//        val imageview_scan = view.findViewById<ImageView>(R.id.imageview_scan)
-
         holder.diseaseName.text = item.prediction
-        holder.timestamp.text = item.timestamp
+
+        val (dateLabel, timeLabel) = formatTimestamp(item.timestamp)
+        holder.date.text = dateLabel
+        holder.time.text = timeLabel
 
         // ✅ Change status background + text color
         if (item.prediction.equals("Healthy", ignoreCase = true)) {
@@ -73,9 +74,51 @@ class HomeHistoryAdapter(private val context: Context, private val items: List<P
         return view
     }
 
+    private fun formatTimestamp(raw: String?): Pair<String, String> {
+        if (raw.isNullOrEmpty()) return "N/A" to "N/A"
+        return try {
+            val parser = SimpleDateFormat("M/d/yyyy, h:mm:ss a", Locale.getDefault())
+            val date = parser.parse(raw) ?: return raw to ""
+
+            val now = Calendar.getInstance()
+            val cal = Calendar.getInstance()
+            cal.time = date
+
+            // Check today
+            val isToday = now.get(Calendar.YEAR) == cal.get(Calendar.YEAR) &&
+                    now.get(Calendar.DAY_OF_YEAR) == cal.get(Calendar.DAY_OF_YEAR)
+
+            // Check yesterday
+            now.add(Calendar.DAY_OF_YEAR, -1)
+            val isYesterday = now.get(Calendar.YEAR) == cal.get(Calendar.YEAR) &&
+                    now.get(Calendar.DAY_OF_YEAR) == cal.get(Calendar.DAY_OF_YEAR)
+
+            val timeFormatter = SimpleDateFormat("hh:mm a", Locale.getDefault())
+
+            val dateLabel = when {
+                isToday -> "Today"
+                isYesterday -> "Yesterday"
+                else -> {
+                    val dateFormatter = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+                    dateFormatter.format(date)
+                }
+            }
+
+            val timeLabel = timeFormatter.format(date)
+
+            dateLabel to timeLabel
+        } catch (e: Exception) {
+            raw to ""
+        }
+    }
+
+
+
+
     private class ViewHolder(view: View) {
         val diseaseName: TextView = view.findViewById(R.id.textview_disease_name)
-        val timestamp: TextView = view.findViewById(R.id.textview_timestamp)
+        val date: TextView = view.findViewById(R.id.textview_date)
+        val time: TextView = view.findViewById(R.id.textview_time)
         val statusView: TextView = view.findViewById(R.id.textview_status)
         val imageview_scan: ImageView = view.findViewById(R.id.imageview_scan)
     }

@@ -269,23 +269,18 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-//        val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
+        val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
 //        val token = prefs.getString("token", "")
 
-        if (bearerToken.isNotEmpty()) {
-            //test
-            getFarmDetails(bearerToken)
+        getFarmDetails(bearerToken)
 
-            updateAnalytics(bearerToken)
-            fetchLocationAndGenerateTip(bearerToken)
-            fetchDailyTip(bearerToken)
-//            getCountScans(bearerToken)
-//            getDailyAnalytics(bearerToken)
-            getStats()
-//            getPredictionHistory()
-        }
+        fetchLocationAndGenerateTip(bearerToken)
+        fetchDailyTip(bearerToken)
+        getCountScans(bearerToken)
+        getDailyAnalytics(bearerToken)
+        getStats()
+        getPredictionHistory()
 
-        val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
         val profileImage = prefs.getString("profileImage", "")
 
         if (!profileImage.isNullOrEmpty()) {
@@ -300,7 +295,7 @@ class HomeFragment : Fragment() {
         }
 
 //        if (token != null) {
-            //test below for getFarmDetails
+        //test below for getFarmDetails
 //            RetrofitClient.instance.getFarmDetails("Bearer $token")
 //                .enqueue(object : Callback<FarmDetailsResponse> {
 //                    override fun onResponse(
@@ -326,7 +321,7 @@ class HomeFragment : Fragment() {
 //                    }
 //                })
 
-            //test
+        //test
 //            getFarmDetails(bearerToken)
 //
 //            updateAnalytics("Bearer $token")

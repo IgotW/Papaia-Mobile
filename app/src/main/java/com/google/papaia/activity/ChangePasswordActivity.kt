@@ -1,9 +1,12 @@
 package com.google.papaia.activity
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +37,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         val newPass = findViewById<EditText>(R.id.edittext_cp_newpass)
         val confirmNewPass = findViewById<EditText>(R.id.edittext_cp_confirmpass)
         val buttonReset = findViewById<MaterialButton>(R.id.button_fg3_reset)
+        val buttonBack = findViewById<ImageView>(R.id.cp_btn_back)
 
         buttonReset.setOnClickListener {
             val oldPassword = oldPass.text.toString().trim()
@@ -81,6 +85,14 @@ class ChangePasswordActivity : AppCompatActivity() {
                         Toast.makeText(this@ChangePasswordActivity, "Error: ${t.message}", Toast.LENGTH_LONG).show()
                     }
                 })
+        }
+
+        buttonBack.setOnClickListener {
+            Log.d("Change Password", "Back to Settings")
+            val intent = Intent()
+            intent.putExtra("navigateTo", "profile")
+            setResult(RESULT_OK, intent)
+            finish()
         }
 
     }

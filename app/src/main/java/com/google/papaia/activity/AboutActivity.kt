@@ -2,6 +2,7 @@ package com.google.papaia.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -17,9 +18,11 @@ class AboutActivity : AppCompatActivity() {
         val btn_back = findViewById<ImageView>(R.id.btn_back)
 
         btn_back.setOnClickListener {
-            startActivity(
-                Intent(this, SettingsActivity::class.java)
-            )
+            Log.d("About Activity", "Go back to profile page")
+            val intent = Intent()
+            intent.putExtra("navigateTo", "profile")
+            setResult(RESULT_OK, intent)
+            finish()
         }
     }
 }

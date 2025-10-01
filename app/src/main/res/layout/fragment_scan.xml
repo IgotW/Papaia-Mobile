@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#F5F5F5"
     tools:context=".activity.ScanFragment">
 
@@ -54,12 +55,42 @@
             android:layout_marginHorizontal="24dp"
             android:layout_marginBottom="16dp">
 
-            <!-- Camera Preview -->
-            <androidx.camera.view.PreviewView
-                android:id="@+id/previewView"
+<!--            &lt;!&ndash; Camera Preview &ndash;&gt;-->
+<!--            <androidx.camera.view.PreviewView-->
+<!--                android:id="@+id/previewView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:background="@drawable/camera_preview_background"/>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/capturedImageView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:visibility="gone"-->
+<!--                android:background="#000" />-->
+            <!-- Rounded container -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/camera_preview_background"/>
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                android:clipToOutline="true">
+
+                <androidx.camera.view.PreviewView
+                    android:id="@+id/previewView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/capturedImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:background="#000" />
 
             <!-- Flash Toggle -->
             <ImageView
@@ -86,6 +117,7 @@
             android:gravity="center">
 
             <FrameLayout
+                android:id="@+id/imageGallery"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/circle_bg"
@@ -95,7 +127,6 @@
                 android:layout_marginRight="50dp">
 
                 <ImageView
-                    android:id="@+id/imageGallery"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
@@ -121,6 +152,41 @@
                     android:tint="@android:color/white"/>
 
             </FrameLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/captureActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="32dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="32dp"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btnRetake"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Retake"
+                android:backgroundTint="@color/gray"
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnUsePhoto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Use Photo"
+                android:backgroundTint="@color/primary"
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
     <FrameLayout

@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.google.papaia" />
+                  <option name="mobileSdkAppId" value="1:199113935519:android:1c8cfb87b09a5e8b52b0aa" />
+                  <option name="projectId" value="papaia-faf06" />
+                  <option name="projectNumber" value="199113935519" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

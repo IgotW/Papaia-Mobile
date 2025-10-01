@@ -1,6 +1,7 @@
 package com.google.papaia.activity
 
 import android.Manifest
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -37,21 +38,82 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class ScanFragment : Fragment() {
     private lateinit var previewView: PreviewView
     private lateinit var btnCapture: FrameLayout
-    private lateinit var imageGallery: ImageView
+    private lateinit var imageGallery: FrameLayout
     private lateinit var loadingOverlay: FrameLayout
     private lateinit var progressBar: ProgressBar
 
-    private var imageCapture: ImageCapture? = null
+    private lateinit var capturedImageView: ImageView
+    private lateinit var btnRetake: Button
+    private lateinit var btnUsePhoto: Button
 
+    private var imageCapture: ImageCapture? = null
     private var camera: Camera? = null
     private var isFlashOn = false
-    private val cameraExecutor by lazy { Executors.newSingleThreadExecutor() }
+    private lateinit var cameraExecutor: ExecutorService
     private var cameraProvider: ProcessCameraProvider? = null
+
+    private var capturedUri: Uri? = null
+
+    // single-permission launcher (clearer)
+//    private val cameraPermissionLauncher =
+//        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+//            Log.d(TAG, "cameraPermissionLauncher: granted=$granted")
+//            if (granted) {
+//                // ensure view has been laid out before starting camera
+//                previewView.post { startCamera() }
+//            } else {
+//                Toast.makeText(requireContext(), "Camera permission required", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//
+//    private val requestGalleryPermissionLauncher =
+//        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+//            if (isGranted) {
+//                galleryLauncher.launch("image/*")
+//            } else {
+//                Toast.makeText(requireContext(), "Permission denied to access gallery", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+
+    // Launcher for multiple permissions
+    private val requestPermissionsLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            val allGranted = permissions.all { it.value }
+            if (allGranted) {
+                previewView.post { startCamera() }
+            } else {
+                Toast.makeText(requireContext(), "Camera & Gallery permissions are required", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    // Use this instead of single permission
+    private fun checkPermissionsAndStart() {
+        if (allPermissionsGranted()) {
+            previewView.post { startCamera() }
+        } else {
+            requestPermissionsLauncher.launch(REQUIRED_PERMISSIONS)
+        }
+    }
+
+    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+                capturedUri = it
+                showLoading()
+                sendImageToApi(it) // directly upload
+            }
+        }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,18 +128,20 @@ class ScanFragment : Fragment() {
 
         initViews(view)
         setupClickListeners()
+        cameraExecutor = Executors.newSingleThreadExecutor()
 
-        if (allPermissionsGranted()) {
-            startCamera()
-        } else {
-            requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
-        }
+        // Check permission & start camera if already granted, otherwise ask
+//        checkPermissionsAndStart()
 
-        // Flash button
         val flashToggle: ImageView = view.findViewById(R.id.flash_toggle)
         flashToggle.setOnClickListener {
             toggleFlash(flashToggle)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkPermissionsAndStart()
     }
 
     private fun initViews(view: View) {
@@ -86,85 +150,147 @@ class ScanFragment : Fragment() {
         imageGallery = view.findViewById(R.id.imageGallery)
         loadingOverlay = view.findViewById(R.id.loadingOverlay)
         progressBar = view.findViewById(R.id.progressBar)
+
+        capturedImageView = view.findViewById(R.id.capturedImageView)
+        btnRetake = view.findViewById(R.id.btnRetake)
+        btnUsePhoto = view.findViewById(R.id.btnUsePhoto)
     }
 
     private fun setupClickListeners() {
         btnCapture.setOnClickListener { takePhoto() }
 
-        imageGallery.setOnClickListener {
-            val permission = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-                Manifest.permission.READ_MEDIA_IMAGES
-            } else {
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            }
+        btnRetake.setOnClickListener {
+            capturedUri = null
+            capturedImageView.visibility = View.GONE
+            previewView.visibility = View.VISIBLE
+            btnCapture.visibility = View.VISIBLE
+            imageGallery.visibility = View.VISIBLE
 
-            if (ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED) {
-                galleryLauncher.launch("image/*")
-            } else {
-                requestGalleryPermissionLauncher.launch(permission)
-            }
+            // Hide parent + children
+            val captureActions = requireView().findViewById<View>(R.id.captureActions)
+            captureActions.visibility = View.GONE
         }
 
+        btnUsePhoto.setOnClickListener {
+            capturedUri?.let {
+                showLoading() // 👈 show loading immediately when clicked
+                btnUsePhoto.isEnabled = false // 👈 prevent multiple clicks
+                sendImageToApi(it)
+            }
+//            capturedUri?.let {sendImageToApi(it) }
+        }
+
+//        imageGallery.setOnClickListener {
+//            val permission =
+//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+//                    Manifest.permission.READ_MEDIA_IMAGES
+//                } else {
+//                    Manifest.permission.READ_EXTERNAL_STORAGE
+//                }
+//
+//            if (ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED) {
+//                galleryLauncher.launch("image/*")
+//            } else {
+//                requestPermissionsLauncher.launch(REQUIRED_PERMISSIONS)
+//            }
+//        }
+        imageGallery.setOnClickListener {
+            galleryLauncher.launch("image/*")
+        }
     }
+
+//    private fun checkCameraPermissionAndStart() {
+//        val permission = Manifest.permission.CAMERA
+//        if (ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED) {
+//            // start camera once layout is ready
+//            previewView.post { startCamera() }
+//        } else {
+//            Log.d(TAG, "Camera permission not granted; requesting.")
+//            cameraPermissionLauncher.launch(permission)
+//        }
+//    }
 
     private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+        try {
+            Log.d(TAG, "startCamera() called")
+            val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
-        cameraProviderFuture.addListener({
-            cameraProvider = cameraProviderFuture.get() // ✅ keep reference
+            cameraProviderFuture.addListener({
+                try {
+                    val provider = cameraProviderFuture.get()
+                    if (cameraProvider == null) {
+                        cameraProvider = provider
+                    }
 
-            val preview = Preview.Builder().build().also {
-                it.setSurfaceProvider(previewView.surfaceProvider)
-            }
+                    val preview = Preview.Builder().build().also {
+                        it.setSurfaceProvider(previewView.surfaceProvider)
+                    }
 
-            imageCapture = ImageCapture.Builder().build()
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+                    imageCapture = ImageCapture.Builder()
+                        .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                        .build()
 
-            try {
-                cameraProvider?.unbindAll()
-                camera = cameraProvider?.bindToLifecycle(
-                    viewLifecycleOwner, cameraSelector, preview, imageCapture
-                )
-            } catch (e: Exception) {
-                Log.e("CameraX", "Use case binding failed", e)
-            }
+                    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
-        }, ContextCompat.getMainExecutor(requireContext()))
+                    provider.unbindAll()
+                    camera = provider.bindToLifecycle(
+                        viewLifecycleOwner,
+                        cameraSelector,
+                        preview,
+                        imageCapture
+                    )
+
+                    Log.d("CameraX", "Camera started successfully")
+                } catch (e: Exception) {
+                    Log.e("CameraX", "Use case binding failed", e)
+                    Toast.makeText(requireContext(), "Failed to open camera", Toast.LENGTH_SHORT).show()
+                }
+            }, ContextCompat.getMainExecutor(requireContext()))
+        } catch (e: Exception) {
+            Log.e(TAG, "startCamera - exception", e)
+            Toast.makeText(requireContext(), "Camera error: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
+
 
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
-        showLoading()  // show overlay
 
-        val photoFile = File(
-            outputDirectory,
-            "JPEG_${System.currentTimeMillis()}.jpg"
-        )
-
+        val photoFile = File(outputDirectory, "JPEG_${System.currentTimeMillis()}.jpg")
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
         imageCapture.takePicture(
             outputOptions,
-            ContextCompat.getMainExecutor(requireContext()),
+            cameraExecutor,
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val savedUri = Uri.fromFile(photoFile)
-                    Toast.makeText(requireContext(), "Photo saved!", Toast.LENGTH_SHORT).show()
-                    imageGallery.setImageURI(savedUri)
-
-                    // ✅ Disable camera preview
-                    cameraProvider?.unbindAll()
-
-                    sendImageToApi(savedUri)
+                    capturedUri = Uri.fromFile(photoFile)
+                    requireActivity().runOnUiThread {
+                        showCapturedImage(capturedUri!!)
+                    }
                 }
 
                 override fun onError(exception: ImageCaptureException) {
-                    hideLoading()
                     Log.e("CameraX", "Photo capture failed: ${exception.message}", exception)
                     Toast.makeText(requireContext(), "Capture failed", Toast.LENGTH_SHORT).show()
                 }
             }
         )
+    }
+
+    private fun showCapturedImage(uri: Uri) {
+        previewView.visibility = View.GONE
+        btnCapture.visibility = View.GONE
+        imageGallery.visibility = View.GONE
+
+        capturedImageView.setImageURI(uri)
+        capturedImageView.visibility = View.VISIBLE
+
+        // Show parent container and child buttons
+        val captureActions = requireView().findViewById<View>(R.id.captureActions)
+        captureActions.visibility = View.VISIBLE
+        btnRetake.visibility = View.VISIBLE
+        btnUsePhoto.visibility = View.VISIBLE
     }
 
     private fun sendImageToApi(imageUri: Uri) {
@@ -190,28 +316,33 @@ class ScanFragment : Fragment() {
                         response: retrofit2.Response<PredictionResponse>
                     ) {
                         hideLoading()
+                        btnUsePhoto.isEnabled = true
                         if (response.isSuccessful && response.body() != null) {
                             val result = response.body()!!.prediction ?: "Unknown"
-                            val remedy = response.body()!!.suggestions ?: "No specific remedy found. Consult local expert."
+                            val remedy = response.body()!!.suggestions
+                                ?: "No specific remedy found. Consult local expert."
                             showScanDialog(result, remedy)
-                            val token = SecurePrefsHelper.getToken(requireContext())
-                            if (!token.isNullOrEmpty()) {
-                                (activity as? DashboardActivity)?.refreshAnalytics(token)
+                            SecurePrefsHelper.getToken(requireContext())?.let {
+                                (activity as? DashboardActivity)?.refreshAnalytics(it)
                             }
                         } else {
                             Log.e("API_ERROR", "Code: ${response.code()} Body: ${response.errorBody()?.string()}")
                             Toast.makeText(requireContext(), "Prediction failed", Toast.LENGTH_SHORT).show()
                         }
+                        startCamera()
                     }
 
                     override fun onFailure(call: retrofit2.Call<PredictionResponse>, t: Throwable) {
                         hideLoading()
+                        btnUsePhoto.isEnabled = true
                         Toast.makeText(requireContext(), "Error: ${t.message}", Toast.LENGTH_SHORT).show()
                     }
                 })
         } catch (e: Exception) {
+            hideLoading()
             Toast.makeText(requireContext(), "Failed to read image file", Toast.LENGTH_SHORT).show()
             Log.e("ImageUpload", "Error: ${e.message}", e)
+            startCamera()
         }
     }
 
@@ -224,11 +355,10 @@ class ScanFragment : Fragment() {
         tvPrediction.text = "Disease Detected: $predictedLabel"
         tvRemedy.text = remedy
 
-        // ✅ Set custom colors
         if (predictedLabel.equals("Healthy", ignoreCase = true)) {
-            tvPrediction.setTextColor(Color.parseColor("#00712D")) // Green
+            tvPrediction.setTextColor(Color.parseColor("#00712D"))
         } else {
-            tvPrediction.setTextColor(Color.parseColor("#FF9100")) // Orange
+            tvPrediction.setTextColor(Color.parseColor("#FF9100"))
         }
 
         val dialog = AlertDialog.Builder(requireContext())
@@ -238,13 +368,18 @@ class ScanFragment : Fragment() {
 
         btnOk.setOnClickListener {
             dialog.dismiss()
-            // Restart camera for next scan
+            // Restore preview + capture button
             previewView.visibility = View.VISIBLE
-            startCamera()
+            btnCapture.visibility = View.VISIBLE
+            imageGallery.visibility = View.VISIBLE
+            capturedImageView.visibility = View.GONE
+            btnRetake.visibility = View.GONE
+            btnUsePhoto.visibility = View.GONE
         }
 
         dialog.show()
     }
+
 
     private fun uriToFile(uri: Uri): File {
         val inputStream = requireActivity().contentResolver.openInputStream(uri)!!
@@ -256,46 +391,22 @@ class ScanFragment : Fragment() {
         return file
     }
 
+//    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+//        ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
+//    }
+
+//    private val requestPermissionLauncher =
+//        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+//            if (permissions.entries.all { it.value }) {
+//                startCamera()
+//            } else {
+//                Toast.makeText(requireContext(), "Permissions not granted", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+
+
     private val outputDirectory: File
         get() = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
-
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
-    }
-
-    // Permission launchers using ActivityResultContract
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            val allGranted = permissions.entries.all { it.value }
-            if (allGranted) {
-                startCamera()
-            } else {
-                Toast.makeText(requireContext(), "Permissions not granted", Toast.LENGTH_SHORT).show()
-                // Optionally navigate back or disable camera functionality
-            }
-        }
-
-    private val requestGalleryPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                galleryLauncher.launch("image/*")
-            } else {
-                Toast.makeText(requireContext(), "Permission denied to access gallery", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-    private val galleryLauncher =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            uri?.let {
-                imageGallery.setImageURI(uri)
-
-                // ✅ Disable camera preview
-                cameraProvider?.unbindAll()
-                previewView.visibility = View.GONE
-
-                sendImageToApi(uri)
-            }
-        }
 
     private fun toggleFlash(flashToggle: ImageView) {
         camera?.let {
@@ -305,15 +416,9 @@ class ScanFragment : Fragment() {
             if (cameraInfo.hasFlashUnit()) {
                 isFlashOn = !isFlashOn
                 cameraControl.enableTorch(isFlashOn)
-
-                // Change icon
-                if (isFlashOn) {
-                    flashToggle.setImageResource(R.drawable.ic_flash_on)
-                    Toast.makeText(requireContext(), "Flash ON", Toast.LENGTH_SHORT).show()
-                } else {
-                    flashToggle.setImageResource(R.drawable.ic_flash_off)
-                    Toast.makeText(requireContext(), "Flash OFF", Toast.LENGTH_SHORT).show()
-                }
+                flashToggle.setImageResource(
+                    if (isFlashOn) R.drawable.ic_flash_on else R.drawable.ic_flash_off
+                )
             } else {
                 Toast.makeText(requireContext(), "No flash available", Toast.LENGTH_SHORT).show()
             }
@@ -330,12 +435,21 @@ class ScanFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        cameraExecutor.shutdown()
+        cameraProvider?.unbindAll()
     }
 
     companion object {
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-
+        private val REQUIRED_PERMISSIONS = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_MEDIA_IMAGES
+            )
+        } else {
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
         @JvmStatic
         fun newInstance() = ScanFragment()
     }

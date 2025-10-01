@@ -39,14 +39,21 @@
             android:textColor="#1F2937"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:fontFamily="@font/league_spartan_bold"
-            android:layout_marginBottom="4dp"/>
+            android:fontFamily="@font/league_spartan_bold" />
 
         <TextView
-            android:id="@+id/textview_timestamp"
+            android:id="@+id/textview_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Today, 2:30 PM"
+            android:text="2:30 PM"
+            android:textColor="#6B7280"
+            android:textSize="14sp"
+            android:fontFamily="@font/league_spartan"/>
+        <TextView
+            android:id="@+id/textview_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today"
             android:textColor="#6B7280"
             android:textSize="14sp"
             android:fontFamily="@font/league_spartan"/>

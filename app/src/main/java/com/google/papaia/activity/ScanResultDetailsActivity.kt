@@ -29,9 +29,7 @@ class ScanResultDetailsActivity : AppCompatActivity() {
     private lateinit var shareButton: ImageView
     private lateinit var plantImage: ImageView
     private lateinit var diseaseStatus: TextView
-    private lateinit var scanStatus: TextView
     private lateinit var diseaseName: TextView
-    private lateinit var severityLevel: TextView
     private lateinit var confidenceText: TextView
     private lateinit var treatmentButton: MaterialButton
     private lateinit var treatmentTextView: TextView
@@ -71,9 +69,7 @@ class ScanResultDetailsActivity : AppCompatActivity() {
         shareButton = findViewById(R.id.shareButton)
         plantImage = findViewById(R.id.plantImage)
         diseaseStatus = findViewById(R.id.diseaseStatus)
-        scanStatus = findViewById(R.id.scanStatus)
         diseaseName = findViewById(R.id.diseaseName)
-        severityLevel = findViewById(R.id.severityLevel)
         confidenceText = findViewById(R.id.confidenceText)
         treatmentButton = findViewById(R.id.treatmentButton)
         treatmentTextView = findViewById(R.id.treatmentTextView)
@@ -84,7 +80,7 @@ class ScanResultDetailsActivity : AppCompatActivity() {
 
     private fun fetchPredictionData(predictionId: String, tokenId: String) {
         // Show loading state
-        scanStatus.text = "Loading prediction data..."
+        diseaseStatus.text = "Loading prediction data..."
 
         RetrofitClient.instance.getPredictionById(predictionId, tokenId).enqueue(object :
             Callback<ScanResult> {
@@ -123,7 +119,6 @@ class ScanResultDetailsActivity : AppCompatActivity() {
         diseaseStatus.text = "⚠ Diseased"
         diseaseStatus.setTextColor(ContextCompat.getColor(this, R.color.tertiary))
 
-        scanStatus.text = "Scan completed successfully"
         diseaseName.text = scanResult.prediction
 
         // Determine severity level based on confidence
@@ -133,12 +128,12 @@ class ScanResultDetailsActivity : AppCompatActivity() {
             else -> "Low"
         }
 
-        severityLevel.text = severity
-        severityLevel.setTextColor(when(severity) {
-            "High" -> ContextCompat.getColor(this, R.color.red)
-            "Medium" -> ContextCompat.getColor(this, R.color.orange)
-            else -> ContextCompat.getColor(this, R.color.green)
-        })
+//        confidenceText.text = severity
+//        confidenceText.setTextColor(when(severity) {
+//            "High" -> ContextCompat.getColor(this, R.color.red)
+//            "Medium" -> ContextCompat.getColor(this, R.color.orange)
+//            else -> ContextCompat.getColor(this, R.color.green)
+//        })
 
         confidenceText.setTextColor(
             when {
@@ -162,13 +157,28 @@ class ScanResultDetailsActivity : AppCompatActivity() {
             return
         }
 
-        val fullUrl = "https://papaiaapi.onrender.com${imageUrl}"
+//        val fullUrl = "https://papaiaapi.onrender.com${imageUrl}"
+//
+//        Glide.with(this)
+//            .load(fullUrl)
+//            .placeholder(R.drawable.image_no_content)
+//            .error(R.drawable.image_no_content)
+//            .into(plantImage)
+
+        // Image with Glide
+        val fullUrl = if (imageUrl.startsWith("http")) {
+            imageUrl
+        } else {
+            "https://papaiaapi.onrender.com${imageUrl}"
+        }
 
         Glide.with(this)
             .load(fullUrl)
             .placeholder(R.drawable.image_no_content)
             .error(R.drawable.image_no_content)
+            .centerCrop()
             .into(plantImage)
+
     }
 
     private fun extractDescription(suggestion: String?): List<String> {
@@ -199,37 +209,39 @@ class ScanResultDetailsActivity : AppCompatActivity() {
 //            .replace("*", "•")
 //    }
 
-    private fun formatSuggestions(suggestion: String?): String {
+    //String -> CharSequence
+    private fun formatSuggestions(suggestion: String?): CharSequence {
         if (suggestion.isNullOrBlank()) {
             return "No treatment suggestions available."
         }
 
-        return suggestion
-            // Clean up markdown formatting
-            .replace("##", "")
-            .replace("**", "")
-            .replace("••", "•")
-            .replace("*", "")
-            .replace("---", "")
+        // Split by '*' (used as bullet points in your backend response)
+        val steps = suggestion.split("*")
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
 
-            // Split into sections and clean up
-            .split("\n\n")
-            .filter { it.trim().isNotEmpty() }
-            .mapIndexed { index, section ->
-                formatSection(section.trim(), index)
-            }
-            .joinToString("\n\n")
+//        return steps.mapIndexed { index, step ->
+//            "${getCircledNumber(index + 1)} $step"
+//        }.joinToString("\n\n")
+        // Format each step with bold "Step ①" then the content
+        val formatted = steps.mapIndexed { index, step ->
+            "<b>🌱 Step ${getCircledNumber(index + 1)}</b><br>${step}"
+        }.joinToString("<br><br>")
+
+        // Convert HTML string to styled text
+        return Html.fromHtml(formatted, Html.FROM_HTML_MODE_LEGACY)
     }
+
 
     private fun formatSection(section: String, sectionIndex: Int): String {
         val lines = section.split("\n").filter { it.trim().isNotEmpty() }
 
         if (lines.isEmpty()) return ""
 
-        val title = lines.first().trim()
+//        val title = lines.first().trim()
         val content = lines.drop(1)
-
-        // Format section title with modern emoji indicators
+//
+//        // Format section title with modern emoji indicators
         val formattedTitle = when {
             title.contains("Understanding", ignoreCase = true) ||
                     title.contains("Enemy", ignoreCase = true) -> "🔍 $title"
@@ -252,21 +264,11 @@ class ScanResultDetailsActivity : AppCompatActivity() {
                     .removePrefix("*")
                     .trim()
 
-                when {
-                    // Main action items get numbered circles
-                    cleanLine.startsWith("Prune", ignoreCase = true) ||
-                            cleanLine.startsWith("What to do", ignoreCase = true) ||
-                            cleanLine.startsWith("Why", ignoreCase = true) ||
-                            cleanLine.startsWith("How", ignoreCase = true) ||
-                            cleanLine.startsWith("Disinfect", ignoreCase = true) -> {
-                        val stepNumber = index + 1
-                        "   ${getCircledNumber(stepNumber)} $cleanLine"
-                    }
-
-                    // Sub-items get modern bullet points
-                    cleanLine.isNotEmpty() -> "     ▸ $cleanLine"
-
-                    else -> cleanLine
+                // Number every item (1, 2, 3…)
+                if (cleanLine.isNotEmpty()) {
+                    "${index + 1}. $cleanLine"
+                } else {
+                    cleanLine
                 }
             }.joinToString("\n")
         } else ""
@@ -293,6 +295,31 @@ class ScanResultDetailsActivity : AppCompatActivity() {
             else -> "⊙" // Generic circle for numbers > 10
         }
     }
+
+//    private fun createStepDrawable(context: Context, number: Int): Drawable {
+//        val size = 80 // px
+//        val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+//        val canvas = Canvas(bitmap)
+//
+//        // Draw circle
+//        val paintCircle = Paint().apply {
+//            color = Color.parseColor("#0B6E4F") // dark green
+//            isAntiAlias = true
+//        }
+//        canvas.drawCircle(size / 2f, size / 2f, size / 2f, paintCircle)
+//
+//        // Draw number
+//        val paintText = Paint().apply {
+//            color = Color.WHITE
+//            textSize = 36f
+//            textAlign = Paint.Align.CENTER
+//            isAntiAlias = true
+//        }
+//        val yPos = (canvas.height / 2 - (paintText.descent() + paintText.ascent()) / 2)
+//        canvas.drawText(number.toString(), size / 2f, yPos, paintText)
+//
+//        return BitmapDrawable(context.resources, bitmap)
+//    }
 
 
     private fun setupClickListeners() {
@@ -373,7 +400,7 @@ class ScanResultDetailsActivity : AppCompatActivity() {
 
     private fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        scanStatus.text = "Error loading data"
-        scanStatus.setTextColor(ContextCompat.getColor(this, R.color.red))
+        diseaseStatus.text = "Error loading data"
+        diseaseStatus.setTextColor(ContextCompat.getColor(this, R.color.red))
     }
 }
