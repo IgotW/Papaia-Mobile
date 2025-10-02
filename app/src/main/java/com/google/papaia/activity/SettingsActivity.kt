@@ -77,7 +77,7 @@ class SettingsActivity : AppCompatActivity() {
         // Subscription
         cardViewPlan.setOnClickListener {
             showToast("View Plan clicked")
-            startActivity(Intent(this, SubscriptionActivity::class.java))
+            startActivity(Intent(this, PlansActivity::class.java))
         }
 
         cardManageBilling.setOnClickListener {

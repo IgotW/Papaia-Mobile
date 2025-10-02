@@ -32,7 +32,6 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:fontFamily="@font/league_spartan_bold"
             android:gravity="center" />
 
         <View

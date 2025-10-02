@@ -18,22 +18,24 @@ import java.util.*
 
 class HistoryAdapter(
     private val context: Context,
-    private val items: List<PredictionHistoryResponse>
+    private val originalItems: List<PredictionHistoryResponse>
 ) : BaseAdapter() {
+
+    private var filteredItems: MutableList<PredictionHistoryResponse> = originalItems.toMutableList()
 
     private val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
     private val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
     private val parser = SimpleDateFormat("M/d/yyyy, h:mm:ss a", Locale.getDefault()) // backend format
 
-    override fun getCount(): Int = items.size
-    override fun getItem(position: Int): Any = items[position]
+    override fun getCount(): Int = filteredItems.size
+    override fun getItem(position: Int): Any = filteredItems[position]
     override fun getItemId(position: Int): Long = position.toLong()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: LayoutInflater.from(context)
             .inflate(R.layout.item_history, parent, false)
 
-        val item = items[position]
+        val item = filteredItems[position]
 
         // Find views
         val txtPrediction = view.findViewById<TextView>(R.id.txtPrediction)
@@ -81,6 +83,117 @@ class HistoryAdapter(
             .into(imgDisease)
 
         return view
+    }
+
+    fun applyFilter(disease: String, dateFilter: String) {
+        filteredItems = originalItems.filter { item ->
+            val matchDisease = when (disease) {
+                "All" -> true
+                else -> item.prediction.equals(disease, ignoreCase = true)
+            }
+
+            val matchDate = when (dateFilter) {
+                "All" -> true
+                "Today" -> isToday(item.timestamp)
+                "Yesterday" -> isYesterday(item.timestamp)
+                "Last 7 Days" -> isWithinDays(item.timestamp, 7)
+                "Last 30 Days" -> isWithinDays(item.timestamp, 30)
+                "This Month" -> isThisMonth(item.timestamp)
+                "Last Month" -> isLastMonth(item.timestamp)
+                "This Year" -> isThisYear(item.timestamp)
+                "Last Year" -> isLastYear(item.timestamp)
+                else -> true
+            }
+
+            matchDisease && matchDate
+        }.toMutableList()
+
+        notifyDataSetChanged()
+    }
+
+    private fun isToday(timestamp: String?): Boolean = checkDate(timestamp, 0)
+    private fun isYesterday(timestamp: String?): Boolean = checkDate(timestamp, -1)
+
+    private fun checkDate(timestamp: String?, offset: Int): Boolean {
+        if (timestamp.isNullOrEmpty()) return false
+        return try {
+            val date = parser.parse(timestamp) ?: return false
+            val cal = Calendar.getInstance()
+            cal.add(Calendar.DAY_OF_YEAR, offset)
+            val cmp = Calendar.getInstance().apply { time = date }
+            cal.get(Calendar.YEAR) == cmp.get(Calendar.YEAR) &&
+                    cal.get(Calendar.DAY_OF_YEAR) == cmp.get(Calendar.DAY_OF_YEAR)
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    private fun isWithinDays(timestamp: String?, days: Int): Boolean {
+        if (timestamp.isNullOrEmpty()) return false
+        return try {
+            val date = parser.parse(timestamp) ?: return false
+            val now = Calendar.getInstance()
+            val cmp = Calendar.getInstance().apply { time = date }
+
+            val diffMillis = now.timeInMillis - cmp.timeInMillis
+            val diffDays = diffMillis / (1000 * 60 * 60 * 24)
+
+            diffDays in 0..days
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    private fun isThisMonth(timestamp: String?): Boolean {
+        if (timestamp.isNullOrEmpty()) return false
+        return try {
+            val date = parser.parse(timestamp) ?: return false
+            val now = Calendar.getInstance()
+            val cmp = Calendar.getInstance().apply { time = date }
+            now.get(Calendar.YEAR) == cmp.get(Calendar.YEAR) &&
+                    now.get(Calendar.MONTH) == cmp.get(Calendar.MONTH)
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    private fun isLastMonth(timestamp: String?): Boolean {
+        if (timestamp.isNullOrEmpty()) return false
+        return try {
+            val date = parser.parse(timestamp) ?: return false
+            val now = Calendar.getInstance()
+            now.add(Calendar.MONTH, -1)
+            val cmp = Calendar.getInstance().apply { time = date }
+            now.get(Calendar.YEAR) == cmp.get(Calendar.YEAR) &&
+                    now.get(Calendar.MONTH) == cmp.get(Calendar.MONTH)
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    private fun isThisYear(timestamp: String?): Boolean {
+        if (timestamp.isNullOrEmpty()) return false
+        return try {
+            val date = parser.parse(timestamp) ?: return false
+            val now = Calendar.getInstance()
+            val cmp = Calendar.getInstance().apply { time = date }
+            now.get(Calendar.YEAR) == cmp.get(Calendar.YEAR)
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    private fun isLastYear(timestamp: String?): Boolean {
+        if (timestamp.isNullOrEmpty()) return false
+        return try {
+            val date = parser.parse(timestamp) ?: return false
+            val now = Calendar.getInstance()
+            now.add(Calendar.YEAR, -1)
+            val cmp = Calendar.getInstance().apply { time = date }
+            now.get(Calendar.YEAR) == cmp.get(Calendar.YEAR)
+        } catch (e: Exception) {
+            false
+        }
     }
 
     private fun formatTimestamp(timestamp: String?, txtTime: TextView, txtDate: TextView) {

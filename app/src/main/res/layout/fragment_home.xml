@@ -328,55 +328,81 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:background="@color/white"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="10dp">
+                        <TextView
+                            android:text="Summary"
+                            android:textStyle="bold"
+                            android:layout_marginTop="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"/>
+
+                        <TextView
+                            android:id="@+id/txtview_analytics_summary"
+                            android:text="Here goes your summary description."
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/black"/>
+
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
+<!--            <com.google.android.material.card.MaterialCardView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="16dp"-->
+<!--                app:cardCornerRadius="16dp"-->
+<!--                app:cardElevation="4dp">-->
 
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:background="@color/white">
-<!--                    <com.github.mikephil.charting.charts.LineChart-->
-<!--                        android:id="@+id/lineChart"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="280dp"-->
-<!--                        android:layout_marginTop="8dp"-->
-<!--                        android:layout_marginBottom="8dp"/>-->
+<!--                <LinearLayout-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:padding="16dp"-->
+<!--                    android:background="@color/white">-->
+<!--&lt;!&ndash;                    <com.github.mikephil.charting.charts.LineChart&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:id="@+id/lineChart"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_height="280dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginTop="8dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginBottom="8dp"/>&ndash;&gt;-->
 
-                    <TextView
-                        android:text="Summary"
-                        android:textStyle="bold"
-                        android:layout_marginTop="12dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"/>
+<!--                    <TextView-->
+<!--                        android:text="Summary"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:layout_marginTop="12dp"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textColor="@color/black"/>-->
 
-                    <TextView
-                        android:id="@+id/txtview_analytics_summary"
-                        android:text="Here goes your summary description."
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textColor="@color/black"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/txtview_analytics_summary"-->
+<!--                        android:text="Here goes your summary description."-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="4dp"-->
+<!--                        android:textColor="@color/black"/>-->
 
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+<!--                </LinearLayout>-->
+<!--            </com.google.android.material.card.MaterialCardView>-->
             <androidx.cardview.widget.CardView
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="#FFFFFF"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="2dp">
+                app:cardElevation="2dp"
+                android:layout_marginTop="20dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

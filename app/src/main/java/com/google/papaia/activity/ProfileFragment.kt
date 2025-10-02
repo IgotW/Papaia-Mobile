@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -355,7 +356,10 @@ class ProfileFragment : Fragment() {
                 }
 
                 override fun onFailure(call: Call<FarmDetailsResponse>, t: Throwable) {
-                    Toast.makeText(context, "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                    if (isAdded && context != null) {
+                        Toast.makeText(requireContext(), "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                    Log.e("API_ERROR", "Failure: ${t.message}", t)
                 }
             })
     }

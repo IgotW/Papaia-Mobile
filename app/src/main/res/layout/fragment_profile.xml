@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="#4CAF50"
+            android:background="@color/primary"
             android:elevation="4dp"
             app:titleTextColor="@android:color/white">
 
@@ -28,8 +28,8 @@
                 android:gravity="center"
                 android:text="My Profile"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
 
         <!-- Profile Header -->

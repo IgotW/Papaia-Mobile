@@ -3,6 +3,8 @@ package com.google.papaia.activity
 import android.content.Intent
 import android.gesture.Prediction
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.Toast
@@ -10,6 +12,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.textfield.TextInputLayout
 import com.google.papaia.R
 import com.google.papaia.adapter.HistoryAdapter
 import com.google.papaia.response.PredictionHistoryResponse
@@ -26,12 +29,22 @@ class HistoryActivity : AppCompatActivity() {
     private lateinit var bearerToken: String  // Get this from your session/auth manager
     private lateinit var userId: String
 
+    private lateinit var dateFilterDropdown: AutoCompleteTextView
+    private lateinit var diseaseFilterDropdown: AutoCompleteTextView
+
+    private var historyAdapter: HistoryAdapter? = null
+    private var historyList: List<PredictionHistoryResponse> = emptyList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_history)
 
         listView = findViewById(R.id.listViewPredictions)
+
+        dateFilterDropdown = findViewById(R.id.dropdown_date_filter)
+        diseaseFilterDropdown = findViewById(R.id.dropdown_disease_filter)
+
         val button_back = findViewById<ImageView>(R.id.imageview_arrowback_history)
 
         val prefs = getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
@@ -47,6 +60,7 @@ class HistoryActivity : AppCompatActivity() {
             return
         }
 
+        setupFilters()
         getPredictionHistory()
 
         button_back.setOnClickListener {
@@ -56,6 +70,43 @@ class HistoryActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    private fun setupFilters() {
+        val dateOptions = listOf(
+            "All",
+            "Today",
+            "Yesterday",
+            "Last 7 Days",
+            "Last 30 Days",
+            "This Month",
+            "Last Month",
+            "This Year",
+            "Last Year"
+        )
+
+        val diseaseOptions = listOf(
+            "All",
+            "Healthy",
+            "Ring Spot Virus",
+            "Anthracnose",
+            "Powdery Mildew"
+        )
+
+        val dateAdapter =
+            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, dateOptions)
+        val diseaseAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, diseaseOptions)
+
+        dateFilterDropdown.setAdapter(dateAdapter)
+        diseaseFilterDropdown.setAdapter(diseaseAdapter)
+
+        // Default = All
+        dateFilterDropdown.setText("All", false)
+        diseaseFilterDropdown.setText("All", false)
+
+        dateFilterDropdown.setOnItemClickListener { _, _, _, _ -> applyFilters() }
+        diseaseFilterDropdown.setOnItemClickListener { _, _, _, _ -> applyFilters() }
+    }
+
     private fun getPredictionHistory() {
         RetrofitClient.instance.getPredictionHistory(bearerToken).enqueue(object :
             Callback<List<PredictionHistoryResponse>> {
@@ -65,7 +116,10 @@ class HistoryActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful && response.body() != null) {
                     val historyList = response.body()!!
-                    listView.adapter = HistoryAdapter(this@HistoryActivity, historyList)
+                    historyAdapter = HistoryAdapter(this@HistoryActivity, historyList)
+                    listView.adapter = historyAdapter
+
+                    applyFilters()
                 } else {
                     Toast.makeText(this@HistoryActivity, "No history found or unauthorized.", Toast.LENGTH_SHORT).show()
                 }
@@ -75,5 +129,12 @@ class HistoryActivity : AppCompatActivity() {
                 Toast.makeText(this@HistoryActivity, "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun applyFilters() {
+        val selectedDate = dateFilterDropdown.text.toString()
+        val selectedDisease = diseaseFilterDropdown.text.toString()
+
+        historyAdapter?.applyFilter(selectedDisease, selectedDate)
     }
 }
