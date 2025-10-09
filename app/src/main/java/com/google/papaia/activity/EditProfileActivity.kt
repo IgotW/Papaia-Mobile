@@ -142,7 +142,7 @@ class EditProfileActivity : AppCompatActivity() {
     private fun showProfilePicture(url: String, blur: Boolean = false) {
         val glideRequest = Glide.with(this)
             .load(url)
-            .placeholder(R.drawable.userprofile)
+            .placeholder(R.drawable.default_profile)
 
         if (blur) {
             glideRequest
@@ -182,7 +182,7 @@ class EditProfileActivity : AppCompatActivity() {
                                 user.profilePicture?.let { url ->
                                     Glide.with(this@EditProfileActivity)
                                         .load(url)
-                                        .placeholder(R.drawable.userprofile)
+                                        .placeholder(R.drawable.default_profile)
                                         .transform(
                                             MultiTransformation(
                                                 BlurTransformation(2, 1), // 🔹 blur

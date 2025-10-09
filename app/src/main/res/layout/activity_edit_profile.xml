@@ -101,7 +101,7 @@
                     android:id="@+id/imageview_edit_profilepic"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:src="@drawable/userprofile"
+                    android:src="@drawable/default_profile"
                     android:scaleType="centerCrop"
                     android:layout_gravity="center"
                     android:clickable="true"/>

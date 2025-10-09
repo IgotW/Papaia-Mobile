@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.papaia.R
 import com.google.papaia.response.PredictionResponse
 import com.google.papaia.utils.RetrofitClient
@@ -45,6 +47,7 @@ class ScanFragment : Fragment() {
     private lateinit var previewView: PreviewView
     private lateinit var btnCapture: FrameLayout
     private lateinit var imageGallery: FrameLayout
+    private lateinit var galleryThumbnail: ShapeableImageView
     private lateinit var loadingOverlay: FrameLayout
     private lateinit var progressBar: ProgressBar
 
@@ -116,6 +119,7 @@ class ScanFragment : Fragment() {
             if (permissions.all { it.value }) {
                 // All permissions granted, start camera
                 previewView.post { startCamera() }
+                loadGalleryThumbnail()
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -222,12 +226,14 @@ class ScanFragment : Fragment() {
         if (!isHidden && allPermissionsGranted() && cameraProvider != null) {
             previewView.post { startCamera() }
         }
+        loadGalleryThumbnail()
     }
 
     private fun initViews(view: View) {
         previewView = view.findViewById(R.id.previewView)
         btnCapture = view.findViewById(R.id.btnCapture)
         imageGallery = view.findViewById(R.id.imageGallery)
+        galleryThumbnail = view.findViewById(R.id.galleryThumbnail)
         loadingOverlay = view.findViewById(R.id.loadingOverlay)
         progressBar = view.findViewById(R.id.progressBar)
 
@@ -289,6 +295,42 @@ class ScanFragment : Fragment() {
 //            cameraPermissionLauncher.launch(permission)
 //        }
 //    }
+
+    //new
+    private fun loadGalleryThumbnail() {
+        try {
+            val projection = arrayOf(
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DATE_ADDED
+            )
+
+            val sortOrder = "${MediaStore.Images.Media.DATE_ADDED} DESC"
+
+            requireContext().contentResolver.query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                projection,
+                null,
+                null,
+                sortOrder
+            )?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+                    val id = cursor.getLong(idColumn)
+                    val contentUri = Uri.withAppendedPath(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        id.toString()
+                    )
+
+                    requireActivity().runOnUiThread {
+                        galleryThumbnail.setImageURI(contentUri)
+                        galleryThumbnail.scaleType = ImageView.ScaleType.CENTER_CROP
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error loading gallery thumbnail: ${e.message}", e)
+        }
+    }
 
     private fun startCamera() {
         try {

@@ -62,9 +62,6 @@
             android:name=".activity.ChangePasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ScanActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.EditProfileActivity"
             android:exported="false" />
         <activity
@@ -93,12 +90,6 @@
             android:exported="false" />
         <activity
             android:name=".activity.ForgotPassword1Activity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.Register3Activity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.Register2Activity"
             android:exported="false" />
         <activity
             android:name=".activity.Register1Activity"

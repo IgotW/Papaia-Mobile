@@ -126,12 +126,24 @@
                 android:layout_marginLeft="-90dp"
                 android:layout_marginRight="50dp">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
+<!--                <ImageView-->
+<!--                    android:id="@+id/galleryThumbnail"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    android:src="@drawable/upload" />-->
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/galleryThumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/upload"
-                    android:tint="@android:color/white"/>
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    app:strokeColor="@color/primary"
+                    app:strokeWidth="2dp"/>
+
 
             </FrameLayout>
 

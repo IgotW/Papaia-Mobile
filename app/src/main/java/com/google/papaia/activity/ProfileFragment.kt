@@ -220,7 +220,7 @@ class ProfileFragment : Fragment() {
         if (!url.isNullOrEmpty()) {
             Glide.with(this)
                 .load(url)
-                .placeholder(R.drawable.userprofile)
+                .placeholder(R.drawable.default_profile)
                 .circleCrop()
                 .into(profilePic)
         }
