@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "199113935519",
+    "project_id": "papaia-faf06",
+    "storage_bucket": "papaia-faf06.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199113935519:android:1c8cfb87b09a5e8b52b0aa",
+        "android_client_info": {
+          "package_name": "com.google.papaia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEmoIYCpnT2IHKfOeVpekRKFsJBtxLxTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

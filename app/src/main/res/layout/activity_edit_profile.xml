@@ -644,6 +644,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="8dp"
                 app:boxCornerRadiusBottomStart="8dp"
@@ -651,6 +652,7 @@
                 app:boxCornerRadiusTopStart="8dp"
                 app:boxStrokeColor="#E0E0E0"
                 app:boxBackgroundColor="@android:color/white"
+                app:hintEnabled="false"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                 <AutoCompleteTextView
@@ -660,7 +662,11 @@
                     android:hint="Province"
                     android:inputType="none"
                     android:fontFamily="@font/league_spartan"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:padding="18dp"
+                    android:dropDownHeight="200dp"
+                    android:popupBackground="@android:color/white"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

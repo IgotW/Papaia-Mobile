@@ -7,6 +7,7 @@ import com.google.papaia.request.OtpRequest
 import com.google.papaia.request.PasswordChangeRequest
 import com.google.papaia.request.RegisterRequest
 import com.google.papaia.request.ResetPasswordRequest
+import com.google.papaia.request.UpdateFcmRequest
 import com.google.papaia.response.ApiResponse
 import com.google.papaia.response.ChangePasswordResponse
 import com.google.papaia.response.LoginResponse
@@ -17,6 +18,7 @@ import com.google.papaia.response.UserResponse
 import com.google.papaia.response.DailyAnalyticsResponse
 import com.google.papaia.response.DailyTipResponse
 import com.google.papaia.response.FarmDetailsResponse
+import com.google.papaia.response.FcmResponse
 import com.google.papaia.response.IdentificationStatsResponse
 import com.google.papaia.response.PredictionHistoryResponse
 import com.google.papaia.response.ScanResult
@@ -83,7 +85,7 @@ interface ApiService {
 
     @GET("/api/farmer/daily-tip")
     fun getDailyTip(
-        @Header("Authorization") bearerToken: String
+        @Header("Authorization") token: String
     ): Call<TipResponse>
 
     @GET("/api/farmer/stats")
@@ -96,6 +98,17 @@ interface ApiService {
         @Header("Authorization") bearerToken: String,
         @Body body: LatLonRequest
     ): Call<TipResponse>
+
+    @POST("api/farmer/update-fcm-token")
+    fun updateFcmToken(
+        @Header("Authorization") auth: String,
+        @Body body: UpdateFcmRequest
+    ): Call<FcmResponse>
+    // fallback if you cannot supply Authorization header (backend accepts farmerId in body)
+    @POST("api/farmer/update-fcm-token")
+    fun updateFcmTokenNoAuth(
+        @Body body: UpdateFcmRequest
+    ): Call<Void>
 
     @POST("/api/user")
     fun registerUser(

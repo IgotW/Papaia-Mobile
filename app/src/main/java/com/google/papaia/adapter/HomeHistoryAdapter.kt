@@ -18,6 +18,8 @@ import java.util.Locale
 
 class HomeHistoryAdapter(private val context: Context, private val items: List<PredictionHistoryResponse>)
     : BaseAdapter() {
+
+
     override fun getCount(): Int = items.size
 
     override fun getItem(position: Int): Any = items[position]

@@ -13,9 +13,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.papaia.MyApp
 import com.google.papaia.R
 import com.google.papaia.request.LoginRequest
+import com.google.papaia.request.UpdateFcmRequest
+import com.google.papaia.response.FcmResponse
 import com.google.papaia.response.LoginResponse
 import com.google.papaia.utils.RetrofitClient
 import com.google.papaia.utils.SecurePrefsHelper
@@ -147,8 +150,100 @@ class LoginActivity : AppCompatActivity() {
             apply()
         }
 
+
+        // ✅ Get FCM token and send to backend
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                Log.w("FCM", "Fetching FCM token failed", task.exception)
+//                return@addOnCompleteListener
+//            }
+//            val fcmToken = task.result
+//            Log.d("FCM", "Device FCM token: $fcmToken")
+//
+//            getSharedPreferences("prefs", MODE_PRIVATE).edit().putString("fcmToken", fcmToken).apply()
+//
+//            val prefs = getSharedPreferences("prefs", MODE_PRIVATE)
+//            val latF = prefs.getFloat("last_lat", 0f)
+//            val lonF = prefs.getFloat("last_lon", 0f)
+//            val lat: Double? = if (latF != 0f) latF.toDouble() else null
+//            val lon: Double? = if (lonF != 0f) lonF.toDouble() else null
+//
+//            val jwt = SecurePrefsHelper.getToken(this)
+//            val userId = user?.id
+//
+//            val req = UpdateFcmRequest(fcmToken, lat, lon, userId)
+//
+//            if (!jwt.isNullOrEmpty()) {
+//                RetrofitClient.instance.updateFcmToken("Bearer $jwt", req)
+//                    .enqueue(object : Callback<Void> {
+//                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+//                            Log.d("FCM", "updateFcmToken success code=${response.code()}")
+//                        }
+//                        override fun onFailure(call: Call<Void>, t: Throwable) {
+//                            Log.e("FCM", "updateFcmToken failed: ${t.message}")
+//                        }
+//                    })
+//            } else if (!userId.isNullOrEmpty()) {
+//                // fallback: no auth header
+//                RetrofitClient.instance.updateFcmTokenNoAuth(req)
+//                    .enqueue(object : Callback<Void> {
+//                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+//                            Log.d("FCM", "updateFcmTokenNoAuth success code=${response.code()}")
+//                        }
+//                        override fun onFailure(call: Call<Void>, t: Throwable) {
+//                            Log.e("FCM", "updateFcmTokenNoAuth failed: ${t.message}")
+//                        }
+//                    })
+//            }
+//        }
+
+        // ✅ Send FCM token + location to backend
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FCM", "Fetching FCM token failed", task.exception)
+                return@addOnCompleteListener
+            }
+
+            val fcmToken = task.result ?: return@addOnCompleteListener
+            Log.d("FCM", "Device FCM token: $fcmToken")
+
+            val prefs = getSharedPreferences("prefs", MODE_PRIVATE)
+            val lat = prefs.getFloat("last_lat", 0f).takeIf { it != 0f }?.toDouble()
+            val lon = prefs.getFloat("last_lon", 0f).takeIf { it != 0f }?.toDouble()
+
+            val request = UpdateFcmRequest(user.id, fcmToken, lat ?: 0.0, lon ?: 0.0)
+            if (token.isNotEmpty()) {
+                RetrofitClient.instance.updateFcmToken("Bearer $token", request)
+                    .enqueue(object : Callback<FcmResponse> {
+                        override fun onResponse(call: Call<FcmResponse>, response: Response<FcmResponse>) {
+                            if (response.isSuccessful) {
+                                Log.d("FCM", "updateFcmToken success code=${response.code()}")
+                            } else {
+                                Log.e("FCM", "Server error: ${response.code()} - ${response.message()}")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<FcmResponse>, t: Throwable) {
+                            Log.e("FCM", "updateFcmToken failed: ${t.message}")
+                        }
+                    })
+            } else if (!user?.id.isNullOrEmpty()) {
+                // fallback: no auth header
+                RetrofitClient.instance.updateFcmTokenNoAuth(request)
+                    .enqueue(object : Callback<Void> {
+                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                            Log.d("FCM", "updateFcmTokenNoAuth success code=${response.code()}")
+                        }
+
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                            Log.e("FCM", "updateFcmTokenNoAuth failed: ${t.message}")
+                        }
+                    })
+            }
+        }
+
         // ✅ Schedule daily tip worker after login
-        MyApp.scheduleDailyTipWorker(this)
+//        MyApp.scheduleDailyTipWorker(this)
 
         // Navigate to proper dashboard
         if (user?.role == "farmer") {

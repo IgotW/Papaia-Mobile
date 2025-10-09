@@ -60,6 +60,9 @@ class ScanFragment : Fragment() {
 
     private var capturedUri: Uri? = null
 
+//    private var isViewReady = false
+    private var arePermissionsGranted = false
+
     // single-permission launcher (clearer)
 //    private val cameraPermissionLauncher =
 //        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -82,15 +85,71 @@ class ScanFragment : Fragment() {
 //        }
 
     // Launcher for multiple permissions
+//    private val requestPermissionsLauncher =
+//        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+//            val allGranted = permissions.all { it.value }
+//            if (allGranted) {
+//                previewView.post { startCamera() }
+//            } else {
+//                Toast.makeText(requireContext(), "Camera & Gallery permissions are required", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+
+//    private val requestPermissionsLauncher =
+//        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+//            arePermissionsGranted = permissions.all { it.value }
+//            if (!arePermissionsGranted) {
+//                Toast.makeText(requireContext(), "Camera & Gallery permissions are required", Toast.LENGTH_SHORT).show()
+//            } else {
+//                tryStartCamera()
+//            }
+//
+////            if (permissions.entries.all { it.value }) {
+////                startCamera()
+////            } else {
+////                Toast.makeText(requireContext(), "Permissions not granted", Toast.LENGTH_SHORT).show()
+////            }
+//        }
+
     private val requestPermissionsLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            val allGranted = permissions.all { it.value }
-            if (allGranted) {
+            if (permissions.all { it.value }) {
+                // All permissions granted, start camera
                 previewView.post { startCamera() }
             } else {
-                Toast.makeText(requireContext(), "Camera & Gallery permissions are required", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Camera & Gallery permissions are required",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
+
+//    private fun checkPermissions() {
+//        arePermissionsGranted = allPermissionsGranted()
+//        if (arePermissionsGranted) {
+//            previewView.post { startCamera() }
+//        } else {
+//            requestPermissionsLauncher.launch(REQUIRED_PERMISSIONS)
+//        }
+//    }
+
+    private fun checkPermissions() {
+        if (allPermissionsGranted()) {
+            // Permissions already granted, start camera immediately
+            previewView.post { startCamera() }
+        } else {
+            // Request permissions
+            requestPermissionsLauncher.launch(REQUIRED_PERMISSIONS)
+        }
+    }
+
+    private fun tryStartCamera() {
+        if (arePermissionsGranted) {
+            previewView.post { startCamera() }
+        }
+    }
+
 
     // Use this instead of single permission
     private fun checkPermissionsAndStart() {
@@ -100,6 +159,7 @@ class ScanFragment : Fragment() {
             requestPermissionsLauncher.launch(REQUIRED_PERMISSIONS)
         }
     }
+
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
@@ -113,7 +173,6 @@ class ScanFragment : Fragment() {
                 sendImageToApi(it) // directly upload
             }
         }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -130,6 +189,10 @@ class ScanFragment : Fragment() {
         setupClickListeners()
         cameraExecutor = Executors.newSingleThreadExecutor()
 
+
+//        isViewReady = true
+//        checkPermissions()
+
         // Check permission & start camera if already granted, otherwise ask
 //        checkPermissionsAndStart()
 
@@ -139,9 +202,26 @@ class ScanFragment : Fragment() {
         }
     }
 
+    // ✅ Add this new method - called when fragment becomes visible
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            // Fragment is now visible - start camera
+            checkPermissions()
+        } else {
+            // Fragment is hidden - optionally stop camera to save resources
+            cameraProvider?.unbindAll()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
-        checkPermissionsAndStart()
+//        checkPermissionsAndStart()
+//        checkPermissions()
+        // Only restart if fragment is visible and permissions granted
+        if (!isHidden && allPermissionsGranted() && cameraProvider != null) {
+            previewView.post { startCamera() }
+        }
     }
 
     private fun initViews(view: View) {

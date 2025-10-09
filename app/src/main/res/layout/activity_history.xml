@@ -60,7 +60,8 @@
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxBackgroundColor="@android:color/white"
+            app:boxBackgroundColor="@color/white"
+            app:hintTextColor="#757575"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
             <AutoCompleteTextView
@@ -87,6 +88,7 @@
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeColor="#E0E0E0"
             app:boxBackgroundColor="@android:color/white"
+            app:hintTextColor="#757575"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
             <AutoCompleteTextView

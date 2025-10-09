@@ -552,7 +552,7 @@
                         <ListView
                             android:id="@+id/listViewScanHistory"
                             android:layout_width="match_parent"
-                            android:layout_height="280dp"
+                            android:layout_height="wrap_content"
                             android:minHeight="180dp"
                             android:divider="@android:color/transparent"
                             android:scrollbars="none"
