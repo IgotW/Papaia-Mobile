@@ -104,8 +104,12 @@ class Register1Activity : AppCompatActivity() {
         role = intent?.getStringExtra("role") ?: ""
 
         button_signup.setOnClickListener {
+            Log.d("REGISTER_DEBUG", "Sign up button clicked")
             if (validateForm()) {
+                Log.d("REGISTER_DEBUG", "Form validated successfully")
                 registerUser()
+            } else {
+                Log.d("REGISTER_DEBUG", "Form validation failed")
             }
         }
         login.setOnClickListener {

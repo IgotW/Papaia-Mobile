@@ -66,53 +66,6 @@ class ScanFragment : Fragment() {
 //    private var isViewReady = false
     private var arePermissionsGranted = false
 
-    // single-permission launcher (clearer)
-//    private val cameraPermissionLauncher =
-//        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-//            Log.d(TAG, "cameraPermissionLauncher: granted=$granted")
-//            if (granted) {
-//                // ensure view has been laid out before starting camera
-//                previewView.post { startCamera() }
-//            } else {
-//                Toast.makeText(requireContext(), "Camera permission required", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//
-//    private val requestGalleryPermissionLauncher =
-//        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-//            if (isGranted) {
-//                galleryLauncher.launch("image/*")
-//            } else {
-//                Toast.makeText(requireContext(), "Permission denied to access gallery", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-
-    // Launcher for multiple permissions
-//    private val requestPermissionsLauncher =
-//        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-//            val allGranted = permissions.all { it.value }
-//            if (allGranted) {
-//                previewView.post { startCamera() }
-//            } else {
-//                Toast.makeText(requireContext(), "Camera & Gallery permissions are required", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-
-//    private val requestPermissionsLauncher =
-//        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-//            arePermissionsGranted = permissions.all { it.value }
-//            if (!arePermissionsGranted) {
-//                Toast.makeText(requireContext(), "Camera & Gallery permissions are required", Toast.LENGTH_SHORT).show()
-//            } else {
-//                tryStartCamera()
-//            }
-//
-////            if (permissions.entries.all { it.value }) {
-////                startCamera()
-////            } else {
-////                Toast.makeText(requireContext(), "Permissions not granted", Toast.LENGTH_SHORT).show()
-////            }
-//        }
 
     private val requestPermissionsLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -129,15 +82,6 @@ class ScanFragment : Fragment() {
             }
         }
 
-//    private fun checkPermissions() {
-//        arePermissionsGranted = allPermissionsGranted()
-//        if (arePermissionsGranted) {
-//            previewView.post { startCamera() }
-//        } else {
-//            requestPermissionsLauncher.launch(REQUIRED_PERMISSIONS)
-//        }
-//    }
-
     private fun checkPermissions() {
         if (allPermissionsGranted()) {
             // Permissions already granted, start camera immediately
@@ -148,21 +92,21 @@ class ScanFragment : Fragment() {
         }
     }
 
-    private fun tryStartCamera() {
-        if (arePermissionsGranted) {
-            previewView.post { startCamera() }
-        }
-    }
-
-
-    // Use this instead of single permission
-    private fun checkPermissionsAndStart() {
-        if (allPermissionsGranted()) {
-            previewView.post { startCamera() }
-        } else {
-            requestPermissionsLauncher.launch(REQUIRED_PERMISSIONS)
-        }
-    }
+//    private fun tryStartCamera() {
+//        if (arePermissionsGranted) {
+//            previewView.post { startCamera() }
+//        }
+//    }
+//
+//
+//    // Use this instead of single permission
+//    private fun checkPermissionsAndStart() {
+//        if (allPermissionsGranted()) {
+//            previewView.post { startCamera() }
+//        } else {
+//            requestPermissionsLauncher.launch(REQUIRED_PERMISSIONS)
+//        }
+//    }
 
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
@@ -265,36 +209,10 @@ class ScanFragment : Fragment() {
             }
 //            capturedUri?.let {sendImageToApi(it) }
         }
-
-//        imageGallery.setOnClickListener {
-//            val permission =
-//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-//                    Manifest.permission.READ_MEDIA_IMAGES
-//                } else {
-//                    Manifest.permission.READ_EXTERNAL_STORAGE
-//                }
-//
-//            if (ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED) {
-//                galleryLauncher.launch("image/*")
-//            } else {
-//                requestPermissionsLauncher.launch(REQUIRED_PERMISSIONS)
-//            }
-//        }
         imageGallery.setOnClickListener {
             galleryLauncher.launch("image/*")
         }
     }
-
-//    private fun checkCameraPermissionAndStart() {
-//        val permission = Manifest.permission.CAMERA
-//        if (ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED) {
-//            // start camera once layout is ready
-//            previewView.post { startCamera() }
-//        } else {
-//            Log.d(TAG, "Camera permission not granted; requesting.")
-//            cameraPermissionLauncher.launch(permission)
-//        }
-//    }
 
     //new
     private fun loadGalleryThumbnail() {
@@ -512,19 +430,6 @@ class ScanFragment : Fragment() {
         outputStream.close()
         return file
     }
-
-//    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-//        ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
-//    }
-
-//    private val requestPermissionLauncher =
-//        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-//            if (permissions.entries.all { it.value }) {
-//                startCamera()
-//            } else {
-//                Toast.makeText(requireContext(), "Permissions not granted", Toast.LENGTH_SHORT).show()
-//            }
-//        }
 
 
     private val outputDirectory: File

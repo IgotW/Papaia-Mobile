@@ -64,7 +64,9 @@
                 android:hint="Enter username"
                 android:fontFamily="@font/league_spartan"
                 android:textSize="16sp"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,7 +100,9 @@
                 android:hint="Enter email address"
                 android:inputType="textEmailAddress"
                 android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -134,7 +138,9 @@
                 android:hint="Enter password"
                 android:inputType="textPassword"
                 android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -196,7 +202,9 @@
                 android:hint="Confirm password"
                 android:inputType="textPassword"
                 android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -230,7 +238,9 @@
                 android:hint="Enter first name"
                 android:inputType="textPersonName"
                 android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -282,7 +292,9 @@
                 android:hint="Enter middle name"
                 android:inputType="textPersonName"
                 android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -316,7 +328,9 @@
                 android:hint="Enter last name"
                 android:inputType="textPersonName"
                 android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -341,6 +355,9 @@
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeColor="#E0E0E0"
             app:boxBackgroundColor="@android:color/white"
+            app:hintEnabled="false"
+            app:endIconMode="dropdown_menu"
+            app:endIconTint="@color/gray"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
             <AutoCompleteTextView
@@ -350,7 +367,9 @@
                 android:hint="Select suffix"
                 android:inputType="none"
                 android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -376,6 +395,7 @@
             app:boxStrokeColor="#E0E0E0"
             app:endIconMode="custom"
             app:endIconDrawable="@drawable/ic_calendar"
+            app:endIconTint="@color/gray"
             app:boxBackgroundColor="@android:color/white"
             app:hintEnabled="false">
 
@@ -388,7 +408,9 @@
                 android:focusable="false"
                 android:clickable="true"
                 android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -422,7 +444,9 @@
                 android:hint="Enter contact number"
                 android:inputType="phone"
                 android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -456,7 +480,9 @@
                 android:hint="Enter street address"
                 android:inputType="textPostalAddress"
                 android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -489,7 +515,9 @@
                 android:hint="Enter Barangay"
                 android:inputType="textPostalAddress"
                 android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -523,7 +551,9 @@
                 android:hint="Enter city or municipality"
                 android:inputType="text"
                 android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -570,7 +600,9 @@
                         android:hint="ZIP"
                         android:inputType="number"
                         android:fontFamily="@font/league_spartan"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/gray"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -603,6 +635,9 @@
                     app:boxCornerRadiusTopStart="8dp"
                     app:boxStrokeColor="#E0E0E0"
                     app:boxBackgroundColor="@android:color/white"
+                    app:hintEnabled="false"
+                    app:endIconMode="dropdown_menu"
+                    app:endIconTint="@color/gray"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                     <AutoCompleteTextView
@@ -612,7 +647,9 @@
                         android:hint="Province"
                         android:inputType="none"
                         android:fontFamily="@font/league_spartan"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/gray"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 

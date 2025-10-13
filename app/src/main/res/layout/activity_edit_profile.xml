@@ -562,19 +562,20 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Municipality and Zip Code Row -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="8dp"
+                android:text="Municipality"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                android:fontFamily="@font/league_spartan_semibold" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:layout_marginEnd="8dp"
                     app:boxBackgroundMode="outline"
+                    android:layout_marginBottom="20dp"
                     app:boxCornerRadiusBottomEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
@@ -590,7 +591,7 @@
                         android:id="@+id/edittext_edit_municipality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Municipality/City"
+                        android:hint="Municipality"
                         android:inputType="text"
                         android:textSize="16sp"
                         android:padding="18dp"
@@ -599,76 +600,106 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <!-- ZIP Code -->
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusBottomEnd="12dp"
-                    app:boxCornerRadiusBottomStart="12dp"
-                    app:boxCornerRadiusTopEnd="12dp"
-                    app:boxCornerRadiusTopStart="12dp"
-                    app:boxBackgroundColor="@android:color/white"
-                    app:boxStrokeColor="#E0E0E0"
-                    app:boxStrokeWidth="1dp"
-                    app:boxStrokeWidthFocused="2dp"
-                    app:hintTextColor="@color/primary"
-                    app:hintEnabled="false">
+                    android:orientation="vertical"
+                    android:layout_marginEnd="8dp">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edittext_edit_zipcode"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="ZIP Code"
+                        android:textColor="#333333"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/league_spartan_semibold" />
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="ZIP Code"
-                        android:inputType="number"
-                        android:textSize="16sp"
-                        android:padding="18dp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/league_spartan" />
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="8dp"
+                        app:boxCornerRadiusBottomStart="8dp"
+                        app:boxCornerRadiusTopEnd="8dp"
+                        app:boxCornerRadiusTopStart="8dp"
+                        app:boxStrokeColor="#E0E0E0"
+                        app:boxBackgroundColor="@android:color/white"
+                        app:hintEnabled="false">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edittext_edit_zipcode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="ZIP"
+                            android:inputType="number"
+                            android:fontFamily="@font/league_spartan"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <!-- Province -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Province"
+                        android:textColor="#333333"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/league_spartan_semibold" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="8dp"
+                        app:boxCornerRadiusBottomStart="8dp"
+                        app:boxCornerRadiusTopEnd="8dp"
+                        app:boxCornerRadiusTopStart="8dp"
+                        app:boxStrokeColor="#E0E0E0"
+                        app:boxBackgroundColor="@android:color/white"
+                        app:hintEnabled="false"
+                        app:endIconMode="dropdown_menu"
+                        app:endIconTint="@color/gray"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/edittext_edit_province"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Province"
+                            android:inputType="none"
+                            android:fontFamily="@font/league_spartan"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:padding="18dp"
+                            android:dropDownHeight="200dp"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <!-- Province Field -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Province"
-                android:textColor="#333333"
-                android:textSize="16sp"
-                android:fontFamily="@font/league_spartan_semibold" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                app:boxBackgroundMode="outline"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp"
-                app:boxStrokeColor="#E0E0E0"
-                app:boxBackgroundColor="@android:color/white"
-                app:hintEnabled="false"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-                <AutoCompleteTextView
-                    android:id="@+id/edittext_edit_province"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Province"
-                    android:inputType="none"
-                    android:fontFamily="@font/league_spartan"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:padding="18dp"
-                    android:dropDownHeight="200dp"
-                    android:popupBackground="@android:color/white"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
