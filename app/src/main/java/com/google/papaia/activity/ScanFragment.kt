@@ -92,23 +92,6 @@ class ScanFragment : Fragment() {
         }
     }
 
-//    private fun tryStartCamera() {
-//        if (arePermissionsGranted) {
-//            previewView.post { startCamera() }
-//        }
-//    }
-//
-//
-//    // Use this instead of single permission
-//    private fun checkPermissionsAndStart() {
-//        if (allPermissionsGranted()) {
-//            previewView.post { startCamera() }
-//        } else {
-//            requestPermissionsLauncher.launch(REQUIRED_PERMISSIONS)
-//        }
-//    }
-
-
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }

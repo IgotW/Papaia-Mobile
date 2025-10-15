@@ -54,6 +54,7 @@ import com.google.papaia.response.FarmDetailsResponse
 import com.google.papaia.response.FcmResponse
 import com.google.papaia.response.IdentificationStatsResponse
 import com.google.papaia.response.PredictionHistoryResponse
+import com.google.papaia.response.SummaryResponse
 import com.google.papaia.response.TipResponse
 import com.google.papaia.response.TodaysPredictionResponse
 import com.google.papaia.utils.CustomMarkerView
@@ -177,31 +178,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Calculate delay until next 6AM
-//        val now = Calendar.getInstance()
-//        val target = Calendar.getInstance().apply {
-//            set(Calendar.HOUR_OF_DAY, 6)
-//            set(Calendar.MINUTE, 0)
-//            set(Calendar.SECOND, 0)
-//            if (before(now)) {
-//                add(Calendar.DAY_OF_YEAR, 1)
-//            }
-//        }
-//        val initialDelay = target.timeInMillis - now.timeInMillis
-//
-//        // Schedule daily job
-//        val workRequest = PeriodicWorkRequestBuilder<DailyTipWorker>(1, TimeUnit.DAYS)
-//            .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
-//            .build()
-//
-//        WorkManager.getInstance(requireContext())
-//            .enqueueUniquePeriodicWork(
-//                "DailyTipWork",
-//                ExistingPeriodicWorkPolicy.UPDATE,
-//                workRequest
-//            )
-
-
         initViews(view)
 
         // Get username from SharedPreferences
@@ -245,6 +221,7 @@ class HomeFragment : Fragment() {
         countHealthy = view.findViewById(R.id.txtview_count_healthy)
         countDiseased = view.findViewById(R.id.txtview_count_diseased)
         imageProfile = view.findViewById(R.id.profile_image)
+        analytics_summary = view.findViewById(R.id.txtview_analytics_summary)
 
         lineChart = view.findViewById(R.id.lineChart)
 
@@ -352,24 +329,6 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        // Load cached tip first (in case FCM sent one while app was closed)
-//        val prefs = requireContext().getSharedPreferences("prefs", Context.MODE_PRIVATE)
-//        val cachedTip = prefs.getString("last_tip", null)
-//        if (!cachedTip.isNullOrEmpty()) {
-//            txtDailyTips.text = cachedTip
-//        }
-//
-//        getFarmDetails(bearerToken)
-//
-////        fetchLocationAndGenerateTip(bearerToken)
-////        fetchDailyTip(bearerToken)
-//        getCountScans(bearerToken)
-//        getDailyAnalytics(bearerToken)
-//        getStats()
-//        getPredictionHistory()
-//        updateProfileImage()
-//        updateFcmToken()
-
         // ✅ UPDATED: Load data in proper order
         loadCachedData()
 //        loadServerData()
@@ -409,8 +368,11 @@ class HomeFragment : Fragment() {
         getDailyAnalytics(bearerToken)
         getStats()
         getPredictionHistory()
+
+        getFiveDaysSummary()
     }
 
+    /** Showing Profile Image at the top **/
     private fun updateProfileImage() {
         val prefs = requireContext().getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val profileImage = prefs.getString("profileImage", "")
@@ -422,6 +384,34 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /** Fetching Analytics Summary **/
+    private fun getFiveDaysSummary() {
+        val call = RetrofitClient.instance.getFiveDaysSummary(bearerToken)
+
+        call.enqueue(object : Callback<SummaryResponse> {
+            override fun onResponse(
+                call: Call<SummaryResponse>,
+                response: Response<SummaryResponse>
+            ) {
+                if (response.isSuccessful && response.body() != null) {
+                    val summaryData = response.body()!!
+                    analytics_summary.text = summaryData.summary
+
+                    Log.d("FiveDaysSummary", "Summary loaded: ${summaryData.summary}")
+                } else {
+                    analytics_summary.text = "Unable to load summary at this time."
+                    Log.e("FiveDaysSummary", "Error: ${response.code()} - ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<SummaryResponse>, t: Throwable) {
+                analytics_summary.text = "Failed to load summary."
+                Log.e("FiveDaysSummary", "Exception: ${t.message}")
+            }
+        })
+    }
+
+    /** Fetching Daily Tip **/
     private fun fetchHybridDailyTip() {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
@@ -460,45 +450,6 @@ class HomeFragment : Fragment() {
             updateFcmToken(null, null)
         }
     }
-
-//    private fun fetchHybridDailyTip() {
-//        if (ActivityCompat.checkSelfPermission(
-//                requireContext(),
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            ) == PackageManager.PERMISSION_GRANTED
-//        ) {
-//            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-//                if (location != null) {
-//                    val prefs = requireContext().getSharedPreferences("prefs", Context.MODE_PRIVATE)
-//                    prefs.edit().putFloat("last_lat", location.latitude.toFloat())
-//                        .putFloat("last_lon", location.longitude.toFloat())
-//                        .apply()
-//                    generateDailyTip(location.latitude, location.longitude)
-//                } else {
-//                    fetchDailyTip(bearerToken)
-//                }
-//            }
-//        } else {
-//            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
-//        }
-//
-//    }
-
-    //TEMPO COMMENTED OUT
-
-
-//
-////    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-////        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-////        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-////            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-////                fetchHybridDailyTip()
-////            } else {
-////                Toast.makeText(requireContext(), "Location permission is required for daily tips", Toast.LENGTH_SHORT).show()
-////                fetchDailyTip(bearerToken) // ✅ pass the token here too
-////            }
-////        }
-////    }
 
     /** ---------------- For notification daily tip (START) ---------------- **/
     private fun generateDailyTip(lat: Double, lon: Double) {
@@ -694,6 +645,7 @@ class HomeFragment : Fragment() {
 //    }
 
 
+    /** Fetching Farm Details **/
     private fun getFarmDetails(token: String) {
         if (token != null) {
             RetrofitClient.instance.getFarmDetails(token)
@@ -723,7 +675,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-
+    /** Fetching Daily Analytics **/
     private fun getDailyAnalytics(token: String){
         RetrofitClient.instance.getDailyAnalytics(token).enqueue(object : Callback<DailyAnalyticsResponse> {
             override fun onResponse(
@@ -985,6 +937,9 @@ class HomeFragment : Fragment() {
         listView.requestLayout()
     }
 
+    /** ---------END CHART SETUP **/
+
+    /** Fetching Prediction History **/
     private fun getPredictionHistory() {
         RetrofitClient.instance.getPredictionHistory(bearerToken).enqueue(object :
             Callback<List<PredictionHistoryResponse>> {
@@ -1020,6 +975,7 @@ class HomeFragment : Fragment() {
         })
     }
 
+    /** Fetching Scan Counting **/
     private fun getCountScans(token: String){
         RetrofitClient.instance.getTodaysPredictionsCount(bearerToken)
             .enqueue(object : Callback<TodaysPredictionResponse> {
@@ -1048,8 +1004,10 @@ class HomeFragment : Fragment() {
         getCountScans(bearerToken)
         getDailyAnalytics(bearerToken)
         getPredictionHistory()
+        getFiveDaysSummary()
     }
 
+    /** Fetching Scan Counting **/
     private fun getStats(){
         RetrofitClient.instance.getFarmerIdentificationStats(bearerToken)
             .enqueue(object : Callback<IdentificationStatsResponse> {

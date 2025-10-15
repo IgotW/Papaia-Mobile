@@ -22,6 +22,7 @@ import com.google.papaia.response.FcmResponse
 import com.google.papaia.response.IdentificationStatsResponse
 import com.google.papaia.response.PredictionHistoryResponse
 import com.google.papaia.response.ScanResult
+import com.google.papaia.response.SummaryResponse
 import com.google.papaia.response.TipResponse
 import com.google.papaia.response.TodaysPredictionResponse
 import com.google.papaia.response.UploadResponse
@@ -92,6 +93,11 @@ interface ApiService {
     fun getFarmerIdentificationStats(
         @Header("Authorization") token: String
     ): Call<IdentificationStatsResponse>
+
+    @GET("/api/farmer/last-five-days-summary")
+    fun getFiveDaysSummary(
+        @Header("Authorization") token: String
+    ): Call<SummaryResponse>
 
     @POST("/api/farmer/daily-tip")
     fun generateDailyTip(
