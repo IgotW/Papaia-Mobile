@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/login_background" />
+        android:src="@drawable/papaia_login_image" />
 
     <!-- Foreground content inside ScrollView -->
     <ScrollView
@@ -104,7 +104,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 app:boxBackgroundMode="filled"
-                app:boxBackgroundColor="#FFFFFF"
+                app:boxBackgroundColor="@color/white"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
@@ -113,9 +113,9 @@
                 app:boxStrokeColor="@color/quarternary"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="2dp"
-                app:hintTextColor="@color/quarternary"
+                app:hintTextColor="@color/black"
                 app:startIconDrawable="@drawable/emailsmall"
-                app:startIconTint="@color/quarternary"
+                app:startIconTint="#9CA3AF"
                 app:expandedHintEnabled="true"
                 app:hintEnabled="true"
                 app:hintAnimationEnabled="true">
@@ -124,7 +124,7 @@
                     android:id="@+id/login_edittext_username"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:textColor="@color/quarternary"
+                    android:textColor="@color/black"
                     android:textColorHint="#757575"
                     android:textSize="16sp"
                     android:fontFamily="@font/league_spartan"
@@ -142,7 +142,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 app:boxBackgroundMode="filled"
-                app:boxBackgroundColor="#FFFFFF"
+                app:boxBackgroundColor="@color/white"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
@@ -151,11 +151,11 @@
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="2dp"
                 android:textColorHint="#A8A7A7"
-                app:hintTextColor="@color/quarternary"
+                app:hintTextColor="@color/black"
                 app:startIconDrawable="@drawable/lock"
-                app:startIconTint="@color/quarternary"
+                app:startIconTint="#9CA3AF"
                 app:endIconMode="password_toggle"
-                app:endIconTint="@color/quarternary"
+                app:endIconTint="#9CA3AF"
                 app:expandedHintEnabled="true"
                 app:hintEnabled="true"
                 app:hintAnimationEnabled="true">
@@ -164,7 +164,7 @@
                     android:id="@+id/login_edittext_password"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:textColor="@color/quarternary"
+                    android:textColor="@color/black"
                     android:textColorHint="#A8A7A7"
                     android:textSize="16sp"
                     android:fontFamily="@font/league_spartan"
@@ -206,7 +206,20 @@
                     android:background="@drawable/button_rounded"
                     app:cornerRadius="12dp"
                     app:rippleColor="#FF8A61"
-                    app:backgroundTint="@color/tertiary" />
+                    app:backgroundTint="@color/tertiary"
+                    app:icon="@drawable/ic_farm2"
+                    app:iconTint="@color/white"
+                    android:paddingLeft="90dp"
+                    android:paddingRight="90dp"/>
+
+                <ImageView
+                    android:id="@+id/login_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_farm2"
+                    android:tint="@color/white"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="25dp" />
 
                 <!-- ProgressBar on top of button -->
                 <ProgressBar

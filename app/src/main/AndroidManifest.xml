@@ -34,11 +34,6 @@
             android:name=".activity.ScanResultDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.HistoryDetailActivity"
-            android:exported="false" /> <!-- <activity -->
-        <!-- android:name=".activity.HomeHistoryActivity" -->
-        <!-- android:exported="false" /> -->
-        <activity
             android:name=".activity.HistoryActivity"
             android:exported="false" />
         <activity
@@ -46,12 +41,6 @@
             android:exported="false" />
         <activity
             android:name=".activity.TermsConditionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.PrivacyPolicyActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.ContactUsActivity"
             android:exported="false" />
         <activity
             android:name=".activity.AboutActivity"

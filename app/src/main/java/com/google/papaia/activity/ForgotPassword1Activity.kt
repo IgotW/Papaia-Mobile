@@ -37,7 +37,6 @@ class ForgotPassword1Activity : AppCompatActivity() {
         val editTextEmail = findViewById<TextInputEditText>(R.id.edittext_fg1_email)
         val buttonSend = findViewById<MaterialButton>(R.id.button_fg1_send)
         val tvSignIn = findViewById<TextView>(R.id.tv_sign_in)
-        val tvContactSupport = findViewById<TextView>(R.id.tv_contact_support)
 
         buttonSend.setOnClickListener {
             val email = editTextEmail.text.toString().trim()
@@ -97,12 +96,6 @@ class ForgotPassword1Activity : AppCompatActivity() {
         tvSignIn.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
-        }
-
-        // Handle Contact Support link
-        tvContactSupport.setOnClickListener {
-            // TODO: Implement contact support functionality
-            Toast.makeText(this, "Contact support feature coming soon", Toast.LENGTH_SHORT).show()
         }
     }
 }

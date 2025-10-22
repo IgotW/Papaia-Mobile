@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp"
-    android:background="#F5F5F5">
+    android:background="@color/white">
 
     <!-- Header Section -->
     <LinearLayout
@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="60dp"
-        android:layout_marginBottom="40dp">
+        android:layout_marginBottom="40dp"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="match_parent"
@@ -42,7 +43,8 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:background="@color/white">
 
         <!-- Farmer Card -->
         <com.google.android.material.card.MaterialCardView

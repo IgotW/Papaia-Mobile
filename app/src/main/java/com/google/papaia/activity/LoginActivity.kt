@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -34,6 +37,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var registerLink: TextView
     private lateinit var forgotPasswordLink: TextView
     private lateinit var progressBar: ProgressBar
+    private lateinit var loginIcon: ImageView
+
+    private var loginSuccess = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +73,8 @@ class LoginActivity : AppCompatActivity() {
         registerLink = findViewById(R.id.txtview_register)
         forgotPasswordLink = findViewById(R.id.txtview_login_forgotpass)
         progressBar = findViewById(R.id.login_progress_bar)
+        loginIcon = findViewById(R.id.login_icon)
+
     }
 
     private fun setupListeners() {
@@ -92,18 +100,23 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
+        loginSuccess = false
         setLoading(true)
 
         val loginRequest = LoginRequest(username, password)
         RetrofitClient.instance.login(loginRequest).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                setLoading(false)
 
                 if (response.isSuccessful && response.body() != null) {
+//                    handleLoginSuccess(response.body()!!)
+                    loginSuccess = true
                     handleLoginSuccess(response.body()!!)
                 } else {
+//                    handleLoginError(response)
+                    loginSuccess = false
                     handleLoginError(response)
                 }
+                setLoading(false)
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
@@ -114,11 +127,87 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
+//    private fun setLoading(isLoading: Boolean) {
+//        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+//        loginButton.text = if (isLoading) "" else getString(R.string.login)
+//        loginButton.isEnabled = !isLoading
+//    }
+
+//    private fun setLoading(isLoading: Boolean) {
+//        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+//        loginButton.text = if (isLoading) "" else getString(R.string.login)
+//        loginButton.isEnabled = !isLoading
+//
+//        if (isLoading) {
+//            // Animate icon from left → right
+//            loginIcon.animate()
+//                .translationXBy(150f) // move horizontally
+//                .setDuration(700)
+//                .withEndAction {
+//                    loginIcon.animate().translationXBy(-150f).setDuration(700).start()
+//                }
+//                .start()
+//        } else {
+//            // Reset icon position
+//            loginIcon.animate().cancel()
+//            loginIcon.translationX = 0f
+//        }
+//    }
+
     private fun setLoading(isLoading: Boolean) {
-        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+//        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         loginButton.text = if (isLoading) "" else getString(R.string.login)
         loginButton.isEnabled = !isLoading
+        loginButton.icon = null
+
+        if (isLoading) {
+            // Reset before animating
+            loginIcon.visibility = View.VISIBLE
+            loginIcon.alpha = 1f
+            loginIcon.translationX = 0f
+            loginIcon.animate().cancel()
+
+            // Animate icon to slowly move right
+            loginButton.post {
+                val endX = loginButton.width - loginIcon.width - 60f
+                val duration = 2500L // slow smooth slide
+                loginButton.icon?.alpha = 255
+
+                loginIcon.animate()
+                    .translationX(endX)
+                    .setDuration(duration)
+                    .setInterpolator(DecelerateInterpolator())
+                    .withEndAction { loginButton.icon = null }
+                    .start()
+            }
+
+        } else {
+            if (loginSuccess) {
+                // If success → fade out smoothly
+                loginIcon.animate()
+                    .alpha(0f)
+                    .translationXBy(loginButton.width.toFloat() - 200f)
+                    .setDuration(600L)
+                    .setInterpolator(DecelerateInterpolator())
+                    .withEndAction {
+                        loginIcon.visibility = View.GONE
+                        loginIcon.translationX = 0f
+                    }
+                    .start()
+            } else {
+                // If failed → move back to start
+                loginButton.icon = getDrawable(R.drawable.ic_farm2)
+                loginButton.iconTint = getColorStateList(R.color.white)
+
+                loginIcon.animate()
+                    .translationX(0f)
+                    .setDuration(800L)
+                    .setInterpolator(AccelerateInterpolator())
+                    .start()
+            }
+        }
     }
+
 
     private fun handleLoginSuccess(loginResponse: LoginResponse) {
         val token = loginResponse.token ?: ""

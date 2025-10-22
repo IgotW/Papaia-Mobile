@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.HistoryActivity"
-    android:orientation="vertical"
-    android:background="#F5F5F5">
+    android:orientation="vertical">
 
     <!-- Toolbar -->
     <LinearLayout
@@ -31,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Settings"
+            android:text="Scan Log History"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -51,6 +50,7 @@
 
         <!-- Disease Filter -->
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_disease"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -62,13 +62,14 @@
             app:boxStrokeColor="#E0E0E0"
             app:boxBackgroundColor="@color/white"
             app:hintTextColor="#757575"
+            app:endIconTint="#757575"
+            android:hint="Disease"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_disease_filter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Disease"
                 android:inputType="none"
                 android:fontFamily="@font/league_spartan"
                 android:textSize="16sp"
@@ -77,6 +78,7 @@
 
         <!-- Date Filter -->
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -89,6 +91,7 @@
             app:boxStrokeColor="#E0E0E0"
             app:boxBackgroundColor="@android:color/white"
             app:hintTextColor="#757575"
+            app:endIconTint="#757575"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
             <AutoCompleteTextView
@@ -107,6 +110,7 @@
         android:id="@+id/listViewPredictions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp"/>
+        android:padding="20dp"
+        android:background="@color/white"/>
 
 </LinearLayout>

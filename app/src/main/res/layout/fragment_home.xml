@@ -239,8 +239,9 @@
                         android:text="Today's Analytics"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:layout_marginBottom="16dp"/>
+                        android:textSize="20sp"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/league_spartan_semibold"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -350,7 +351,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/league_spartan"
+                            android:textSize="14sp"/>
 
                     </LinearLayout>
                 </LinearLayout>

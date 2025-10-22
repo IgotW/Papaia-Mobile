@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.EditProfileActivity"
-    android:orientation="vertical"
-    android:background="@android:color/white">
+    android:orientation="vertical">
 
     <!-- Header with back button -->
     <LinearLayout
@@ -15,7 +14,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/btn_back"
@@ -44,52 +44,14 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp">
-
-            <!-- Profile Picture Section -->
-<!--            <FrameLayout-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center">-->
-
-<!--                &lt;!&ndash; Profile Picture &ndash;&gt;-->
-<!--                <de.hdodenhof.circleimageview.CircleImageView-->
-<!--                    android:id="@+id/imageview_edit_profilepic"-->
-<!--                    android:layout_width="120dp"-->
-<!--                    android:layout_height="120dp"-->
-<!--                    android:src="@drawable/userprofile"-->
-<!--                    android:scaleType="centerCrop"-->
-<!--                    android:layout_gravity="center" />-->
-
-<!--                &lt;!&ndash; Blur Overlay (same size as profile picture) &ndash;&gt;-->
-<!--                <View-->
-<!--                    android:id="@+id/overlay_blur"-->
-<!--                    android:layout_width="120dp"-->
-<!--                    android:layout_height="120dp"-->
-<!--                    android:background="#80000000"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:clickable="true"-->
-<!--                    android:focusable="true"-->
-<!--                    android:visibility="gone" />-->
-
-<!--                &lt;!&ndash; Change Photo Button &ndash;&gt;-->
-<!--                <ImageView-->
-<!--                    android:id="@+id/btn_change_photo"-->
-<!--                    android:layout_width="32dp"-->
-<!--                    android:layout_height="32dp"-->
-<!--                    android:layout_gravity="bottom|end"-->
-<!--                    android:layout_margin="4dp"-->
-<!--                    android:background="@drawable/camera_button_selector"-->
-<!--                    android:padding="6dp"-->
-<!--                    android:src="@drawable/camera"-->
-<!--                    android:tint="@android:color/white" />-->
-<!--            </FrameLayout>-->
 
             <FrameLayout
                 android:layout_width="wrap_content"

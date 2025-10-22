@@ -34,8 +34,6 @@ class ScanResultDetailsActivity : AppCompatActivity() {
     private lateinit var treatmentButton: MaterialButton
     private lateinit var treatmentTextView: TextView
     private lateinit var treatmentCard: androidx.cardview.widget.CardView
-    private lateinit var scanAgainButton: MaterialButton
-    private lateinit var viewHistoryButton: MaterialButton
 
     private var currentScanResult: ScanResult? = null
     private var isExpanded = false
@@ -66,7 +64,6 @@ class ScanResultDetailsActivity : AppCompatActivity() {
 
     private fun initViews() {
         backButton = findViewById(R.id.backButton)
-        shareButton = findViewById(R.id.shareButton)
         plantImage = findViewById(R.id.plantImage)
         diseaseStatus = findViewById(R.id.diseaseStatus)
         diseaseName = findViewById(R.id.diseaseName)
@@ -74,8 +71,6 @@ class ScanResultDetailsActivity : AppCompatActivity() {
         treatmentButton = findViewById(R.id.treatmentButton)
         treatmentTextView = findViewById(R.id.treatmentTextView)
         treatmentCard = findViewById(R.id.treatmentCard)
-        scanAgainButton = findViewById(R.id.scanAgainButton)
-        viewHistoryButton = findViewById(R.id.viewHistoryButton)
     }
 
     private fun fetchPredictionData(predictionId: String, tokenId: String) {
@@ -198,17 +193,6 @@ class ScanResultDetailsActivity : AppCompatActivity() {
         }
     }
 
-//    private fun formatSuggestions(suggestion: String?): String {
-//        if (suggestion.isNullOrBlank()) {
-//            return "No treatment suggestions available."
-//        }
-//
-//        // Example formatting
-//        return suggestion
-//            .replace("## ", "")   // safe now
-//            .replace("*", "•")
-//    }
-
     //String -> CharSequence
     private fun formatSuggestions(suggestion: String?): CharSequence {
         if (suggestion.isNullOrBlank()) {
@@ -296,43 +280,10 @@ class ScanResultDetailsActivity : AppCompatActivity() {
         }
     }
 
-//    private fun createStepDrawable(context: Context, number: Int): Drawable {
-//        val size = 80 // px
-//        val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
-//        val canvas = Canvas(bitmap)
-//
-//        // Draw circle
-//        val paintCircle = Paint().apply {
-//            color = Color.parseColor("#0B6E4F") // dark green
-//            isAntiAlias = true
-//        }
-//        canvas.drawCircle(size / 2f, size / 2f, size / 2f, paintCircle)
-//
-//        // Draw number
-//        val paintText = Paint().apply {
-//            color = Color.WHITE
-//            textSize = 36f
-//            textAlign = Paint.Align.CENTER
-//            isAntiAlias = true
-//        }
-//        val yPos = (canvas.height / 2 - (paintText.descent() + paintText.ascent()) / 2)
-//        canvas.drawText(number.toString(), size / 2f, yPos, paintText)
-//
-//        return BitmapDrawable(context.resources, bitmap)
-//    }
-
 
     private fun setupClickListeners() {
         backButton.setOnClickListener {
             finish()
-        }
-
-        shareButton.setOnClickListener {
-            currentScanResult?.let {
-                shareResult(it)
-            } ?: run {
-                Toast.makeText(this, "No data to share", Toast.LENGTH_SHORT).show()
-            }
         }
 
 //        treatmentButton.setOnClickListener {
@@ -348,19 +299,6 @@ class ScanResultDetailsActivity : AppCompatActivity() {
 //        }
         treatmentButton.setOnClickListener {
             toggleTreatmentCard()
-        }
-
-
-
-        scanAgainButton.setOnClickListener {
-            // Navigate back to camera/scan activity
-            finish()
-        }
-
-        viewHistoryButton.setOnClickListener {
-            // Navigate to history activity
-            Toast.makeText(this, "Opening scan history...", Toast.LENGTH_SHORT).show()
-            // startActivity(Intent(this, HistoryActivity::class.java))
         }
     }
 

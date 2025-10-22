@@ -1,7 +1,9 @@
 package com.google.papaia.activity
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.gesture.Prediction
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -32,6 +34,9 @@ class HistoryActivity : AppCompatActivity() {
     private lateinit var dateFilterDropdown: AutoCompleteTextView
     private lateinit var diseaseFilterDropdown: AutoCompleteTextView
 
+    private lateinit var layout_disease: TextInputLayout
+    private lateinit var layout_date: TextInputLayout
+
     private var historyAdapter: HistoryAdapter? = null
     private var historyList: List<PredictionHistoryResponse> = emptyList()
 
@@ -44,6 +49,11 @@ class HistoryActivity : AppCompatActivity() {
 
         dateFilterDropdown = findViewById(R.id.dropdown_date_filter)
         diseaseFilterDropdown = findViewById(R.id.dropdown_disease_filter)
+        layout_disease = findViewById(R.id.layout_disease)
+        layout_date = findViewById(R.id.layout_date)
+
+        layout_disease.defaultHintTextColor = ColorStateList.valueOf(Color.BLACK)
+        layout_date.defaultHintTextColor = ColorStateList.valueOf(Color.BLACK)
 
         val button_back = findViewById<ImageView>(R.id.imageview_arrowback_history)
 

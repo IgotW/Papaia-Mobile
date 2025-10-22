@@ -73,16 +73,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Juan Dela Cruz"
-                            android:textColor="#333333"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textColor="@color/black"
+                            android:textSize="19sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_semibold"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Farmer"
                             android:textColor="#666666"
-                            android:textSize="14sp" />
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan"/>
 
                         <TextView
                             android:id="@+id/button_editprofile"
@@ -91,9 +93,10 @@
                             android:layout_marginTop="4dp"
                             android:text="Edit Profile"
                             android:textColor="#FF9800"
-                            android:textSize="14sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
-                            android:clickable="true"/>
+                            android:clickable="true"
+                            android:fontFamily="@font/league_spartan_semibold"/>
 
                     </LinearLayout>
                 </LinearLayout>
@@ -130,7 +133,8 @@
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_account"
                         android:background="@drawable/square_background"
-                        app:tint="@color/primary"
+                        android:backgroundTint="#2563EB"
+                        app:tint="#2563EB"
                         android:padding="4dp"/>
 
                     <TextView
@@ -139,9 +143,10 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="8dp"
                         android:text="Account Information"
-                        android:textColor="#333333"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/league_spartan_semibold"/>
 
                 </LinearLayout>
 
@@ -163,7 +168,8 @@
                             android:layout_height="wrap_content"
                             android:text="Farmer Id"
                             android:textColor="#666666"
-                            android:textSize="14sp" />
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan"/>
 
                         <TextView
                             android:id="@+id/txtview_farmerid"
@@ -172,8 +178,9 @@
                             android:layout_weight="1"
                             android:text="FMR_123"
                             android:textAlignment="textEnd"
-                            android:textColor="#333333"
-                            android:textSize="14sp" />
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan" />
 
                     </LinearLayout>
 
@@ -189,7 +196,8 @@
                             android:layout_height="wrap_content"
                             android:text="Username"
                             android:textColor="#666666"
-                            android:textSize="14sp" />
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan"/>
 
                         <TextView
                             android:id="@+id/txtview_username"
@@ -198,8 +206,9 @@
                             android:layout_weight="1"
                             android:text="juandelacruz"
                             android:textAlignment="textEnd"
-                            android:textColor="#333333"
-                            android:textSize="14sp" />
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan" />
 
                     </LinearLayout>
 
@@ -215,7 +224,8 @@
                             android:layout_height="wrap_content"
                             android:text="Birthday"
                             android:textColor="#666666"
-                            android:textSize="14sp" />
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan" />
 
                         <TextView
                             android:id="@+id/txtview_birthdate"
@@ -224,8 +234,9 @@
                             android:layout_weight="1"
                             android:text="February 29, 1989"
                             android:textAlignment="textEnd"
-                            android:textColor="#333333"
-                            android:textSize="14sp" />
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan"/>
 
                     </LinearLayout>
 
@@ -241,7 +252,8 @@
                             android:layout_height="wrap_content"
                             android:text="Email"
                             android:textColor="#666666"
-                            android:textSize="14sp" />
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan" />
 
                         <TextView
                             android:id="@+id/txtview_email"
@@ -250,8 +262,9 @@
                             android:layout_weight="1"
                             android:text="juan@email.com"
                             android:textAlignment="textEnd"
-                            android:textColor="#333333"
-                            android:textSize="14sp" />
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan" />
 
                     </LinearLayout>
 
@@ -266,7 +279,8 @@
                             android:layout_height="wrap_content"
                             android:text="Contact Number"
                             android:textColor="#666666"
-                            android:textSize="14sp" />
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan" />
 
                         <TextView
                             android:id="@+id/txtview_contact"
@@ -275,8 +289,9 @@
                             android:layout_weight="1"
                             android:text="+63 912 345 6789"
                             android:textAlignment="textEnd"
-                            android:textColor="#333333"
-                            android:textSize="14sp" />
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan" />
 
                     </LinearLayout>
 
@@ -324,9 +339,10 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="8dp"
                         android:text="Farm Information"
-                        android:textColor="#333333"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/league_spartan_semibold"/>
 
                 </LinearLayout>
 
@@ -348,7 +364,8 @@
                             android:layout_height="wrap_content"
                             android:text="Farm Name"
                             android:textColor="#666666"
-                            android:textSize="14sp" />
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan"/>
 
                         <TextView
                             android:id="@+id/txtview_farmName"
@@ -357,8 +374,9 @@
                             android:layout_weight="1"
                             android:text="None"
                             android:textAlignment="textEnd"
-                            android:textColor="#333333"
-                            android:textSize="14sp" />
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan"/>
 
                     </LinearLayout>
 
@@ -373,7 +391,8 @@
                             android:layout_height="wrap_content"
                             android:text="Location"
                             android:textColor="#666666"
-                            android:textSize="14sp" />
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan"/>
 
                         <TextView
                             android:id="@+id/txtview_farmLocation"
@@ -382,8 +401,9 @@
                             android:layout_weight="1"
                             android:text="None"
                             android:textAlignment="textEnd"
-                            android:textColor="#333333"
-                            android:textSize="14sp" />
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan" />
 
                     </LinearLayout>
 
@@ -420,8 +440,9 @@
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_settings"
-                        app:tint="@color/primary"
+                        app:tint="#9333EA"
                         android:background="@drawable/square_background"
+                        android:backgroundTint="#9333EA"
                         android:padding="4dp"/>
 
                     <TextView
@@ -430,9 +451,10 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="8dp"
                         android:text="Plans &amp; Preferences"
-                        android:textColor="#333333"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/league_spartan_semibold"/>
 
                 </LinearLayout>
 
@@ -455,7 +477,8 @@
                             android:layout_weight="1"
                             android:text="Notifications"
                             android:textColor="#666666"
-                            android:textSize="14sp" />
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan" />
 
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/notificationSwitch"
@@ -478,7 +501,8 @@
                             android:layout_height="wrap_content"
                             android:text="Subscription"
                             android:textColor="#666666"
-                            android:textSize="14sp" />
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan" />
 
                         <TextView
                             android:id="@+id/subscriptionValue"
@@ -487,8 +511,9 @@
                             android:layout_weight="1"
                             android:text="Free"
                             android:textAlignment="textEnd"
-                            android:textColor="#333333"
-                            android:textSize="14sp" />
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/league_spartan" />
 
                     </LinearLayout>
 
@@ -521,8 +546,8 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_settings"
                         app:tint="#4B5563"
@@ -534,11 +559,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Settings &amp; Account"
-                        android:textSize="16sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         android:layout_weight="1"
-                        android:layout_marginStart="10dp"/>
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/league_spartan_semibold"/>
 
 
                     <ImageView
@@ -557,7 +583,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="12dp"
             android:clickable="true"
             android:focusable="true"
             android:backgroundTint="#FFFFFF"
@@ -593,7 +618,7 @@
             android:text="Logout"
             android:textColor="@color/white"
             android:textSize="14sp"
-            app:backgroundTint="#F44336"
+            app:backgroundTint="@color/tertiary"
             android:textStyle="bold"
             android:background="@drawable/button_rounded"
             android:layout_marginBottom="48dp"
@@ -602,7 +627,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="60dp"/>
 
     </LinearLayout>
