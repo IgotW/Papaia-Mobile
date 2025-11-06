@@ -20,12 +20,15 @@ import com.google.papaia.response.DailyTipResponse
 import com.google.papaia.response.FarmDetailsResponse
 import com.google.papaia.response.FcmResponse
 import com.google.papaia.response.IdentificationStatsResponse
+import com.google.papaia.response.MonthlyAnalyticsResponse
 import com.google.papaia.response.PredictionHistoryResponse
 import com.google.papaia.response.ScanResult
 import com.google.papaia.response.SummaryResponse
 import com.google.papaia.response.TipResponse
 import com.google.papaia.response.TodaysPredictionResponse
 import com.google.papaia.response.UploadResponse
+import com.google.papaia.response.WeeklyAnalyticsResponse
+import com.google.papaia.response.YearlyAnalyticsResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Response
@@ -34,6 +37,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
@@ -48,15 +52,30 @@ interface ApiService {
         @Path("idNumber") userId: String
     ): Call<UserResponse>
 
-    @GET("/api/farmer/weekly-analytics")
-    fun getWeeklyAnalytics(
-        @Header("Authorization") token: String
-    ): Call<DailyAnalyticsResponse>
+//    @GET("/api/farmer/weekly-analytics")
+//    fun getWeeklyAnalytics(
+//        @Header("Authorization") token: String
+//    ): Call<DailyAnalyticsResponse>
 
     @GET("/api/farmer/daily-analytics")
     fun getDailyAnalytics(
         @Header("Authorization") token: String
     ): Call<DailyAnalyticsResponse>
+
+    @GET("/api/farmer/weekly-analytics")
+    fun getWeeklyAnalytics(
+        @Header("Authorization") token: String
+    ): Call<WeeklyAnalyticsResponse>
+
+    @GET("/api/farmer/monthly-analytics")
+    fun getMonthlyAnalytics(
+        @Header("Authorization") token: String
+    ): Call<MonthlyAnalyticsResponse>
+
+    @GET("/api/farmer/yearly-analytics")
+    fun getYearlyAnalytics(
+        @Header("Authorization") token: String
+    ): Call<YearlyAnalyticsResponse>
 
 //    @GET("/api/farmer/daily-tip")
 //    fun getDailyTip(
@@ -156,9 +175,15 @@ interface ApiService {
     ): Call<ChangePasswordResponse>
 
     @Multipart
-    @PUT("profile-picture")
+    @PUT("/api/profile-picture")
     fun updateProfilePicture(
         @Header("Authorization") token: String,
         @Part profilePicture: MultipartBody.Part
     ): Call<UploadResponse>
+
+    @PATCH("/api/deactivate")
+    fun deactivateAccount()
+
+    @PATCH("api/reactivate")
+    fun reactivateAccount()
 }

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AnalyticsActivity"
+    android:orientation="vertical">
+
+    <!-- Header with back button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/arrow_back"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="4dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="View Analytics"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginEnd="28dp"
+            android:fontFamily="@font/league_spartan" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Daily Analytics"
+                android:textColor="@color/black"
+                android:fontFamily="@font/league_spartan_semibold"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/button_outline_primary"
+                android:padding="10dp"
+                android:weightSum="4">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDaily"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="40dp"
+                    android:text="Daily"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:background="@drawable/button_primary_selector"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@null"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginLeft="2dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnWeekly"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="40dp"
+                    android:text="Weekly"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:background="@drawable/button_outline_primary"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@null"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginLeft="2dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnMonthly"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="40dp"
+                    android:text="Monthly"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:background="@drawable/button_outline_primary"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@null"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginLeft="2dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnYearly"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="40dp"
+                    android:text="Yearly"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:background="@drawable/button_outline_primary"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@null"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginLeft="2dp"/>
+            </LinearLayout>
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/lineChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="280dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/white"
+                        android:outlineAmbientShadowColor="@color/primary" />
+                </LinearLayout>
+            </HorizontalScrollView>
+<!--            <com.github.mikephil.charting.charts.LineChart-->
+<!--                android:id="@+id/lineChart"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="280dp"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:background="@color/white"-->
+<!--                android:outlineAmbientShadowColor="@color/primary"/>-->
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="10dp"-->
+<!--                android:layout_marginTop="10dp">-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Summary"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:fontFamily="@font/league_spartan_semibold"/>-->
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Sample Summary"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:fontFamily="@font/league_spartan"-->
+<!--                        android:textColor="@color/black"/>-->
+<!--                </LinearLayout>-->
+<!--            </androidx.cardview.widget.CardView>-->
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

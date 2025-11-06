@@ -1,5 +1,6 @@
 package com.google.papaia.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -17,13 +18,33 @@ class SplashActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         // Check token first
-        val token = SecurePrefsHelper.getToken(this)
-        if (!token.isNullOrEmpty()) {
-            // User is already logged in, skip Splash/Login
-            val intent = Intent(this, DashboardActivity::class.java)
-            startActivity(intent)
+//        val token = SecurePrefsHelper.getToken(this)
+//        if (!token.isNullOrEmpty()) {
+//            // User is already logged in, skip Splash/Login
+//            val intent = Intent(this, DashboardActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//            return
+//        }
+
+        val prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val token = prefs.getString("token", null)
+        val role = prefs.getString("role", null)
+
+        if (token != null && role != null) {
+            if (role.equals("farmer", ignoreCase = true)) {
+                // ✅ Auto-login farmer
+                startActivity(Intent(this, DashboardActivity::class.java))
+                finish()
+            } else {
+                // 🚫 Non-farmer should go to login (no auto-login)
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+        } else {
+            // 🚪 No saved login → Go to login
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
-            return
         }
 
         setContentView(R.layout.activity_splash)

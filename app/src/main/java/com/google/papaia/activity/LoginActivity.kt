@@ -338,10 +338,19 @@ class LoginActivity : AppCompatActivity() {
         if (user?.role == "farmer") {
             startActivity(Intent(this, DashboardActivity::class.java))
             Toast.makeText(this, "Welcome ${user?.username}", Toast.LENGTH_SHORT).show()
+            finish()
         } else {
-            startActivity(Intent(this, OwnerActivity::class.java))
+            // Not a farmer → reject login
+            Toast.makeText(this, "Access denied. Only farmers can log in.", Toast.LENGTH_LONG).show()
+
+            // Optional: clear stored token and prefs so they can’t auto-login
+            SecurePrefsHelper.clearToken(this)
+            getSharedPreferences("prefs", MODE_PRIVATE).edit().clear().apply()
+
+            val intent = Intent(this, OwnerActivity::class.java)
+            startActivity(intent)
+            finish()
         }
-        finish()
     }
 
     private fun handleLoginError(response: Response<LoginResponse>) {

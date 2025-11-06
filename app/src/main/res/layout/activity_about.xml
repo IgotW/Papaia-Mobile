@@ -119,7 +119,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="To provide intelligent plant disease detection and agricultural guidance, helping farmers increase yields while promoting environmentally conscious farming methods."
+                    android:text="To create a world where every farmer has access to intelligent agricultural tools that ensure food security, promote sustainable farming practices, and maximize crop productivity through advanced technology and data-driven insights."
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:fontFamily="@font/league_spartan"/>
@@ -155,7 +155,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Developing cutting-edge AI solutions that support intelligent farming, helping farmers make smarter decisions and create more environmentally beneficial farming methods."
+                    android:text="We develop innovate AI-powered solutions that help farmers detect crop diseases early, receive expert treatment recommendations, and access comprehensive analytics to optimize their farming operations and increase yields."
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:fontFamily="@font/league_spartan"/>
@@ -184,7 +184,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/league_spartan_bold"
-                    android:text="How to Use Papaya"
+                    android:text="How to Use Papaia"
                     android:textColor="@color/primary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -219,7 +219,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/league_spartan_bold"
-                            android:text="Capture Plant Image"
+                            android:text="Capture"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -265,7 +265,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/league_spartan_bold"
-                            android:text="AI Analysis"
+                            android:text="Analyze"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -275,7 +275,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:fontFamily="@font/league_spartan"
-                            android:text="Our advanced AI analyzes the image to identify diseases."
+                            android:text="Our AI analyzes the image and identifies potential diseases or issues."
                             android:textColor="#6B7280"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -311,7 +311,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/league_spartan_bold"
-                            android:text="Get Recommendations"
+                            android:text="Treat"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -321,52 +321,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:fontFamily="@font/league_spartan"
-                            android:text="Receive specific treatment suggestions and care instructions tailored to your findings."
-                            android:textColor="#6B7280"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Step 4 -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:background="@drawable/circle"
-                        android:backgroundTint="#F97316"
-                        android:fontFamily="@font/league_spartan_bold"
-                        android:gravity="center"
-                        android:text="4"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/league_spartan_bold"
-                            android:text="Track Progress"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="@font/league_spartan"
-                            android:text="Monitor your farm's health and maintain healthy growth over time."
+                            android:text="Receive detailed treatment recommendations and track your crop's recovery progress."
                             android:textColor="#6B7280"
                             android:textSize="12sp" />
                     </LinearLayout>

@@ -74,7 +74,9 @@ class OwnerActivity : AppCompatActivity() {
 
         // Back to previous screen
         buttonOwnerBack.setOnClickListener {
-            finish() // Close this activity and return to previous screen
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 

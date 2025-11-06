@@ -89,7 +89,7 @@ class ForgotPassword1Activity : AppCompatActivity() {
         }
 
         backArrow.setOnClickListener {
-            finish() // Just finish instead of creating new intent
+            finish()
         }
 
         // Handle Sign In link

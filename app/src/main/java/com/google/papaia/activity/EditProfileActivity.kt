@@ -55,7 +55,7 @@ class EditProfileActivity : AppCompatActivity() {
 
     private var bearerToken: String? = null
     private var idNumber: String? = null
-    private var isBlurred = false  // 🔹 NEW: track blur state
+    private var isBlurred = false
 
     // 🔹 Photo picker launcher
     // Replace existing launcher with UCrop integration
@@ -138,7 +138,6 @@ class EditProfileActivity : AppCompatActivity() {
         saveButton = findViewById(R.id.btn_save_changes)
     }
 
-    // 🔹 Load normal vs blurred image
     private fun showProfilePicture(url: String, blur: Boolean = false) {
         val glideRequest = Glide.with(this)
             .load(url)
@@ -185,8 +184,8 @@ class EditProfileActivity : AppCompatActivity() {
                                         .placeholder(R.drawable.default_profile)
                                         .transform(
                                             MultiTransformation(
-                                                BlurTransformation(2, 1), // 🔹 blur
-                                                ColorFilterTransformation(Color.parseColor("#80000000")), // 🔹 dark overlay
+                                                BlurTransformation(2, 1),
+                                                ColorFilterTransformation(Color.parseColor("#80000000")),
                                                 CircleCrop() // 🔹 circular crop
                                             )
                                         )
@@ -215,13 +214,12 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         profilePic.setOnClickListener {
-            // 🔹 Toggle blur instead of immediately launching picker
             isBlurred = !isBlurred
             val url = prefs.getString("profileImageUrl", null)
             if (!url.isNullOrEmpty()) {
                 showProfilePicture(url, blur = isBlurred)
             } else {
-                pickImageLauncher.launch("image/*") // fallback if no saved photo
+                pickImageLauncher.launch("image/*")
             }
         }
 
@@ -279,19 +277,11 @@ class EditProfileActivity : AppCompatActivity() {
                             if (response.isSuccessful) {
                                 val newImageUrl = response.body()?.profilePicture
                                 if (!newImageUrl.isNullOrEmpty()) {
-//                                    Glide.with(this@EditProfileActivity)
-//                                        .load(newImageUrl)
-//                                        .placeholder(R.drawable.userprofile)
-//                                        .into(profilePic)
 
                                     prefs.edit().putString("profileImage", newImageUrl).apply()
                                     showProfilePicture(newImageUrl, blur = false)
                                     Toast.makeText(this@EditProfileActivity, "Photo updated!", Toast.LENGTH_SHORT).show()
 
-                                    // Save to prefs
-//                                    prefs.edit().putString("profileImageUrl", newImageUrl).apply()
-//
-//                                    Toast.makeText(this@EditProfileActivity, "Photo updated!", Toast.LENGTH_SHORT).show()
                                 }
                             } else {
                                 Toast.makeText(this@EditProfileActivity, "Upload failed", Toast.LENGTH_SHORT).show()

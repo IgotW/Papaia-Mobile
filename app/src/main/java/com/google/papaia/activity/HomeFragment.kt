@@ -9,27 +9,19 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
@@ -43,13 +35,11 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.papaia.R
-import com.google.papaia.adapter.HistoryAdapter
 import com.google.papaia.adapter.HomeHistoryAdapter
-import com.google.papaia.request.AnalyticsStatRequest
+import com.google.papaia.request.DailyAnalyticsStatRequest
 import com.google.papaia.request.LatLonRequest
 import com.google.papaia.request.UpdateFcmRequest
 import com.google.papaia.response.DailyAnalyticsResponse
-import com.google.papaia.response.DailyTipResponse
 import com.google.papaia.response.FarmDetailsResponse
 import com.google.papaia.response.FcmResponse
 import com.google.papaia.response.IdentificationStatsResponse
@@ -58,14 +48,11 @@ import com.google.papaia.response.SummaryResponse
 import com.google.papaia.response.TipResponse
 import com.google.papaia.response.TodaysPredictionResponse
 import com.google.papaia.utils.CustomMarkerView
-import com.google.papaia.utils.DailyTipWorker
 import com.google.papaia.utils.RetrofitClient
 import de.hdodenhof.circleimageview.CircleImageView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.Calendar
-import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
 
 // TODO: Rename parameter arguments, choose names that match
@@ -100,6 +87,7 @@ class HomeFragment : Fragment() {
     private lateinit var farmLocation: TextView
     private lateinit var countHealthy: TextView
     private lateinit var countDiseased: TextView
+    private lateinit var viewMoreAnalytics: TextView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var dailyTipReceiver: BroadcastReceiver? = null
     private var isPermissionRequestInProgress = false
@@ -204,6 +192,7 @@ class HomeFragment : Fragment() {
 
         // ✅ UPDATED: Register receiver for daily tip updates from FCM
         registerDailyTipReceiver()
+        setupButtonClickListeners()
 
     }
 
@@ -222,6 +211,7 @@ class HomeFragment : Fragment() {
         countDiseased = view.findViewById(R.id.txtview_count_diseased)
         imageProfile = view.findViewById(R.id.profile_image)
         analytics_summary = view.findViewById(R.id.txtview_analytics_summary)
+        viewMoreAnalytics = view.findViewById(R.id.txtview_viewmore)
 
         lineChart = view.findViewById(R.id.lineChart)
 
@@ -243,6 +233,13 @@ class HomeFragment : Fragment() {
 //        )
     }
 
+    private fun setupButtonClickListeners(){
+        viewMoreAnalytics.setOnClickListener {
+            startActivity(
+                Intent(requireContext(), AnalyticsActivity::class.java)
+            )
+        }
+    }
     private fun registerDailyTipReceiver() {
         dailyTipReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -697,7 +694,7 @@ class HomeFragment : Fragment() {
     }
 
     /** ---------------- CHART SETUP ---------------- **/
-    private fun setupLineChart(dailyStats: List<AnalyticsStatRequest>, context: Context) {
+    private fun setupLineChart(dailyStats: List<DailyAnalyticsStatRequest>, context: Context) {
         val diseaseMap = mutableMapOf<String, MutableList<Entry>>()
         val labels = mutableListOf<String>()
 
@@ -830,13 +827,13 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun fillMissingDays(dailyStats: List<AnalyticsStatRequest>, daysToShow: Int): List<AnalyticsStatRequest> {
+    private fun fillMissingDays(dailyStats: List<DailyAnalyticsStatRequest>, daysToShow: Int): List<DailyAnalyticsStatRequest> {
         val calendar = java.util.Calendar.getInstance()
         val dateFormat = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.ENGLISH)
-        val filledStats = mutableListOf<AnalyticsStatRequest>()
+        val filledStats = mutableListOf<DailyAnalyticsStatRequest>()
 
         // Create a map of existing data for quick lookup - handle various date formats
-        val existingDataMap = mutableMapOf<String, AnalyticsStatRequest>()
+        val existingDataMap = mutableMapOf<String, DailyAnalyticsStatRequest>()
 
         // Add existing data with multiple possible date formats
         dailyStats.forEach { stat ->
@@ -861,7 +858,7 @@ class HomeFragment : Fragment() {
 
             if (existingData != null) {
                 // Use existing data but with standardized date format
-                val standardizedData = AnalyticsStatRequest(dateString, existingData.predictions)
+                val standardizedData = DailyAnalyticsStatRequest(dateString, existingData.predictions)
                 filledStats.add(standardizedData)
             } else {
                 // Create zero data for missing day
@@ -871,7 +868,7 @@ class HomeFragment : Fragment() {
                     "Powdery Mildew" to 0,
                     "Ring Spot Virus" to 0
                 )
-                filledStats.add(AnalyticsStatRequest(dateString, zeroPredictions))
+                filledStats.add(DailyAnalyticsStatRequest(dateString, zeroPredictions))
             }
         }
 

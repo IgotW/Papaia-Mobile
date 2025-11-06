@@ -2,6 +2,7 @@ package com.google.papaia.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -28,6 +29,16 @@ class ForgotPassword2Activity : AppCompatActivity() {
 
     private lateinit var editTextFields: List<EditText>
     private lateinit var buttonVerify: MaterialButton
+    private lateinit var backArrow: ImageView
+    private lateinit var editTextCode1: EditText
+    private lateinit var editTextCode2: EditText
+    private lateinit var editTextCode3: EditText
+    private lateinit var editTextCode4: EditText
+    private lateinit var tvResendCode: TextView
+    private lateinit var tvTimer: TextView
+
+    private var countDownTimer: CountDownTimer? = null
+    private val COUNTDOWN_TIME = 120000L // 2 minutes in milliseconds
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +50,14 @@ class ForgotPassword2Activity : AppCompatActivity() {
             insets
         }
 
-        val backArrow = findViewById<ImageView>(R.id.fg2_back_arrow)
-        val editTextCode1 = findViewById<EditText>(R.id.edittext_code_1)
-        val editTextCode2 = findViewById<EditText>(R.id.edittext_code_2)
-        val editTextCode3 = findViewById<EditText>(R.id.edittext_code_3)
-        val editTextCode4 = findViewById<EditText>(R.id.edittext_code_4)
-        buttonVerify = findViewById<MaterialButton>(R.id.button_fg2_verify)
-        val tvResendCode = findViewById<TextView>(R.id.tv_resend_code)
+        backArrow = findViewById(R.id.fg2_back_arrow)
+        editTextCode1 = findViewById(R.id.edittext_code_1)
+        editTextCode2 = findViewById(R.id.edittext_code_2)
+        editTextCode3 = findViewById(R.id.edittext_code_3)
+        editTextCode4 = findViewById(R.id.edittext_code_4)
+        buttonVerify = findViewById(R.id.button_fg2_verify)
+        tvResendCode = findViewById(R.id.tv_resend_code)
+        tvTimer = findViewById(R.id.tv_timer)
 
         // Store edit text fields for easy access
         editTextFields = listOf(editTextCode1, editTextCode2, editTextCode3, editTextCode4)
@@ -112,18 +124,42 @@ class ForgotPassword2Activity : AppCompatActivity() {
         }
 
         backArrow.setOnClickListener {
-            finish() // Just finish this activity instead of creating new intent
+            finish()
         }
 
-        // Handle resend code click
         tvResendCode.setOnClickListener {
-            // TODO: Implement resend code functionality
-            Toast.makeText(this, "Resending code...", Toast.LENGTH_SHORT).show()
+            if (tvResendCode.isEnabled) {
+                Toast.makeText(this, "Resending code...", Toast.LENGTH_SHORT).show()
+                // TODO: Add actual resend code API call here
+                startCountdown()
+            }
         }
     }
 
+    private fun startCountdown() {
+        // Disable resend code button
+        tvResendCode.isEnabled = false
+        tvResendCode.alpha = 0.5f
+
+        // Cancel any existing timer
+        countDownTimer?.cancel()
+
+        countDownTimer = object : CountDownTimer(COUNTDOWN_TIME, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val minutes = (millisUntilFinished / 1000) / 60
+                val seconds = (millisUntilFinished / 1000) % 60
+                tvTimer.text = String.format("%02d:%02d", minutes, seconds)
+            }
+
+            override fun onFinish() {
+                tvTimer.text = "00:00"
+                tvResendCode.isEnabled = true
+                tvResendCode.alpha = 1.0f
+            }
+        }.start()
+    }
+
     private fun setupOtpInputs() {
-        // Set up auto-focus between fields
         editTextFields.forEachIndexed { index, editText ->
             editText.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -138,12 +174,10 @@ class ForgotPassword2Activity : AppCompatActivity() {
                         }
                     }
 
-                    // Update button state
                     updateButtonState()
                 }
             })
 
-            // Handle backspace to move to previous field
             editText.setOnKeyListener { _, keyCode, event ->
                 if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN) {
                     if (editText.text.isEmpty() && index > 0) {
@@ -155,7 +189,6 @@ class ForgotPassword2Activity : AppCompatActivity() {
             }
         }
 
-        // Focus on first field initially
         editTextFields.first().requestFocus()
     }
 
@@ -168,5 +201,11 @@ class ForgotPassword2Activity : AppCompatActivity() {
         } else {
             ContextCompat.getColorStateList(this, R.color.disabled_gray)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Cancel timer to prevent memory leaks
+        countDownTimer?.cancel()
     }
 }

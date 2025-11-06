@@ -306,70 +306,13 @@ class DashboardActivity : AppCompatActivity() {
         fragment?.updateAnalytics(bearerToken)
     }
 
-    // Method to programmatically change tabs
     fun changeTab(tabIndex: Int) {
         if (tabIndex in 0..2) {
             selectTab(tabIndex)
         }
     }
 
-//    fun scheduleDailyTip(context: Context) {
-//        val dailyWorkRequest = PeriodicWorkRequestBuilder<DailyTipWorker>(1, TimeUnit.DAYS)
-//            .setInitialDelay(calculateDelayUntil6AM(), TimeUnit.MILLISECONDS)
-//            .build()
-//
-//        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-//            "DailyTipWork",
-//            ExistingPeriodicWorkPolicy.UPDATE,
-//            dailyWorkRequest
-//        )
-//    }
-//
-//    private fun calculateDelayUntil6AM(): Long {
-//        val now = Calendar.getInstance()
-//        val target = Calendar.getInstance().apply {
-//            set(Calendar.HOUR_OF_DAY, 6)
-//            set(Calendar.MINUTE, 0)
-//            set(Calendar.SECOND, 0)
-//            set(Calendar.MILLISECOND, 0)
-//        }
-//        if (target.before(now)) {
-//            target.add(Calendar.DAY_OF_MONTH, 1) // schedule next day
-//        }
-//        return target.timeInMillis - now.timeInMillis
-//    }
-
-//    fun scheduleDailyTip(context: Context) {
-//        // Get current time
-//        val calendar = Calendar.getInstance().apply {
-//            set(Calendar.HOUR_OF_DAY, 6)
-//            set(Calendar.MINUTE, 0)
-//            set(Calendar.SECOND, 0)
-//        }
-//
-//        // Calculate initial delay
-//        var delay = calendar.timeInMillis - System.currentTimeMillis()
-//        if (delay < 0) {
-//            // If 6 AM already passed, schedule for tomorrow
-//            delay += TimeUnit.DAYS.toMillis(1)
-//        }
-//
-//        // Create a periodic work request for every 24 hours
-//        val dailyWork = PeriodicWorkRequestBuilder<DailyTipWorker>(24, TimeUnit.HOURS)
-//            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
-//            .build()
-//
-//        // Enqueue as unique periodic work to prevent duplicates
-//        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-//            "daily_tip",
-//            ExistingPeriodicWorkPolicy.REPLACE,
-//            dailyWork
-//        )
-//    }
-
-
-    // Getter for current selected tab
-    fun getSelectedTab(): Int = selectedTab
+//    fun getSelectedTab(): Int = selectedTab
 
     companion object {
         private const val CAMERA_REQUEST_CODE = 100
