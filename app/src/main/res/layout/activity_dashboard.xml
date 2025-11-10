@@ -81,7 +81,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/camera_svgrepo_com"
+                    android:src="@drawable/ic_camera"
                     android:tint="@android:color/white"/>
             </FrameLayout>
 

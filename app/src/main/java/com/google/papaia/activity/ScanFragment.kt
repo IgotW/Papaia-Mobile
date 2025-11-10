@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -340,18 +341,59 @@ class ScanFragment : Fragment() {
                     ) {
                         hideLoading()
                         btnUsePhoto.isEnabled = true
+
+//                        if (response.isSuccessful && response.body() != null) {
+//                            val result = response.body()!!.prediction ?: "Unknown"
+//                            val remedy = response.body()!!.suggestions
+//                                ?: "No specific remedy found. Consult local expert."
+//                            showScanDialog(result, remedy)
+//                            SecurePrefsHelper.getToken(requireContext())?.let {
+//                                (activity as? DashboardActivity)?.refreshAnalytics(it)
+//                            }
+//                        } else {
+//                            Log.e("API_ERROR", "Code: ${response.code()} Body: ${response.errorBody()?.string()}")
+//                            Toast.makeText(requireContext(), "Prediction failed", Toast.LENGTH_SHORT).show()
+//                        }
+
                         if (response.isSuccessful && response.body() != null) {
-                            val result = response.body()!!.prediction ?: "Unknown"
-                            val remedy = response.body()!!.suggestions
+                            val body = response.body()!!
+
+                            // ✅ Handle case when model confidence < 0.5
+                            if (!body.success) {
+                                val confidencePercent = (body.confidence ?: 0.0) * 100
+                                AlertDialog.Builder(requireContext())
+                                    .setTitle("Unrecognized Disease")
+                                    .setMessage(
+                                        "${body.message ?: "Disease not recognized. Please try again with a clearer image."}\n\n" +
+                                                "Confidence: ${"%.2f".format(confidencePercent)}%"
+                                    )
+                                    .setPositiveButton("Try Again") { dialog, _ ->
+                                        dialog.dismiss()
+                                        startCamera()
+                                    }
+                                    .setCancelable(false)
+                                    .show()
+                                return
+                            }
+
+                            // ✅ If prediction was successful
+                            val result = body.prediction ?: "Unknown"
+                            val remedy = body.suggestions
                                 ?: "No specific remedy found. Consult local expert."
-                            showScanDialog(result, remedy)
+
+                            showScanDialog(result, remedy, body.confidence, capturedUri)
+
                             SecurePrefsHelper.getToken(requireContext())?.let {
                                 (activity as? DashboardActivity)?.refreshAnalytics(it)
                             }
                         } else {
-                            Log.e("API_ERROR", "Code: ${response.code()} Body: ${response.errorBody()?.string()}")
+                            Log.e(
+                                "API_ERROR",
+                                "Code: ${response.code()} Body: ${response.errorBody()?.string()}"
+                            )
                             Toast.makeText(requireContext(), "Prediction failed", Toast.LENGTH_SHORT).show()
                         }
+
                         startCamera()
                     }
 
@@ -369,19 +411,39 @@ class ScanFragment : Fragment() {
         }
     }
 
-    private fun showScanDialog(predictedLabel: String, remedy: String) {
+    private fun showScanDialog(predictedLabel: String, remedy: String, confidence: Double? = null, imageUri: Uri? = null) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_scan_result, null)
+        val imagePrev = dialogView.findViewById<ImageView>(R.id.iv_result_image)
+        val tvConfidence = dialogView.findViewById<TextView>(R.id.tv_confidence)
         val tvPrediction = dialogView.findViewById<TextView>(R.id.tv_prediction)
         val tvRemedy = dialogView.findViewById<TextView>(R.id.tv_remedy)
         val btnOk = dialogView.findViewById<Button>(R.id.btn_ok)
 
-        tvPrediction.text = "Disease Detected: $predictedLabel"
-        tvRemedy.text = remedy
+        tvPrediction.text = "Detected: $predictedLabel"
+        tvPrediction.setTextColor(
+            if (predictedLabel.equals("Healthy", ignoreCase = true))
+                Color.parseColor("#00712D")
+            else
+                Color.parseColor("#FF9100")
+        )
+//        if (predictedLabel.equals("Healthy", ignoreCase = true)) {
+//            tvPrediction.setTextColor(Color.parseColor("#00712D"))
+//        } else {
+//            tvPrediction.setTextColor(Color.parseColor("#FF9100"))
+//        }
 
-        if (predictedLabel.equals("Healthy", ignoreCase = true)) {
-            tvPrediction.setTextColor(Color.parseColor("#00712D"))
+        tvConfidence.text = confidence?.let {
+            "Confidence: ${"%.2f".format(it * 100)}%"
+        } ?: ""
+
+//        tvRemedy.text = remedy
+        tvRemedy.text = formatRemedyText(remedy)
+
+        if (imageUri != null) {
+            imagePrev.visibility = View.VISIBLE
+            imagePrev.setImageURI(imageUri)
         } else {
-            tvPrediction.setTextColor(Color.parseColor("#FF9100"))
+            imagePrev.visibility = View.GONE
         }
 
         val dialog = AlertDialog.Builder(requireContext())
@@ -402,6 +464,42 @@ class ScanFragment : Fragment() {
 
         dialog.show()
     }
+
+    private fun formatRemedyText(remedy: String?): CharSequence {
+        if (remedy.isNullOrBlank()) {
+            return "No treatment suggestions available."
+        }
+
+        // Split remedy by bullets or newlines for formatting
+        val steps = remedy.split("*", "\n")
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+
+        // Format with circled numbers and emoji steps
+        val formatted = steps.mapIndexed { index, step ->
+            "<b>🌱 Step ${getCircledNumber(index + 1)}</b><br>${step}"
+        }.joinToString("<br><br>")
+
+        // Render as styled HTML text
+        return Html.fromHtml(formatted, Html.FROM_HTML_MODE_LEGACY)
+    }
+
+    private fun getCircledNumber(number: Int): String {
+        return when (number) {
+            1 -> "①"
+            2 -> "②"
+            3 -> "③"
+            4 -> "④"
+            5 -> "⑤"
+            6 -> "⑥"
+            7 -> "⑦"
+            8 -> "⑧"
+            9 -> "⑨"
+            10 -> "⑩"
+            else -> "⊙"
+        }
+    }
+
 
 
     private fun uriToFile(uri: Uri): File {

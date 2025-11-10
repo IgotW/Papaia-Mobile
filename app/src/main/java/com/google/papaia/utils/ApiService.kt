@@ -182,8 +182,12 @@ interface ApiService {
     ): Call<UploadResponse>
 
     @PATCH("/api/deactivate")
-    fun deactivateAccount()
+    fun deactivateAccount(
+        @Header("Authorization") token: String
+    ): Call<ApiResponse>
 
     @PATCH("api/reactivate")
-    fun reactivateAccount()
+    fun reactivateAccount(
+        @Header("Authorization") token: String
+    ): Call<ApiResponse>
 }

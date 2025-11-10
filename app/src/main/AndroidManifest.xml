@@ -40,9 +40,6 @@
             android:name=".activity.HistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.SubscriptionActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.TermsConditionActivity"
             android:exported="false" />
         <activity

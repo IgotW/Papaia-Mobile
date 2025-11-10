@@ -21,5 +21,6 @@ data class User(
     val profilePicture: String?,
     val emailVerified: Boolean,
     val createdAt: String?,
-    val updatedAt: String?
+    val updatedAt: String?,
+    val status: String?,
 )

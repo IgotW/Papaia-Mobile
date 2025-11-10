@@ -1,7 +1,8 @@
 package com.google.papaia.response
 
 data class PredictionResponse(
-    val success: Boolean?,
+    val success: Boolean,
+    val message: String?,
     val userId: String?,
 //    val idNumber: String?,
     val farmId: String?,

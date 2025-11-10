@@ -12,6 +12,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -19,8 +20,10 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.papaia.MyApp
 import com.google.papaia.R
+import com.google.papaia.model.User
 import com.google.papaia.request.LoginRequest
 import com.google.papaia.request.UpdateFcmRequest
+import com.google.papaia.response.ApiResponse
 import com.google.papaia.response.FcmResponse
 import com.google.papaia.response.LoginResponse
 import com.google.papaia.utils.RetrofitClient
@@ -127,33 +130,6 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-//    private fun setLoading(isLoading: Boolean) {
-//        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-//        loginButton.text = if (isLoading) "" else getString(R.string.login)
-//        loginButton.isEnabled = !isLoading
-//    }
-
-//    private fun setLoading(isLoading: Boolean) {
-//        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-//        loginButton.text = if (isLoading) "" else getString(R.string.login)
-//        loginButton.isEnabled = !isLoading
-//
-//        if (isLoading) {
-//            // Animate icon from left → right
-//            loginIcon.animate()
-//                .translationXBy(150f) // move horizontally
-//                .setDuration(700)
-//                .withEndAction {
-//                    loginIcon.animate().translationXBy(-150f).setDuration(700).start()
-//                }
-//                .start()
-//        } else {
-//            // Reset icon position
-//            loginIcon.animate().cancel()
-//            loginIcon.translationX = 0f
-//        }
-//    }
-
     private fun setLoading(isLoading: Boolean) {
 //        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         loginButton.text = if (isLoading) "" else getString(R.string.login)
@@ -209,12 +185,192 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
+//    private fun handleLoginSuccess(loginResponse: LoginResponse) {
+//        val token = loginResponse.token ?: ""
+//        val user = loginResponse.user
+//
+//        // Save token securely
+//        SecurePrefsHelper.saveToken(this, token)
+//
+//        // Save other user info in prefs
+//        getSharedPreferences("prefs", MODE_PRIVATE).edit().apply {
+//            putString("token", token)
+//            putString("role", user?.role)
+//            putString("id", user?.id)
+//            putString("idNumber", user?.idNumber)
+//            putString("profileImage", user?.profilePicture)
+//            putString("email", user?.email)
+//            putString("username", user?.username)
+//            putString("firstname", user?.firstName)
+//            putString("middlename", user?.middleName)
+//            putString("lastname", user?.lastName)
+//            putString("birthdate", user?.birthDate)
+//            putString("contactNumber", user?.contactNumber)
+//            putString("suffix", user?.suffix)
+//            putString("street", user?.street)
+//            putString("barangay", user?.barangay)
+//            putString("municipality", user?.municipality)
+//            putString("province", user?.province)
+//            putString("zipcode", user?.zipCode)
+//            apply()
+//        }
+//
+//        // ✅ Send FCM token + location to backend
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                Log.w("FCM", "Fetching FCM token failed", task.exception)
+//                return@addOnCompleteListener
+//            }
+//
+//            val fcmToken = task.result ?: return@addOnCompleteListener
+//            Log.d("FCM", "Device FCM token: $fcmToken")
+//
+//            val prefs = getSharedPreferences("prefs", MODE_PRIVATE)
+//            val lat = prefs.getFloat("last_lat", 0f).takeIf { it != 0f }?.toDouble()
+//            val lon = prefs.getFloat("last_lon", 0f).takeIf { it != 0f }?.toDouble()
+//
+//            val request = UpdateFcmRequest(user.id, fcmToken, lat ?: 0.0, lon ?: 0.0)
+//            if (token.isNotEmpty()) {
+//                RetrofitClient.instance.updateFcmToken("Bearer $token", request)
+//                    .enqueue(object : Callback<FcmResponse> {
+//                        override fun onResponse(call: Call<FcmResponse>, response: Response<FcmResponse>) {
+//                            if (response.isSuccessful) {
+//                                Log.d("FCM", "updateFcmToken success code=${response.code()}")
+//                            } else {
+//                                Log.e("FCM", "Server error: ${response.code()} - ${response.message()}")
+//                            }
+//                        }
+//
+//                        override fun onFailure(call: Call<FcmResponse>, t: Throwable) {
+//                            Log.e("FCM", "updateFcmToken failed: ${t.message}")
+//                        }
+//                    })
+//            } else if (!user?.id.isNullOrEmpty()) {
+//                // fallback: no auth header
+//                RetrofitClient.instance.updateFcmTokenNoAuth(request)
+//                    .enqueue(object : Callback<Void> {
+//                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+//                            Log.d("FCM", "updateFcmTokenNoAuth success code=${response.code()}")
+//                        }
+//
+//                        override fun onFailure(call: Call<Void>, t: Throwable) {
+//                            Log.e("FCM", "updateFcmTokenNoAuth failed: ${t.message}")
+//                        }
+//                    })
+//            }
+//        }
+//
+//        // ✅ Schedule daily tip worker after login
+////        MyApp.scheduleDailyTipWorker(this)
+//
+//        // Navigate to proper dashboard
+//        if (user?.role == "farmer") {
+//            startActivity(Intent(this, DashboardActivity::class.java))
+//            Toast.makeText(this, "Welcome ${user?.username}", Toast.LENGTH_SHORT).show()
+//            finish()
+//        } else {
+//            // Not a farmer → reject login
+//            Toast.makeText(this, "Access denied. Only farmers can log in.", Toast.LENGTH_LONG).show()
+//
+//            // Optional: clear stored token and prefs so they can’t auto-login
+//            SecurePrefsHelper.clearToken(this)
+//            getSharedPreferences("prefs", MODE_PRIVATE).edit().clear().apply()
+//
+//            val intent = Intent(this, OwnerActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
+//    }
+
     private fun handleLoginSuccess(loginResponse: LoginResponse) {
         val token = loginResponse.token ?: ""
         val user = loginResponse.user
 
-        // Save token securely
+        if (user == null) {
+            Toast.makeText(this, "Invalid user data.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // ⚠️ Check account status before proceeding
+        if (user.status == "deactivate") {
+            showReactivateDialog(token)
+            return
+        }
+
+        // ✅ Continue normal login process
+        completeLoginProcess(user, token)
+    }
+
+    private fun showReactivateDialog(token: String) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_reactivate, null)
+        val btnYes = dialogView.findViewById<MaterialButton>(R.id.button_yes)
+        val btnNo = dialogView.findViewById<MaterialButton>(R.id.button_no)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        btnNo.setOnClickListener {
+            dialog.dismiss()
+            Toast.makeText(this, "Login canceled.", Toast.LENGTH_SHORT).show()
+        }
+
+        btnYes.setOnClickListener {
+            btnYes.isEnabled = false
+            reactivateAccount(token, dialog)
+        }
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        dialog.show()
+    }
+
+    private fun reactivateAccount(token: String, dialog: AlertDialog) {
+        RetrofitClient.instance.reactivateAccount("Bearer $token")
+            .enqueue(object : Callback<ApiResponse> {
+                override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+                    if (response.isSuccessful && response.body()?.success == true) {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            response.body()?.message ?: "Account reactivated successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        dialog.dismiss()
+                        attemptLogin() // retry login automatically
+                    } else {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Failed to reactivate account.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        dialog.dismiss()
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Error: ${t.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    dialog.dismiss()
+                }
+            })
+    }
+
+    private fun completeLoginProcess(user: User,token: String) {
         SecurePrefsHelper.saveToken(this, token)
+
+//        getSharedPreferences("prefs", MODE_PRIVATE).edit().apply {
+//            putString("token", token)
+//            putString("role", user.role)
+//            putString("id", user.id)
+//            putString("username", user.username)
+//            putString("email", user.email)
+//            putString("status", user.status)
+//            apply()
+//        }
 
         // Save other user info in prefs
         getSharedPreferences("prefs", MODE_PRIVATE).edit().apply {
@@ -239,54 +395,6 @@ class LoginActivity : AppCompatActivity() {
             apply()
         }
 
-
-        // ✅ Get FCM token and send to backend
-//        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-//            if (!task.isSuccessful) {
-//                Log.w("FCM", "Fetching FCM token failed", task.exception)
-//                return@addOnCompleteListener
-//            }
-//            val fcmToken = task.result
-//            Log.d("FCM", "Device FCM token: $fcmToken")
-//
-//            getSharedPreferences("prefs", MODE_PRIVATE).edit().putString("fcmToken", fcmToken).apply()
-//
-//            val prefs = getSharedPreferences("prefs", MODE_PRIVATE)
-//            val latF = prefs.getFloat("last_lat", 0f)
-//            val lonF = prefs.getFloat("last_lon", 0f)
-//            val lat: Double? = if (latF != 0f) latF.toDouble() else null
-//            val lon: Double? = if (lonF != 0f) lonF.toDouble() else null
-//
-//            val jwt = SecurePrefsHelper.getToken(this)
-//            val userId = user?.id
-//
-//            val req = UpdateFcmRequest(fcmToken, lat, lon, userId)
-//
-//            if (!jwt.isNullOrEmpty()) {
-//                RetrofitClient.instance.updateFcmToken("Bearer $jwt", req)
-//                    .enqueue(object : Callback<Void> {
-//                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
-//                            Log.d("FCM", "updateFcmToken success code=${response.code()}")
-//                        }
-//                        override fun onFailure(call: Call<Void>, t: Throwable) {
-//                            Log.e("FCM", "updateFcmToken failed: ${t.message}")
-//                        }
-//                    })
-//            } else if (!userId.isNullOrEmpty()) {
-//                // fallback: no auth header
-//                RetrofitClient.instance.updateFcmTokenNoAuth(req)
-//                    .enqueue(object : Callback<Void> {
-//                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
-//                            Log.d("FCM", "updateFcmTokenNoAuth success code=${response.code()}")
-//                        }
-//                        override fun onFailure(call: Call<Void>, t: Throwable) {
-//                            Log.e("FCM", "updateFcmTokenNoAuth failed: ${t.message}")
-//                        }
-//                    })
-//            }
-//        }
-
-        // ✅ Send FCM token + location to backend
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("FCM", "Fetching FCM token failed", task.exception)
@@ -294,62 +402,31 @@ class LoginActivity : AppCompatActivity() {
             }
 
             val fcmToken = task.result ?: return@addOnCompleteListener
-            Log.d("FCM", "Device FCM token: $fcmToken")
-
             val prefs = getSharedPreferences("prefs", MODE_PRIVATE)
             val lat = prefs.getFloat("last_lat", 0f).takeIf { it != 0f }?.toDouble()
             val lon = prefs.getFloat("last_lon", 0f).takeIf { it != 0f }?.toDouble()
 
             val request = UpdateFcmRequest(user.id, fcmToken, lat ?: 0.0, lon ?: 0.0)
-            if (token.isNotEmpty()) {
-                RetrofitClient.instance.updateFcmToken("Bearer $token", request)
-                    .enqueue(object : Callback<FcmResponse> {
-                        override fun onResponse(call: Call<FcmResponse>, response: Response<FcmResponse>) {
-                            if (response.isSuccessful) {
-                                Log.d("FCM", "updateFcmToken success code=${response.code()}")
-                            } else {
-                                Log.e("FCM", "Server error: ${response.code()} - ${response.message()}")
-                            }
-                        }
+            RetrofitClient.instance.updateFcmToken("Bearer $token", request)
+                .enqueue(object : Callback<FcmResponse> {
+                    override fun onResponse(call: Call<FcmResponse>, response: Response<FcmResponse>) {
+                        Log.d("FCM", "FCM updated: ${response.code()}")
+                    }
 
-                        override fun onFailure(call: Call<FcmResponse>, t: Throwable) {
-                            Log.e("FCM", "updateFcmToken failed: ${t.message}")
-                        }
-                    })
-            } else if (!user?.id.isNullOrEmpty()) {
-                // fallback: no auth header
-                RetrofitClient.instance.updateFcmTokenNoAuth(request)
-                    .enqueue(object : Callback<Void> {
-                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                            Log.d("FCM", "updateFcmTokenNoAuth success code=${response.code()}")
-                        }
-
-                        override fun onFailure(call: Call<Void>, t: Throwable) {
-                            Log.e("FCM", "updateFcmTokenNoAuth failed: ${t.message}")
-                        }
-                    })
-            }
+                    override fun onFailure(call: Call<FcmResponse>, t: Throwable) {
+                        Log.e("FCM", "update failed: ${t.message}")
+                    }
+                })
         }
 
-        // ✅ Schedule daily tip worker after login
-//        MyApp.scheduleDailyTipWorker(this)
-
-        // Navigate to proper dashboard
-        if (user?.role == "farmer") {
+        if (user.role == "farmer") {
             startActivity(Intent(this, DashboardActivity::class.java))
-            Toast.makeText(this, "Welcome ${user?.username}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Welcome ${user.username}", Toast.LENGTH_SHORT).show()
             finish()
         } else {
-            // Not a farmer → reject login
             Toast.makeText(this, "Access denied. Only farmers can log in.", Toast.LENGTH_LONG).show()
-
-            // Optional: clear stored token and prefs so they can’t auto-login
             SecurePrefsHelper.clearToken(this)
             getSharedPreferences("prefs", MODE_PRIVATE).edit().clear().apply()
-
-            val intent = Intent(this, OwnerActivity::class.java)
-            startActivity(intent)
-            finish()
         }
     }
 

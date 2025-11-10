@@ -85,7 +85,8 @@
                     android:text="⚠ Diseased"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="@color/tertiary" />
+                    android:textColor="@color/tertiary"
+                    android:fontFamily="@font/league_spartan_semibold"/>
 
             </LinearLayout>
 
@@ -111,7 +112,8 @@
                         android:text="Papaya Ring Spot Virus"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        android:fontFamily="@font/league_spartan_semibold"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -124,7 +126,8 @@
                             android:text="Confidence: "
                             android:textSize="14sp"
                             android:textColor="#616161"
-                            android:lineSpacingExtra="2dp" />
+                            android:lineSpacingExtra="2dp"
+                            android:fontFamily="@font/league_spartan"/>
                         <TextView
                             android:id="@+id/confidenceText"
                             android:layout_width="wrap_content"
@@ -134,7 +137,8 @@
                             android:textSize="14sp"
                             android:textColor="#616161"
                             android:lineSpacingExtra="2dp"
-                            android:textStyle="bold"/>
+                            android:textStyle="italic"
+                            android:fontFamily="@font/league_spartan_semibold"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -148,7 +152,7 @@
                 android:layout_height="56dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:text="⚡ Suggested Treatment"
+                android:text="Suggested Treatment"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -157,7 +161,8 @@
                 app:icon="@drawable/ic_keyboard_arrow_down"
                 app:iconGravity="end"
                 app:iconTint="@android:color/white"
-                android:letterSpacing="0" />
+                android:letterSpacing="0"
+                android:fontFamily="@font/league_spartan_bold"/>
 
             <!-- Treatment Text View -->
             <androidx.cardview.widget.CardView

@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingBottom="80dp">
+        android:paddingBottom="80dp"
+        android:background="#F5F5F5">
 
         <!-- Header -->
         <LinearLayout
@@ -160,7 +161,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/camera"
+                    android:src="@drawable/ic_camera"
                     android:tint="@android:color/white"/>
 
             </FrameLayout>
@@ -176,29 +177,45 @@
             android:gravity="center"
             android:visibility="gone">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnRetake"
+                style="?attr/materialButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Retake"
-                android:backgroundTint="@color/gray"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white"
+                android:backgroundTint="@color/gray"
+                app:rippleColor="#FF9100"
+                app:cornerRadius="12dp"
+                android:padding="12dp"
+                android:elevation="3dp"
+                android:insetTop="6dp"
+                android:insetBottom="6dp"
                 android:visibility="gone"/>
 
             <Space
                 android:layout_width="16dp"
                 android:layout_height="wrap_content" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnUsePhoto"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Use Photo"
-                android:backgroundTint="@color/primary"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white"
+                android:backgroundTint="@color/primary"
+                app:rippleColor="#80FFFFFF"
+                app:cornerRadius="12dp"
+                android:padding="12dp"
+                android:elevation="3dp"
+                android:insetTop="6dp"
+                android:insetBottom="6dp"
                 android:visibility="gone"/>
+
         </LinearLayout>
     </LinearLayout>
     <FrameLayout

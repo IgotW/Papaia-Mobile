@@ -243,7 +243,7 @@ class HistoryAdapter(
             txtStatus.setBackgroundResource(R.drawable.status_badge_healthy)
             txtStatus.setTextColor(context.getColor(R.color.primary))
         } else {
-            txtStatus.text = "Diseased"
+            txtStatus.text = "Disease Detected"
             txtStatus.setBackgroundResource(R.drawable.status_badge_diseased)
             txtStatus.setTextColor(context.getColor(R.color.tertiary))
         }

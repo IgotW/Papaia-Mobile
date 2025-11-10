@@ -167,6 +167,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews(view)
+        setLoadingStates()
 
         // Get username from SharedPreferences
         val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
@@ -231,6 +232,17 @@ class HomeFragment : Fragment() {
 //            R.color.secondary,
 //            R.color.tertiary
 //        )
+    }
+
+    private fun setLoadingStates() {
+        txtDailyTips.text = "Loading daily tip..."
+        analytics_summary.text = "Loading summary..."
+        farmName.text = "Loading..."
+        farmLocation.text = "Loading..."
+        todayScans.text = "..."
+        healthPercent.text = "...%"
+        countHealthy.text = "... Healthy"
+        countDiseased.text = "... Diseased"
     }
 
     private fun setupButtonClickListeners(){

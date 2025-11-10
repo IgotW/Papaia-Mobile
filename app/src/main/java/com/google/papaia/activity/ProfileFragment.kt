@@ -185,53 +185,92 @@ class ProfileFragment : Fragment() {
                 }
             })
     }
+//    private fun showLogoutDialog() {
+//        // ✅ Custom title TextView (black text, left aligned)
+//        val titleView = TextView(requireContext()).apply {
+//            text = "Logout"
+//            setTextColor(ContextCompat.getColor(requireContext(), android.R.color.black))
+//            textSize = 20f
+//            setPadding(50, 40, 50, 20)
+//            gravity = Gravity.START   // keep left aligned
+//            setTypeface(null, Typeface.BOLD) // make bold for visibility
+//        }
+//
+//        val dialog = AlertDialog.Builder(requireContext())
+//            .setCustomTitle(titleView) // 👈 use custom title
+//            .setMessage("Are you sure you want to logout?")
+//            .setPositiveButton("Yes") { _, _ ->
+//                performLogout()
+//            }
+//            .setNegativeButton("Cancel", null)
+//            .create()
+//
+//        dialog.setOnShowListener {
+//            dialog.window?.setBackgroundDrawableResource(android.R.color.white)
+//
+//            // Center + color the message
+//            dialog.findViewById<TextView>(android.R.id.message)?.apply {
+//                setTextColor(ContextCompat.getColor(requireContext(), android.R.color.black))
+//                gravity = Gravity.CENTER
+//                textSize = 16f
+//            }
+//
+//            // Buttons
+//            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(
+//                ContextCompat.getColor(requireContext(), android.R.color.holo_blue_dark)
+//            )
+//            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(
+//                ContextCompat.getColor(requireContext(), android.R.color.darker_gray)
+//            )
+//
+//        }
+//
+//        dialog.show()
+//    }
+
     private fun showLogoutDialog() {
-        // ✅ Custom title TextView (black text, left aligned)
-        val titleView = TextView(requireContext()).apply {
-            text = "Logout"
-            setTextColor(ContextCompat.getColor(requireContext(), android.R.color.black))
-            textSize = 20f
-            setPadding(50, 40, 50, 20)
-            gravity = Gravity.START   // keep left aligned
-            setTypeface(null, Typeface.BOLD) // make bold for visibility
-        }
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_logout, null)
+
+        val btnCancel = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.button_cancel)
+        val btnConfirm = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.button_confirm)
 
         val dialog = AlertDialog.Builder(requireContext())
-            .setCustomTitle(titleView) // 👈 use custom title
-            .setMessage("Are you sure you want to logout?")
-            .setPositiveButton("Yes") { _, _ ->
-                performLogout()
-            }
-            .setNegativeButton("Cancel", null)
+            .setView(dialogView)
+            .setCancelable(true)
             .create()
 
-        dialog.setOnShowListener {
-            dialog.window?.setBackgroundDrawableResource(android.R.color.white)
+        // Make background transparent for rounded corners to show
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-            // Center + color the message
-            dialog.findViewById<TextView>(android.R.id.message)?.apply {
-                setTextColor(ContextCompat.getColor(requireContext(), android.R.color.black))
-                gravity = Gravity.CENTER
-                textSize = 16f
-            }
-
-            // Buttons
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(
-                ContextCompat.getColor(requireContext(), android.R.color.holo_blue_dark)
-            )
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(
-                ContextCompat.getColor(requireContext(), android.R.color.darker_gray)
-            )
-
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
         }
 
+        btnConfirm.setOnClickListener {
+            dialog.dismiss()
+            performLogout()
+        }
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
+
 
     private fun performLogout() {
         val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
         prefs.edit().clear().apply()
         SecurePrefsHelper.clearToken(requireContext())
+
+        //for testing
+        // 🔥 Delete FCM token so it stops receiving push notifications
+//        FirebaseMessaging.getInstance().deleteToken()
+//            .addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    Log.d("Logout", "FCM token deleted successfully")
+//                } else {
+//                    Log.e("Logout", "Failed to delete FCM token", task.exception)
+//                }
+//            }
 
         requireActivity().finishAffinity()
         startActivity(Intent(requireContext(), LoginActivity::class.java))
