@@ -828,8 +828,8 @@ class HomeFragment : Fragment() {
         return try {
             // Parse the input format "Jul 24, 2025"
             val inputFormat = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.ENGLISH)
-            // Format to output "07/24/25"
-            val outputFormat = java.text.SimpleDateFormat("MM/dd/yy", java.util.Locale.ENGLISH)
+            // Format to output "Jul 24"
+            val outputFormat = java.text.SimpleDateFormat("MMM dd", java.util.Locale.ENGLISH)
 
             val date = inputFormat.parse(dateString)
             outputFormat.format(date ?: return dateString)

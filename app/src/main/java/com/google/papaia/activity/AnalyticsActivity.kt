@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.ListView
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -39,6 +40,7 @@ import kotlin.collections.forEach
 
 class AnalyticsActivity : AppCompatActivity() {
 
+    private lateinit var txtTitle: TextView
     private lateinit var btnDaily: MaterialButton
     private lateinit var btnWeekly: MaterialButton
     private lateinit var btnMonthly: MaterialButton
@@ -57,6 +59,7 @@ class AnalyticsActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_analytics)
 
+        txtTitle = findViewById(R.id.txtviewTitle)
         btnDaily = findViewById(R.id.btnDaily)
         btnWeekly = findViewById(R.id.btnWeekly)
         btnMonthly = findViewById(R.id.btnMonthly)
@@ -71,15 +74,19 @@ class AnalyticsActivity : AppCompatActivity() {
     private fun setupButtonClickListeners() {
         btnDaily.setOnClickListener {
             selectButton(btnDaily)
+            txtTitle.setText("Daily Analytics")
         }
         btnWeekly.setOnClickListener {
             selectButton(btnWeekly)
+            txtTitle.setText("Weekly Analytics")
         }
         btnMonthly.setOnClickListener {
             selectButton(btnMonthly)
+            txtTitle.setText("Monthly Analytics")
         }
         btnYearly.setOnClickListener {
             selectButton(btnYearly)
+            txtTitle.setText("Yearly Analytics")
         }
         btnBack.setOnClickListener {
             val intent = Intent(this, DashboardActivity::class.java)
@@ -380,6 +387,9 @@ class AnalyticsActivity : AppCompatActivity() {
     }
 
     private fun setupChart(diseaseMap: MutableMap<String, MutableList<Entry>>, labels: MutableList<String>, dataSize: Int, category: String) {
+
+        val allDiseases = listOf("Healthy", "Anthracnose", "Powdery Mildew", "Ring Spot Virus")
+
         val colorMap = mapOf(
             "Healthy" to Color.parseColor("#4CAF50"),
             "Anthracnose" to Color.parseColor("#F44336"),
@@ -387,7 +397,16 @@ class AnalyticsActivity : AppCompatActivity() {
             "Ring Spot Virus" to Color.parseColor("#FF9800")
         )
 
-        val diseaseNames = diseaseMap.keys.toList()
+        allDiseases.forEach { disease ->
+            if (!diseaseMap.containsKey(disease)) {
+                diseaseMap[disease] = mutableListOf()
+                for (i in 0 until dataSize) {
+                    diseaseMap[disease]?.add(Entry(i.toFloat(), 0f))
+                }
+            }
+        }
+
+//        val diseaseNames = diseaseMap.keys.toList()
 
         val lineDataSets = diseaseMap.entries.map { (key, value) ->
             LineDataSet(value, key).apply {
@@ -403,7 +422,7 @@ class AnalyticsActivity : AppCompatActivity() {
         lineChart.data = LineData(lineDataSets)
 
         val markerView =
-            CustomMarkerView(this, R.layout.custom_marker_view, labels, diseaseNames)
+            CustomMarkerView(this, R.layout.custom_marker_view, labels, allDiseases)
         markerView.chartView = lineChart
         lineChart.marker = markerView
 
@@ -724,186 +743,6 @@ class AnalyticsActivity : AppCompatActivity() {
 
         return filledStats
     }
-
-//    private fun fillMissingWeeks(weeklyStats: List<WeeklyAnalyticsRequest>): List<WeeklyAnalyticsRequest> {
-//        if (weeklyStats.isEmpty()) return emptyList()
-//
-//        // Backend format: "Oct 20 - Oct 26, 2025"
-//        val weekRangeFormat = java.text.SimpleDateFormat("MMM d - MMM d, yyyy", java.util.Locale.ENGLISH)
-//        val calendar = java.util.Calendar.getInstance()
-//        val filledStats = mutableListOf<WeeklyAnalyticsRequest>()
-//
-//        // Parse existing weeks and extract their start dates
-//        val existingDataMap = mutableMapOf<String, WeeklyAnalyticsRequest>()
-//        weeklyStats.forEach { stat ->
-//            existingDataMap[stat.week] = stat
-//        }
-//
-//        // Find the earliest and latest weeks
-//        val weekDates = weeklyStats.mapNotNull { stat ->
-//            try {
-//                // Extract the start date from "Oct 20 - Oct 26, 2025"
-//                val parts = stat.week.split(" - ")
-//                if (parts.size == 2) {
-//                    val startDateStr = parts[0]
-//                    val year = parts[1].split(", ").lastOrNull()
-//                    if (year != null) {
-//                        val fullStartDate = "$startDateStr, $year"
-//                        java.text.SimpleDateFormat("MMM d, yyyy", java.util.Locale.ENGLISH).parse(fullStartDate)
-//                    } else null
-//                } else null
-//            } catch (e: Exception) {
-//                null
-//            }
-//        }.sorted()
-//
-//        if (weekDates.isEmpty()) return weeklyStats
-//
-//        val startDate = weekDates.first()
-//        val endDate = java.util.Date()
-//
-//        // Generate every week from start to today
-//        calendar.time = startDate
-//        calendar.set(java.util.Calendar.DAY_OF_WEEK, java.util.Calendar.MONDAY)
-//
-//        while (!calendar.time.after(endDate)) {
-//            val weekStart = calendar.clone() as java.util.Calendar
-//            val weekEnd = calendar.clone() as java.util.Calendar
-//            weekEnd.add(java.util.Calendar.DAY_OF_MONTH, 6) // Sunday
-//
-//            val weekLabel = if (weekStart.get(java.util.Calendar.YEAR) == weekEnd.get(java.util.Calendar.YEAR)) {
-//                "${java.text.SimpleDateFormat("MMM d", java.util.Locale.ENGLISH).format(weekStart.time)} - ${java.text.SimpleDateFormat("MMM d, yyyy", java.util.Locale.ENGLISH).format(weekEnd.time)}"
-//            } else {
-//                "${java.text.SimpleDateFormat("MMM d, yyyy", java.util.Locale.ENGLISH).format(weekStart.time)} - ${java.text.SimpleDateFormat("MMM d, yyyy", java.util.Locale.ENGLISH).format(weekEnd.time)}"
-//            }
-//
-//            val existingData = existingDataMap[weekLabel]
-//            if (existingData != null) {
-//                filledStats.add(existingData)
-//            } else {
-//                val zeroPredictions = mapOf(
-//                    "Healthy" to 0,
-//                    "Anthracnose" to 0,
-//                    "Powdery Mildew" to 0,
-//                    "Ring Spot Virus" to 0
-//                )
-//                filledStats.add(WeeklyAnalyticsRequest(weekLabel, zeroPredictions))
-//            }
-//
-//            calendar.add(java.util.Calendar.WEEK_OF_YEAR, 1)
-//        }
-//
-//        return filledStats
-//    }
-//
-//    private fun fillMissingMonths(monthlyStats: List<MonthlyAnalyticsRequest>): List<MonthlyAnalyticsRequest> {
-//        if (monthlyStats.isEmpty()) return emptyList()
-//
-//        // Backend format: "October 2025"
-//        val monthFormat = java.text.SimpleDateFormat("MMMM yyyy", java.util.Locale.ENGLISH)
-//        val calendar = java.util.Calendar.getInstance()
-//        val filledStats = mutableListOf<MonthlyAnalyticsRequest>()
-//
-//        // Create a map of existing data
-//        val existingDataMap = mutableMapOf<String, MonthlyAnalyticsRequest>()
-//        monthlyStats.forEach { stat ->
-//            existingDataMap[stat.month] = stat
-//        }
-//
-//        // Sort the dates to find first month
-//        val sortedDates = monthlyStats.mapNotNull { stat ->
-//            try {
-//                monthFormat.parse(stat.month)
-//            } catch (e: Exception) {
-//                null
-//            }
-//        }.sorted()
-//
-//        if (sortedDates.isEmpty()) return monthlyStats
-//
-//        val startDate = sortedDates.first()
-//        val endDate = java.util.Date()
-//
-//        // Generate every month from start to today
-//        calendar.time = startDate
-//        calendar.set(java.util.Calendar.DAY_OF_MONTH, 1)
-//
-//        while (!calendar.time.after(endDate)) {
-//            val monthLabel = monthFormat.format(calendar.time)
-//            val existingData = existingDataMap[monthLabel]
-//
-//            if (existingData != null) {
-//                filledStats.add(existingData)
-//            } else {
-//                val zeroPredictions = mapOf(
-//                    "Healthy" to 0,
-//                    "Anthracnose" to 0,
-//                    "Powdery Mildew" to 0,
-//                    "Ring Spot Virus" to 0
-//                )
-//                filledStats.add(MonthlyAnalyticsRequest(monthLabel, zeroPredictions))
-//            }
-//
-//            calendar.add(java.util.Calendar.MONTH, 1)
-//        }
-//
-//        return filledStats
-//    }
-//
-//    private fun fillMissingYears(yearlyStats: List<YearlyAnalyticsRequest>): List<YearlyAnalyticsRequest> {
-//        if (yearlyStats.isEmpty()) return emptyList()
-//
-//        // Backend format: "2025"
-//        val yearFormat = java.text.SimpleDateFormat("yyyy", java.util.Locale.ENGLISH)
-//        val calendar = java.util.Calendar.getInstance()
-//        val filledStats = mutableListOf<YearlyAnalyticsRequest>()
-//
-//        // Create a map of existing data
-//        val existingDataMap = mutableMapOf<String, YearlyAnalyticsRequest>()
-//        yearlyStats.forEach { stat ->
-//            existingDataMap[stat.year] = stat
-//        }
-//
-//        // Sort the dates to find first year
-//        val sortedDates = yearlyStats.mapNotNull { stat ->
-//            try {
-//                yearFormat.parse(stat.year)
-//            } catch (e: Exception) {
-//                null
-//            }
-//        }.sorted()
-//
-//        if (sortedDates.isEmpty()) return yearlyStats
-//
-//        val startDate = sortedDates.first()
-//        val endDate = java.util.Date()
-//
-//        // Generate every year from start to today
-//        calendar.time = startDate
-//        calendar.set(java.util.Calendar.MONTH, java.util.Calendar.JANUARY)
-//        calendar.set(java.util.Calendar.DAY_OF_MONTH, 1)
-//
-//        while (!calendar.time.after(endDate)) {
-//            val yearLabel = yearFormat.format(calendar.time)
-//            val existingData = existingDataMap[yearLabel]
-//
-//            if (existingData != null) {
-//                filledStats.add(existingData)
-//            } else {
-//                val zeroPredictions = mapOf(
-//                    "Healthy" to 0,
-//                    "Anthracnose" to 0,
-//                    "Powdery Mildew" to 0,
-//                    "Ring Spot Virus" to 0
-//                )
-//                filledStats.add(YearlyAnalyticsRequest(yearLabel, zeroPredictions))
-//            }
-//
-//            calendar.add(java.util.Calendar.YEAR, 1)
-//        }
-//
-//        return filledStats
-//    }
 
     private fun parseAndStandardizeDate(dateString: String): String? {
         val targetFormat = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.ENGLISH)

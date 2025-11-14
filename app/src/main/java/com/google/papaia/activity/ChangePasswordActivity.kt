@@ -7,11 +7,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -19,7 +19,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.papaia.R
-import com.google.papaia.activity.Register1Activity.PasswordStrength
 import com.google.papaia.request.PasswordChangeRequest
 import com.google.papaia.response.ChangePasswordResponse
 import com.google.papaia.utils.RetrofitClient
@@ -53,6 +52,9 @@ class ChangePasswordActivity : AppCompatActivity() {
         tilConfirmPass = findViewById(R.id.til_confirm_password)
         buttonReset = findViewById(R.id.button_fg3_reset)
         buttonBack = findViewById(R.id.cp_btn_back)
+        passwordStrengthBar = findViewById(R.id.password_strength_bar)
+
+        setupPasswordValidation() // ✅ initialize validation listeners
 
         buttonReset.setOnClickListener {
             val oldPassword = oldPass.text.toString().trim()
@@ -69,16 +71,14 @@ class ChangePasswordActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE)
-            val token = sharedPreferences.getString("token", null)
-
+            val prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+            val token = prefs.getString("token", null)
             if (token == null) {
                 Toast.makeText(this, "Authentication token not found", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             val request = PasswordChangeRequest(password = oldPassword, newPassword = newPassword)
-
             RetrofitClient.instance.changePassword("Bearer $token", request)
                 .enqueue(object : Callback<ChangePasswordResponse> {
                     override fun onResponse(
@@ -86,43 +86,36 @@ class ChangePasswordActivity : AppCompatActivity() {
                         response: Response<ChangePasswordResponse>
                     ) {
                         if (response.isSuccessful) {
-                            val res = response.body()
-                            Toast.makeText(this@ChangePasswordActivity, res?.message ?: "Password changed successfully", Toast.LENGTH_LONG).show()
-                            finish()
+                            showSuccessDialog()
                         } else {
                             val errorBody = response.errorBody()?.string()
-                            val errorMsg = JSONObject(errorBody ?: "{}").optString("error", "Failed to change password")
-                            Toast.makeText(this@ChangePasswordActivity, errorMsg, Toast.LENGTH_LONG).show()
+                            val errorMsg = JSONObject(errorBody ?: "{}")
+                                .optString("error", "Failed to change password")
+                            showErrorDialog(errorMsg)
                         }
                     }
 
                     override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
-                        Toast.makeText(this@ChangePasswordActivity, "Error: ${t.message}", Toast.LENGTH_LONG).show()
+                        showErrorDialog("Error: ${t.message}")
                     }
                 })
         }
 
         buttonBack.setOnClickListener {
-            Log.d("Change Password", "Back to Settings")
             val intent = Intent()
             intent.putExtra("navigateTo", "profile")
             setResult(RESULT_OK, intent)
             finish()
         }
-
     }
 
     private fun setupPasswordValidation() {
-        // Password strength validation
         newPass.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
             override fun afterTextChanged(s: Editable?) {
                 val password = s.toString()
                 updatePasswordStrength(password)
-
-                // Clear confirm password error if passwords now match
                 val confirmPassword = confirmNewPass.text.toString()
                 if (password.isNotEmpty() && confirmPassword.isNotEmpty() && password == confirmPassword) {
                     tilConfirmPass.error = null
@@ -130,24 +123,57 @@ class ChangePasswordActivity : AppCompatActivity() {
             }
         })
 
-        // Confirm password validation
         confirmNewPass.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
             override fun afterTextChanged(s: Editable?) {
                 val confirmPassword = s.toString()
                 val password = newPass.text.toString()
-
                 if (confirmPassword.isNotEmpty() && password.isNotEmpty()) {
-                    if (password != confirmPassword) {
-                        tilConfirmPass.error = "Passwords do not match"
-                    } else {
-                        tilConfirmPass.error = null
-                    }
+                    tilConfirmPass.error = if (password != confirmPassword) "Passwords do not match" else null
                 }
             }
         })
+    }
+
+    /** ✅ Success Dialog */
+    private fun showSuccessDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_success_change_password, null)
+        val btnOk = dialogView.findViewById<MaterialButton>(R.id.button_ok)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        btnOk.setOnClickListener {
+            dialog.dismiss()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finishAffinity()
+        }
+
+        dialog.show()
+    }
+
+    /** ❌ Error Dialog */
+    private fun showErrorDialog(errorMessage: String) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_error_change_password, null)
+        val btnOk = dialogView.findViewById<MaterialButton>(R.id.button_ok)
+        val messageText = dialogView.findViewById<android.widget.TextView>(R.id.tvDialogMessage)
+        messageText.text = errorMessage
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        btnOk.setOnClickListener { dialog.dismiss() }
+
+        dialog.show()
     }
 
     private fun updatePasswordStrength(password: String) {
@@ -170,12 +196,8 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     private fun calculatePasswordStrength(password: String): PasswordStrength {
         var score = 0
-
-        // Length check
         if (password.length >= 8) score++
         if (password.length >= 12) score++
-
-        // Character variety checks
         if (password.any { it.isUpperCase() }) score++
         if (password.any { it.isLowerCase() }) score++
         if (password.any { it.isDigit() }) score++
@@ -187,7 +209,6 @@ class ChangePasswordActivity : AppCompatActivity() {
             else -> PasswordStrength.STRONG
         }
     }
-    enum class PasswordStrength {
-        WEAK, MEDIUM, STRONG
-    }
+
+    enum class PasswordStrength { WEAK, MEDIUM, STRONG }
 }

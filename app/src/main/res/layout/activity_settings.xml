@@ -31,7 +31,8 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:gravity="center" />
+            android:gravity="center"
+            android:fontFamily="@font/league_spartan_bold"/>
 
         <View
             android:layout_width="24dp"
@@ -58,15 +59,17 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/league_spartan_semibold"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Manage your personal information"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textColor="#666666"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/league_spartan"/>
 
             <!-- Edit Profile Card -->
             <androidx.cardview.widget.CardView
@@ -106,16 +109,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Edit Profile"
-                            android:textSize="16sp"
+                            android:textSize="17sp"
                             android:textStyle="bold"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/league_spartan_semibold"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Update personal details"
-                            android:textSize="14sp"
-                            android:textColor="#666666" />
+                            android:textSize="15sp"
+                            android:textColor="#666666"
+                            android:fontFamily="@font/league_spartan"/>
 
                     </LinearLayout>
 
@@ -167,16 +172,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Change Password"
-                            android:textSize="16sp"
+                            android:textSize="17sp"
                             android:textStyle="bold"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/league_spartan_semibold"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Update security credentials"
-                            android:textSize="14sp"
-                            android:textColor="#666666" />
+                            android:textSize="15sp"
+                            android:textColor="#666666"
+                            android:fontFamily="@font/league_spartan"/>
 
                     </LinearLayout>
 
@@ -283,7 +290,8 @@
                     android:text="Subscription"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/league_spartan_semibold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -302,9 +310,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Manage your plan and billing"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textColor="#666666"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/league_spartan"/>
 
             <!-- View Plan Card -->
             <androidx.cardview.widget.CardView
@@ -344,15 +353,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="View Plan"
-                            android:textSize="16sp"
+                            android:textSize="17sp"
                             android:textStyle="bold"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/league_spartan_semibold"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Current subscription details"
-                            android:textSize="14sp"
+                            android:textSize="15sp"
                             android:textColor="#666666" />
 
                     </LinearLayout>
@@ -405,16 +415,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Manage Billing"
-                            android:textSize="16sp"
+                            android:textSize="17sp"
                             android:textStyle="bold"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/league_spartan_semibold"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Payment methods and history"
-                            android:textSize="14sp"
-                            android:textColor="#666666" />
+                            android:textSize="15sp"
+                            android:textColor="#666666"
+                            android:fontFamily="@font/league_spartan"/>
 
                     </LinearLayout>
 
@@ -435,9 +447,10 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:text="Deactivate Account"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                app:backgroundTint="@color/tertiary"
+                android:textSize="15sp"
+                app:backgroundTint="@color/button_orange"
                 android:textStyle="bold"
                 android:background="@drawable/button_rounded"
                 android:layout_marginBottom="30dp"/>

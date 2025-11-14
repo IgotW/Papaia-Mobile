@@ -52,11 +52,6 @@ interface ApiService {
         @Path("idNumber") userId: String
     ): Call<UserResponse>
 
-//    @GET("/api/farmer/weekly-analytics")
-//    fun getWeeklyAnalytics(
-//        @Header("Authorization") token: String
-//    ): Call<DailyAnalyticsResponse>
-
     @GET("/api/farmer/daily-analytics")
     fun getDailyAnalytics(
         @Header("Authorization") token: String
@@ -76,11 +71,6 @@ interface ApiService {
     fun getYearlyAnalytics(
         @Header("Authorization") token: String
     ): Call<YearlyAnalyticsResponse>
-
-//    @GET("/api/farmer/daily-tip")
-//    fun getDailyTip(
-//        @Header("Authorization") token: String
-//    ): Call<DailyTipResponse>
 
     @GET("/api/farmer/predict-history")
     fun getPredictionHistory(

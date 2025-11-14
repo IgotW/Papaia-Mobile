@@ -50,10 +50,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:gravity="center"
-                    android:text="Owner Account Detected"
+                    android:text="Owner Account \n Detected"
                     android:textColor="#333333"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/league_spartan_semibold"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -63,7 +64,8 @@
                     android:lineSpacingExtra="4dp"
                     android:text="This mobile app is designed exclusively for farmer accounts. Owner accounts should use our web portal for full access to management features."
                     android:textColor="#666666"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:fontFamily="@font/league_spartan"/>
 
                 <View
                     android:layout_width="60dp"
@@ -109,7 +111,8 @@
                         android:text="Access Owner Portal"
                         android:textColor="#333333"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:fontFamily="@font/league_spartan_semibold"/>
 
                 </LinearLayout>
 
@@ -119,7 +122,8 @@
                     android:layout_marginBottom="16dp"
                     android:text="Please visit our web portal to access your owner dashboard with full management capabilities:"
                     android:textColor="#666666"
-                    android:textSize="14sp" />
+                    android:textSize="15sp"
+                    android:fontFamily="@font/league_spartan"/>
 
                 <!-- Website URL -->
                 <LinearLayout
@@ -217,7 +221,8 @@
                     android:text="Owner Portal Features"
                     android:textColor="#333333"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/league_spartan_semibold"/>
 
                 <!-- Feature 1 -->
                 <LinearLayout
@@ -239,7 +244,8 @@
                         android:layout_height="wrap_content"
                         android:text="Comprehensive farm management dashboard"
                         android:textColor="#666666"
-                        android:textSize="14sp" />
+                        android:textSize="15sp"
+                        android:fontFamily="@font/league_spartan"/>
 
                 </LinearLayout>
 
@@ -263,7 +269,8 @@
                         android:layout_height="wrap_content"
                         android:text="Advanced analytics and reporting tools"
                         android:textColor="#666666"
-                        android:textSize="14sp" />
+                        android:textSize="15sp"
+                        android:fontFamily="@font/league_spartan"/>
 
                 </LinearLayout>
 
@@ -286,7 +293,8 @@
                         android:layout_height="wrap_content"
                         android:text="Multi-farmer account management"
                         android:textColor="#666666"
-                        android:textSize="14sp" />
+                        android:textSize="15sp"
+                        android:fontFamily="@font/league_spartan"/>
 
                 </LinearLayout>
 

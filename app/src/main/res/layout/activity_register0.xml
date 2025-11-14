@@ -26,9 +26,10 @@
                 android:text="Choose Your Role"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                android:textColor="#212121"
+                android:textColor="@color/black"
                 android:textAlignment="center"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/league_spartan_semibold"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -37,7 +38,8 @@
                 android:textSize="16sp"
                 android:textColor="#757575"
                 android:textAlignment="center"
-                android:lineSpacingExtra="4dp" />
+                android:lineSpacingExtra="4dp"
+                android:fontFamily="@font/league_spartan"/>
 
         </LinearLayout>
 
@@ -95,9 +97,10 @@
                         android:text="Farmer"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textColor="#212121"
+                        android:textColor="@color/black"
                         android:textAlignment="center"
-                        android:layout_marginBottom="12dp" />
+                        android:layout_marginBottom="12dp"
+                        android:fontFamily="@font/league_spartan_semibold"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -106,7 +109,8 @@
                         android:textSize="14sp"
                         android:textColor="#757575"
                         android:textAlignment="center"
-                        android:lineSpacingExtra="2dp" />
+                        android:lineSpacingExtra="2dp"
+                        android:fontFamily="@font/league_spartan"/>
 
                 </LinearLayout>
 
@@ -156,9 +160,10 @@
                         android:text="Farm Owner"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textColor="#212121"
+                        android:textColor="@color/black"
                         android:textAlignment="center"
-                        android:layout_marginBottom="12dp" />
+                        android:layout_marginBottom="12dp"
+                        android:fontFamily="@font/league_spartan_semibold"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -167,7 +172,8 @@
                         android:textSize="14sp"
                         android:textColor="#757575"
                         android:textAlignment="center"
-                        android:lineSpacingExtra="2dp" />
+                        android:lineSpacingExtra="2dp"
+                        android:fontFamily="@font/league_spartan"/>
 
                 </LinearLayout>
 
@@ -207,21 +213,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Already have an account? "
-                    android:textSize="14sp"
-                    android:textColor="#757575" />
+                    android:textSize="15sp"
+                    android:textColor="#757575"
+                    android:fontFamily="@font/league_spartan"/>
 
                 <TextView
                     android:id="@+id/tvLogIn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Log In"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="@color/primary"
                     android:clickable="true"
                     android:focusable="true"
                     android:background="?android:attr/selectableItemBackground"
-                    android:padding="4dp" />
+                    android:padding="4dp"
+                    android:fontFamily="@font/league_spartan_semibold"/>
 
             </LinearLayout>
 

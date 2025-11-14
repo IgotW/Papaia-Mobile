@@ -53,6 +53,7 @@
             android:padding="24dp">
 
             <TextView
+                android:id="@+id/txtviewTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Daily Analytics"

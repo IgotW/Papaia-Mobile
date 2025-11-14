@@ -368,9 +368,9 @@
                     android:layout_marginBottom="8dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/image_no_content"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/eborda"
                         app:civ_border_width="2dp"
                         app:civ_border_color="#4CAF50" />
 
@@ -412,9 +412,9 @@
                     android:layout_marginBottom="8dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/image_no_content"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/duarte"
                         app:civ_border_width="2dp"
                         app:civ_border_color="#4CAF50" />
 
@@ -456,9 +456,9 @@
                     android:layout_marginBottom="8dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/image_no_content"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/igot"
                         app:civ_border_width="2dp"
                         app:civ_border_color="#4CAF50" />
 
@@ -498,9 +498,9 @@
                     android:backgroundTint="#00712D">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/image_no_content"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/estomo"
                         app:civ_border_width="2dp"
                         app:civ_border_color="#4CAF50" />
 

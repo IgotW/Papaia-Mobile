@@ -16,7 +16,7 @@
         android:text="Reactivate Account"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="#1B5E20"
+        android:textColor="@color/primary"
         android:gravity="center"
         android:layout_marginBottom="8dp" />
 

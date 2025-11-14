@@ -69,7 +69,7 @@
             android:text="Yes, Logout"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:backgroundTint="@color/tertiary"
+            android:backgroundTint="@color/button_orange"
             app:rippleColor="#80FFFFFF"
             app:cornerRadius="12dp"
             app:elevation="3dp" />

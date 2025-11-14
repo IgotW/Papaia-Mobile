@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/dialog_background"
+    android:gravity="center_horizontal"
+    android:elevation="8dp">
+
+    <!-- 📜 Title -->
+    <TextView
+        android:id="@+id/tvDialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Terms and Conditions"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 📖 Scrollable Terms Text -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="#F9F9F9"
+        android:padding="12dp"
+        android:layout_marginBottom="24dp"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTermsContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15sp"
+                android:lineSpacingExtra="4dp"
+                android:text="Welcome to Papaia, an AI-powered system for papaya disease identification and farm management. By creating an account and using this system, you agree to comply with these Terms and Conditions of Use. Please read this document carefully before proceeding."/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="15dp"
+                android:text="1. Acceptance of Terms"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="By registering or accessing Papaia via mobile or web platforms, you acknowledge that you have read, understood, and agreed to these Terms and Conditions, the Privacy Policy, and any future updates. Continued use of Papaia constitutes acceptance of all revisions. Users who do not agree must discontinue the use of the platform immediately." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="2. Purpose of System"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="Papaia is designed to assist farmers and farm managers in detecting papaya leaf and fruit diseases using AI-based image recognition, scan history logs, and farm monitoring tools. The platform aims to improve disease prevention, productivity, and agricultural decision-making. Papaia is intended for informational and educational purposes only and does not replace certified agricultural consultation or laboratory diagnostics."/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="3. Account Registration and Responsibilities"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="Users must provide accurate and truthful information during registration. You are responsible for maintaining the confidentiality of your account credentials and for all activities under your account." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="You agree not to:" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Impersonate another person or entity;"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Share your credentials; or"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Use the system for illegal, fraudulent, or harmful purposes."
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="10dp"
+                android:text="The developers reserve the right to suspend or terminate accounts that violate these Terms." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="4. Data Collection and Privacy"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="Papaia collects the following user and farm-related data:" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Account details (name, email, role, and farm affiliation)"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Uploaded images (papaya leaf/fruit scans)"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Activity and usage logs"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="10dp"
+                android:text="All data are processed in accordance with the Data Privacy Act of 2012 (RA 10173)." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="Data are used solely for:"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• AI-based disease analysis and model improvement"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Research and system analytics"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• User experience enhancement"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Papaia does not sell, trade, or disclose personal data to third parties without prior consent, except as required by law."/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="5. Payment and Subscription Policy"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="Some features of Papaia may be subject to subscription plans." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Subscription fees are clearly stated on the Subscription Page and processed securely via verified payment gateways."
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Renewals are automatic unless cancelled prior to the next billing cycle."
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Refunds, if applicable, are handled under the refund policy stated on the same page."
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Farm owners with active subscriptions automatically extend paid access to their connected farmer accounts."
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="6. AI and Data Accuracy Disclaimer"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="Papaia’s disease identification results are generated using machine learning models (CNNs) trained on validated papaya datasets." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="While the model strives for high accuracy, results should be treated as decision support, not as an absolute diagnosis" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="The developers, researchers, and partner institutions shall not be held liable for losses, crop damage, or mismanagement resulting from reliance solely on AI outputs."/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="7. Bugs, Fixes, and Updates"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="Papaia undergoes regular updates to improve security, performance, and functionality. During maintenance, temporary downtime or limited access may occur." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="Users are encouraged to report bugs or feedback through the Help &amp; Support section. Reported issues will be prioritized based on severity and impact." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="8. Maintenance and System Availability"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="While the development team strives for maximum uptime, Papaia may experience temporary interruptions due to maintenance, internet issues, or third-party service disruptions (e.g., Firebase, Render, or Vercel). The team reserves the right to perform scheduled maintenance without prior notice."/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="9. Data Retention and Deletion"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="User data will remain stored securely for as long as the account is active. If a farmer account is deleted, their scan records remain visible to the farm owner in anonymized form (e.g., timestamps, disease results) for analytics integrity. Users may request data deletion or export in compliance with RA 10173."/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="10. Security and Confidentiality"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="Papaia uses Google Firebase for encrypted, cloud-based data storage.
+All transmitted data are protected through SSL encryption and authentication protocols.
+Periodic security audits are conducted to safeguard against unauthorized access.
+However, users acknowledge that no online system is completely secure and that they share data at their own discretion."/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="11. Limitation of Liability"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="Under no circumstance shall Papaia, its developers, affiliated institutions, or partners be liable for:" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Direct or indirect losses resulting from the use or inability to use the system;"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Damage to crops, farm property, or equipment;"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Service interruptions or inaccurate data due to technical or environmental factors."
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Use of Papaia implies acknowledgment and acceptance of these limitations." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="12. No Warranty Clause"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="Papaia is provided on an “as is” and “as available” basis."/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="No warranties, whether express or implied, are made regarding:" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Accuracy or reliability of results,"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• System performance, or"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Availability of service"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="10dp"
+                android:text="The developers disclaim all liability arising from system errors, omissions, or temporary downtime."/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="13. Indemnification Clause"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="By using Papaia, you agree to indemnify and hold harmless the developers, affiliated institutions, and partners from any claims, losses, or damages (including legal fees) resulting from:" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Your misuse of the system,"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Violation of these Terms, or"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Breach of any applicable law or regulation."
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="14. Intellectual Property Rights"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="All trademarks, models, designs, software code, and content in Papaia are intellectual property of the development team.
+Unauthorized copying, reverse engineering, or redistribution of any component of Papaia is strictly prohibited." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="15. Governing Law and Jurisdiction"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="These Terms and Conditions shall be governed by and construed in accordance with the laws of the Republic of the Philippines.
+Any dispute arising from the use of Papaia shall fall under the exclusive jurisdiction of the courts of Cebu City, Philippines."/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="16. Contact and Support"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="For technical assistance, bug reporting, or account issues, you may reach the team through:
+Email through support.papaia@gmail.com or via the in-app Help &amp; Feedback feature."/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="17. Consent"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="By clicking “I Agree”, you confirm that you:"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Have read and understood these Terms and Conditions;"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Consent to the collection, processing, and storage of your data; and"
+                android:layout_marginLeft="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:text="• Agree to comply with all policies governing the use of Papaia."
+                android:layout_marginLeft="25dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 🔘 Buttons Container -->
+    <LinearLayout
+        android:id="@+id/dialogButtonsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_decline"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Decline"
+            android:textAllCaps="false"
+            android:textColor="#333333"
+            android:backgroundTint="#E0E0E0"
+            app:rippleColor="#33000000"
+            app:cornerRadius="12dp"
+            app:elevation="2dp" />
+
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_accept"
+            style="?attr/materialButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Accept"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/primary"
+            app:rippleColor="#80FFFFFF"
+            app:cornerRadius="12dp"
+            app:elevation="3dp" />
+    </LinearLayout>
+
+</LinearLayout>

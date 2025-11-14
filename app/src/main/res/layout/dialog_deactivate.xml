@@ -30,7 +30,8 @@
         android:textColor="#333333"
         android:gravity="center"
         android:layout_marginBottom="24dp"
-        android:lineSpacingExtra="2dp" />
+        android:lineSpacingExtra="2dp"
+        android:fontFamily=""/>
 
     <!-- 🌱 Buttons Row -->
     <LinearLayout
@@ -76,7 +77,7 @@
             android:textColor="@android:color/white"
             android:textSize="15sp"
             android:lineSpacingExtra="2dp"
-            android:backgroundTint="@color/primary"
+            android:backgroundTint="@color/button_orange"
             app:rippleColor="#66FFFFFF"
             app:cornerRadius="14dp"
             app:elevation="3dp" />
