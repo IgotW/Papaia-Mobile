@@ -263,14 +263,14 @@ class ProfileFragment : Fragment() {
 
         //for testing
         // 🔥 Delete FCM token so it stops receiving push notifications
-//        FirebaseMessaging.getInstance().deleteToken()
-//            .addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    Log.d("Logout", "FCM token deleted successfully")
-//                } else {
-//                    Log.e("Logout", "Failed to delete FCM token", task.exception)
-//                }
-//            }
+        FirebaseMessaging.getInstance().deleteToken()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d("Logout", "FCM token deleted successfully")
+                } else {
+                    Log.e("Logout", "Failed to delete FCM token", task.exception)
+                }
+            }
 
         requireActivity().finishAffinity()
         startActivity(Intent(requireContext(), LoginActivity::class.java))

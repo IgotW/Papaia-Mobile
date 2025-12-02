@@ -2,6 +2,7 @@ package com.google.papaia.adapter
 
 import android.content.Context
 import android.graphics.Color
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,16 +51,21 @@ class HomeHistoryAdapter(private val context: Context, private val items: List<P
         holder.date.text = dateLabel
         holder.time.text = timeLabel
 
-        // ✅ Change status background + text color
-        if (item.prediction.equals("Healthy", ignoreCase = true)) {
-            holder.statusView.text = "Healthy"
-            holder.statusView.setBackgroundResource(R.drawable.status_badge_healthy) // new drawable
-            holder.statusView.setTextColor(Color.parseColor("#00712D"))
-        } else {
-            holder.statusView.text = "Diseased"
-            holder.statusView.setBackgroundResource(R.drawable.status_badge_diseased) // existing drawable
-            holder.statusView.setTextColor(Color.parseColor("#F97316"))
-        }
+        holder.statusView.text = "AI Verified: \n${(item.confidence * 100).toInt()}%"
+        holder.statusView.setBackgroundResource(R.drawable.status_verified) // new drawable
+        holder.statusView.setTextColor(Color.parseColor("#005FF7"))
+        holder.statusView.gravity = Gravity.CENTER
+
+//        // ✅ Change status background + text color
+//        if (item.prediction.equals("Healthy", ignoreCase = true)) {
+//            holder.statusView.text = "Healthy"
+//            holder.statusView.setBackgroundResource(R.drawable.status_badge_healthy) // new drawable
+//            holder.statusView.setTextColor(Color.parseColor("#00712D"))
+//        } else {
+//            holder.statusView.text = "Diseased"
+//            holder.statusView.setBackgroundResource(R.drawable.status_badge_diseased) // existing drawable
+//            holder.statusView.setTextColor(Color.parseColor("#F97316"))
+//        }
 
         val fullUrl = if (item.imageUrl.startsWith("http")) {
             item.imageUrl // already a full URL from Firebase/Google Storage

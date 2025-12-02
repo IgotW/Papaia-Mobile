@@ -256,12 +256,6 @@ class Register1Activity : AppCompatActivity() {
             isValid = false
         }
 
-        // Birth date validation
-        if (edittext_birthdate.text.toString().trim().isEmpty()) {
-            edittext_birthdate.error = "Birth date is required"
-            isValid = false
-        }
-
         // Contact number validation
         val contactNumberText = edittext_contactnumber.text.toString().trim()
         if (contactNumberText.isEmpty()) {
@@ -276,38 +270,38 @@ class Register1Activity : AppCompatActivity() {
         }
 
         // Street address validation
-        if (edittext_street.text.toString().trim().isEmpty()) {
-            edittext_street.error = "Street address is required"
-            isValid = false
-        }
-
-        // Barangay validation
-        if (edittext_barangay.text.toString().trim().isEmpty()) {
-            edittext_barangay.error = "Barangay is required"
-            isValid = false
-        }
-
-        // Municipality validation
-        if (edittext_municipality.text.toString().trim().isEmpty()) {
-            edittext_municipality.error = "City/Municipality is required"
-            isValid = false
-        }
-
-        // ZIP code validation
-        val zipCodeText = edittext_zipCode.text.toString().trim()
-        if (zipCodeText.isEmpty()) {
-            edittext_zipCode.error = "ZIP code is required"
-            isValid = false
-        } else if (zipCodeText.length != 4) {
-            edittext_zipCode.error = "ZIP code must be 4 digits"
-            isValid = false
-        }
-
-        // Province validation
-        if (edittext_province.text.toString().trim().isEmpty()) {
-            edittext_province.error = "Province is required"
-            isValid = false
-        }
+//        if (edittext_street.text.toString().trim().isEmpty()) {
+//            edittext_street.error = "Street address is required"
+//            isValid = false
+//        }
+//
+//        // Barangay validation
+//        if (edittext_barangay.text.toString().trim().isEmpty()) {
+//            edittext_barangay.error = "Barangay is required"
+//            isValid = false
+//        }
+//
+//        // Municipality validation
+//        if (edittext_municipality.text.toString().trim().isEmpty()) {
+//            edittext_municipality.error = "City/Municipality is required"
+//            isValid = false
+//        }
+//
+//        // ZIP code validation
+//        val zipCodeText = edittext_zipCode.text.toString().trim()
+//        if (zipCodeText.isEmpty()) {
+//            edittext_zipCode.error = "ZIP code is required"
+//            isValid = false
+//        } else if (zipCodeText.length != 4) {
+//            edittext_zipCode.error = "ZIP code must be 4 digits"
+//            isValid = false
+//        }
+//
+//        // Province validation
+//        if (edittext_province.text.toString().trim().isEmpty()) {
+//            edittext_province.error = "Province is required"
+//            isValid = false
+//        }
 
         // Terms and conditions validation
         if (!cbTerms.isChecked) {

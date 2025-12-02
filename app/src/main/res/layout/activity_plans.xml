@@ -6,16 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.PlansActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#F5F5F5">
 
     <!-- Toolbar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/primary"
         android:gravity="center_vertical"
         android:padding="16dp"
-        android:backgroundTint="@color/primary">
+        android:elevation="4dp">
 
         <ImageView
             android:id="@+id/btn_back"
@@ -32,22 +33,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Plans"
+            android:text="Choose Your Plan"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:fontFamily="@font/league_spartan_bold"
             android:gravity="center" />
 
         <View
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="#F5F5F5"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,99 +57,190 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Header Text -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select the best plan for your farming needs"
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/league_spartan"/>
+
+            <!-- Free Plan -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="2dp"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="10dp"
-                    android:background="@drawable/top_gradient_overlay">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Choose the best plan for \n your farm"
-                        android:textSize="20sp"
-                        android:textColor="@color/white"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/league_spartan_semibold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Unlock powerful tools to manage your crops effectively"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:fontFamily="@font/league_spartan"/>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp"
-                    android:background="@drawable/card_border"
-                    android:theme="@style/BorderGray">
+                    android:padding="20dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Free Plan"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:textColor="@color/primary"
-                        android:gravity="center"
-                        android:fontFamily="@font/league_spartan_semibold"/>
-
+                    <!-- Plan Header -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center">
-                        <TextView
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_leave"
+                            android:background="@drawable/circle_bg"
+                            android:backgroundTint="#38757575"
+                            android:padding="6dp"
+                            app:tint="#757575"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Free Plan"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:textColor="#212121"
+                                android:fontFamily="@font/league_spartan_semibold"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Best for beginners"
+                                android:background="@drawable/status_badge_healthy"
+                                android:backgroundTint="#757575"
+                                android:textSize="12sp"
+                                android:textColor="#757575"
+                                android:fontFamily="@font/league_spartan"
+                                android:layout_marginTop="2dp"
+                                android:padding="5dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ideal for: Beginners in farming or small scale farms"
+                                android:textSize="12sp"
+                                android:textColor="#757575"
+                                android:fontFamily="@font/league_spartan"
+                                android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="₱0"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:textSize="22sp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="/month" />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₱0"
+                                android:textStyle="bold"
+                                android:textColor="#212121"
+                                android:textSize="24sp"
+                                android:fontFamily="@font/league_spartan_bold"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="/month"
+                                android:textColor="#212121"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
                     </LinearLayout>
 
-                    <!-- Features Section -->
+                    <!-- Features -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp">
 
-                        <!-- Feature 1 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_check"
+                                app:tint="#4CAF50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="Up to 10 scans/month"
+                                android:textColor="#424242"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_check"
+                                app:tint="#4CAF50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="AI disease detection"
+                                android:textColor="#424242"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_check"
+                                app:tint="#4CAF50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="Basic treatment recommendations"
+                                android:textColor="#424242"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -155,148 +248,213 @@
                             android:gravity="center_vertical">
 
                             <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
                                 android:src="@drawable/ic_check"
-                                app:tint="#1B5E20" />
+                                app:tint="#4CAF50" />
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Limited daily ten(10) plant scanning"
+                                android:layout_marginStart="10dp"
+                                android:text="Mobile app access only"
                                 android:textColor="#424242"
-                                android:textSize="16sp"
-                                android:lineSpacingExtra="4dp"
+                                android:textSize="14sp"
                                 android:fontFamily="@font/league_spartan"/>
-
                         </LinearLayout>
-
-                        <!-- Feature 2 -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_check"
-                                app:tint="#1B5E20" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Disease identification"
-                                android:textColor="#424242"
-                                android:textSize="16sp"
-                                android:lineSpacingExtra="4dp"
-                                android:fontFamily="@font/league_spartan"/>
-
-                        </LinearLayout>
-
-                        <!-- Feature 3 -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_check"
-                                app:tint="#1B5E20" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Basic Recommendation"
-                                android:textColor="#424242"
-                                android:textSize="16sp"
-                                android:lineSpacingExtra="4dp"
-                                android:fontFamily="@font/league_spartan"/>
-
-                        </LinearLayout>
-
                     </LinearLayout>
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_current_plan"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_height="48dp"
                         android:background="@drawable/button_rounded"
-                        app:backgroundTint="#E5E7EB"
+                        app:backgroundTint="#E0E0E0"
                         android:text="Current Plan"
-                        android:textColor="#616161"
-                        android:textSize="14sp"
+                        android:textColor="#757575"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         android:enabled="false"
                         android:stateListAnimator="@null"
-                        android:textAllCaps="false"/>
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/league_spartan_semibold"/>
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
+
+            <!-- Farmer Plan (PO) -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="12dp"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp"
-                    android:background="@drawable/card_border"
-                    android:theme="@style/BorderOrange">
+                    android:padding="20dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Pro Plan"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:textColor="@color/primary"
-                        android:gravity="center"
-                        android:fontFamily="@font/league_spartan_semibold"/>
-
+                    <!-- Plan Header -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center">
-                        <TextView
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_user"
+                            android:background="@drawable/circle_bg"
+                            android:backgroundTint="#3300712D"
+                            android:padding="6dp"
+                            app:tint="@color/primary"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Farmer Plan"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:textColor="#212121"
+                                android:fontFamily="@font/league_spartan_semibold"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="For solo farmers"
+                                android:background="@drawable/status_badge_healthy"
+                                android:backgroundTint="@color/primary"
+                                android:textSize="12sp"
+                                android:textColor="@color/primary"
+                                android:fontFamily="@font/league_spartan"
+                                android:layout_marginTop="2dp"
+                                android:padding="5dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ideal for: Individual farmers"
+                                android:textSize="12sp"
+                                android:textColor="#757575"
+                                android:fontFamily="@font/league_spartan"
+                                android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="₱99"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:textSize="22sp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="/month" />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₱199"
+                                android:textStyle="bold"
+                                android:textColor="#212121"
+                                android:textSize="24sp"
+                                android:fontFamily="@font/league_spartan_bold"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="/month"
+                                android:textColor="#212121"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
                     </LinearLayout>
 
-                    <!-- Features Section -->
+                    <!-- Features -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp">
 
-                        <!-- Feature 1 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_check"
+                                app:tint="#4CAF50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="100 scans/month"
+                                android:textColor="#424242"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_check"
+                                app:tint="#4CAF50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="Disease detection + treatment"
+                                android:textColor="#424242"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_check"
+                                app:tint="#4CAF50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="Treatment reminders"
+                                android:textColor="#424242"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -304,174 +462,229 @@
                             android:gravity="center_vertical">
 
                             <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
                                 android:src="@drawable/ic_check"
-                                app:tint="#1B5E20" />
+                                app:tint="#4CAF50" />
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Unlimited plant scans"
+                                android:layout_marginStart="10dp"
+                                android:text="Basic farm analytics"
                                 android:textColor="#424242"
-                                android:textSize="16sp"
-                                android:lineSpacingExtra="4dp"
+                                android:textSize="14sp"
                                 android:fontFamily="@font/league_spartan"/>
-
                         </LinearLayout>
-
-                        <!-- Feature 2 -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_check"
-                                app:tint="#1B5E20" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Treatment Reminders"
-                                android:textColor="#424242"
-                                android:textSize="16sp"
-                                android:lineSpacingExtra="4dp"
-                                android:fontFamily="@font/league_spartan"/>
-
-                        </LinearLayout>
-
-                        <!-- Feature 3 -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_check"
-                                app:tint="#1B5E20" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Advance Analytics"
-                                android:textColor="#424242"
-                                android:textSize="16sp"
-                                android:lineSpacingExtra="4dp"
-                                android:fontFamily="@font/league_spartan"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_check"
-                                app:tint="#1B5E20" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Priority Support"
-                                android:textColor="#424242"
-                                android:textSize="16sp"
-                                android:lineSpacingExtra="4dp"
-                                android:fontFamily="@font/league_spartan"/>
-
-                        </LinearLayout>
-
                     </LinearLayout>
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_pro_plan"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_height="48dp"
                         android:background="@drawable/button_rounded"
-                        app:backgroundTint="@color/tertiary"
-                        android:text="Subscribe Now"
-                        android:textAllCaps="false"
+                        app:backgroundTint="@color/primary"
+                        android:text="Choose Plan"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
-                        android:enabled="false"
-                        android:stateListAnimator="@null" />
+                        android:stateListAnimator="@null"
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/league_spartan_semibold"/>
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
+
+            <!-- Basic Plan -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="12dp"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp"
-                    android:background="@drawable/card_border"
-                    android:theme="@style/BorderPrimary">
+                    android:padding="20dp">
 
+                    <!-- Badge -->
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Farm Manager Plan"
+                        android:text="Most Popular"
+                        android:background="@drawable/button_rounded"
+                        android:backgroundTint="#FFC107"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:textSize="11sp"
+                        android:textColor="@color/white"
                         android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:textColor="@color/primary"
-                        android:gravity="center"
-                        android:fontFamily="@font/league_spartan_semibold"/>
+                        android:layout_gravity="end"
+                        android:fontFamily="@font/league_spartan_semibold"
+                        android:layout_marginBottom="8dp"/>
 
+                    <!-- Plan Header -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center">
-                        <TextView
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_users"
+                            android:background="@drawable/circle_bg"
+                            android:backgroundTint="#FFF8E1"
+                            android:padding="6dp"
+                            app:tint="#FFC107"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Basic Plan"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:textColor="#212121"
+                                android:fontFamily="@font/league_spartan_semibold"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Up to 5 farmers"
+                                android:background="@drawable/status_badge_healthy"
+                                android:backgroundTint="#FFC107"
+                                android:textSize="12sp"
+                                android:textColor="#FFC107"
+                                android:fontFamily="@font/league_spartan"
+                                android:layout_marginTop="2dp"
+                                android:padding="5dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ideal for: Small farm owners or cooperatives"
+                                android:textSize="12sp"
+                                android:textColor="#757575"
+                                android:fontFamily="@font/league_spartan"
+                                android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="₱199"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:textSize="22sp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="/month" />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₱699"
+                                android:textStyle="bold"
+                                android:textColor="#212121"
+                                android:textSize="24sp"
+                                android:fontFamily="@font/league_spartan_bold"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="/month"
+                                android:textColor="#212121"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
                     </LinearLayout>
 
-                    <!-- Features Section -->
+                    <!-- Features -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp">
 
-                        <!-- Feature 1 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_check"
+                                app:tint="#4CAF50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="All Farmer Plan features"
+                                android:textColor="#424242"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_check"
+                                app:tint="#4CAF50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="Web dashboard"
+                                android:textColor="#424242"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_check"
+                                app:tint="#4CAF50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="Multi-farm analytics"
+                                android:textColor="#424242"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -479,149 +692,251 @@
                             android:gravity="center_vertical">
 
                             <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
                                 android:src="@drawable/ic_check"
-                                app:tint="#1B5E20" />
+                                app:tint="#4CAF50" />
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Everything in Pro Plan"
+                                android:layout_marginStart="10dp"
+                                android:text="Real-time monitoring"
                                 android:textColor="#424242"
-                                android:textSize="16sp"
-                                android:lineSpacingExtra="4dp"
+                                android:textSize="14sp"
                                 android:fontFamily="@font/league_spartan"/>
-
                         </LinearLayout>
-
-                        <!-- Feature 2 -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_check"
-                                app:tint="#1B5E20" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Shared with all farm workers"
-                                android:textColor="#424242"
-                                android:textSize="16sp"
-                                android:lineSpacingExtra="4dp"
-                                android:fontFamily="@font/league_spartan"/>
-
-                        </LinearLayout>
-
-                        <!-- Feature 3 -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_check"
-                                app:tint="#1B5E20" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Team management tools"
-                                android:textColor="#424242"
-                                android:textSize="16sp"
-                                android:lineSpacingExtra="4dp"
-                                android:fontFamily="@font/league_spartan"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_check"
-                                app:tint="#1B5E20" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Centralized reporting"
-                                android:textColor="#424242"
-                                android:textSize="16sp"
-                                android:lineSpacingExtra="4dp"
-                                android:fontFamily="@font/league_spartan"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_check"
-                                app:tint="#1B5E20" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Bulk data management"
-                                android:textColor="#424242"
-                                android:textSize="16sp"
-                                android:lineSpacingExtra="4dp"
-                                android:fontFamily="@font/league_spartan"/>
-
-                        </LinearLayout>
-
                     </LinearLayout>
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_manager_plan"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_height="48dp"
                         android:background="@drawable/button_rounded"
-                        app:backgroundTint="@color/tertiary"
-                        android:text="Subscribe Now"
+                        app:backgroundTint="#FFC107"
+                        android:text="Choose Plan"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
-                        android:enabled="false"
                         android:stateListAnimator="@null"
-                        android:textAllCaps="false"/>
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/league_spartan_semibold"/>
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
+
+            <!-- Enterprise Plan -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Plan Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_enterprise"
+                            android:background="@drawable/circle_bg"
+                            android:backgroundTint="#166534"
+                            android:padding="6dp"
+                            app:tint="@color/white"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Enterprise Plan"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:textColor="#212121"
+                                android:fontFamily="@font/league_spartan_semibold"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Large-scale operations"
+                                android:background="@drawable/status_badge_healthy"
+                                android:backgroundTint="#166534"
+                                android:textSize="12sp"
+                                android:textColor="#166534"
+                                android:fontFamily="@font/league_spartan"
+                                android:layout_marginTop="2dp"
+                                android:padding="5dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ideal for: Large farms, agribusinesses"
+                                android:textSize="12sp"
+                                android:textColor="#757575"
+                                android:fontFamily="@font/league_spartan"
+                                android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₱1,299"
+                                android:textStyle="bold"
+                                android:textColor="#212121"
+                                android:textSize="24sp"
+                                android:fontFamily="@font/league_spartan_bold"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="/month"
+                                android:textColor="#212121"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Features -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_check"
+                                app:tint="#4CAF50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="All Basic Plan features"
+                                android:textColor="#424242"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_check"
+                                app:tint="#4CAF50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="Unlimited farmer accounts"
+                                android:textColor="#424242"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_check"
+                                app:tint="#4CAF50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="Advanced analytics &amp; insights"
+                                android:textColor="#424242"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_check"
+                                app:tint="#4CAF50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="Priority support"
+                                android:textColor="#424242"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/league_spartan"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_enterprise_plan"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/button_rounded"
+                        app:backgroundTint="#166534"
+                        android:text="Choose Plan"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:stateListAnimator="@null"
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/league_spartan_semibold"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
         </LinearLayout>
     </ScrollView>
 

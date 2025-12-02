@@ -460,6 +460,8 @@ class ScanFragment : Fragment() {
             capturedImageView.visibility = View.GONE
             btnRetake.visibility = View.GONE
             btnUsePhoto.visibility = View.GONE
+
+            startCamera()
         }
 
         dialog.show()

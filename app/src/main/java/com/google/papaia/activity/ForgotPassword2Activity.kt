@@ -18,7 +18,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 import com.google.papaia.R
+import com.google.papaia.request.ForgotPassword1Request
 import com.google.papaia.request.OtpRequest
+import com.google.papaia.response.ApiResponse
 import com.google.papaia.response.OtpResponse
 import com.google.papaia.utils.RetrofitClient
 import retrofit2.Call
@@ -39,6 +41,7 @@ class ForgotPassword2Activity : AppCompatActivity() {
 
     private var countDownTimer: CountDownTimer? = null
     private val COUNTDOWN_TIME = 120000L // 2 minutes in milliseconds
+    private var email = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +65,6 @@ class ForgotPassword2Activity : AppCompatActivity() {
         // Store edit text fields for easy access
         editTextFields = listOf(editTextCode1, editTextCode2, editTextCode3, editTextCode4)
 
-        var email = ""
         intent?.let {
             it.getStringExtra("email")?.let { mail ->
                 email = mail
@@ -131,6 +133,32 @@ class ForgotPassword2Activity : AppCompatActivity() {
             if (tvResendCode.isEnabled) {
                 Toast.makeText(this, "Resending code...", Toast.LENGTH_SHORT).show()
                 // TODO: Add actual resend code API call here
+
+                val request = ForgotPassword1Request(email)
+                RetrofitClient.instance.sendOtp(request).enqueue(object : Callback<ApiResponse> {
+                    override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+
+
+                        if (response.isSuccessful && response.body()?.success == true) {
+                            Toast.makeText(this@ForgotPassword2Activity, "Reset code sent to your email", Toast.LENGTH_SHORT).show()
+
+                            startActivity(
+                                Intent(this@ForgotPassword2Activity, ForgotPassword2Activity::class.java).apply {
+                                    putExtra("email", email)
+                                }
+                            )
+                        } else {
+                            val errorMessage = response.body()?.message ?: "Failed to send reset code"
+                            Toast.makeText(this@ForgotPassword2Activity, errorMessage, Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                        Log.e("ForgotPassword", "Error: ${t.message}")
+                        Toast.makeText(this@ForgotPassword2Activity, "Network error. Please try again.", Toast.LENGTH_SHORT).show()
+                    }
+                })
+
                 startCountdown()
             }
         }

@@ -245,6 +245,11 @@ class HomeFragment : Fragment() {
         countDiseased.text = "... Diseased"
     }
 
+    private fun setTextOrNone(value: String?, textView: TextView) {
+        textView.text = if (value.isNullOrEmpty()) "None" else value
+    }
+
+
     private fun setupButtonClickListeners(){
         viewMoreAnalytics.setOnClickListener {
             startActivity(
@@ -666,18 +671,25 @@ class HomeFragment : Fragment() {
                         if (response.isSuccessful) {
                             val farm = response.body()
                             if (farm != null) {
-                                // Show data in TextViews
-                                farmName.text = farm.farmName
-                                farmLocation.text = farm.farmLocation
+                                setTextOrNone(farm.farmName, farmName)
+                                setTextOrNone(farm.farmLocation, farmLocation)
+                            } else {
+                                // If response body itself is null
+                                farmName.text = "None"
+                                farmLocation.text = "None"
                             }
                         } else {
 //                            Toast.makeText(requireContext(), "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
                             Log.e("DailyTip", "Error: ${response.code()}")
+                            farmName.text = "None"
+                            farmLocation.text = "None"
                         }
                     }
 
                     override fun onFailure(call: Call<FarmDetailsResponse>, t: Throwable) {
                         Log.e("DailyTip", "Failed: ${t.message}")
+                        farmName.text = "None"
+                        farmLocation.text = "None"
 //                        Toast.makeText(requireContext(), "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
                     }
                 })

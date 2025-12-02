@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5"
+    tools:context=".activity.BillingActivity">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:elevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/arrow_back"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="4dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Manage Billing"
+                    android:textColor="#212121"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/league_spartan_bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View your plan, billing cycle, and payment"
+                    android:textColor="#757575"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/league_spartan"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Basic Plan Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Basic Plan"
+                                android:textColor="#212121"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/league_spartan_bold"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₱699"
+                                android:textColor="#4CAF50"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/league_spartan_bold"
+                                android:layout_marginTop="4dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="monthly - Renews March 18, 2025"
+                                android:textColor="#757575"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/league_spartan"
+                                android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Active"
+                            android:background="@drawable/button_rounded"
+                            android:backgroundTint="#4CAF50"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_semibold"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Plan Limit Usage"
+                            android:textColor="#757575"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/league_spartan"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="950/1000"
+                            android:textColor="#212121"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_semibold"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_change_plan"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/button_rounded"
+                        app:backgroundTint="#FF9800"
+                        android:text="Change Plan"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:stateListAnimator="@null"
+                        android:fontFamily="@font/league_spartan_semibold"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Payment Method -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment Method"
+                android:textColor="#212121"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/league_spartan_bold"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manage where your subscription charges"
+                android:textColor="#757575"
+                android:textSize="13sp"
+                android:fontFamily="@font/league_spartan"
+                android:layout_marginBottom="12dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_visa"
+                            android:scaleType="fitCenter"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="•••• 4982"
+                                android:textColor="#212121"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/league_spartan_semibold"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Active"
+                            android:background="@drawable/button_rounded"
+                            android:backgroundTint="#4CAF50"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:textSize="11sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_semibold"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_add_payment"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/square_background"
+                        app:backgroundTint="@color/primary"
+                        app:strokeColor="#E0E0E0"
+                        app:strokeWidth="1dp"
+                        android:text="Add Payment Method"
+                        android:textColor="@color/primary"
+                        android:textSize="14sp"
+                        android:textAllCaps="false"
+                        android:stateListAnimator="@null"
+                        android:fontFamily="@font/league_spartan_semibold"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_update_payment"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/square_background"
+                        app:backgroundTint="@color/tertiary"
+                        app:strokeColor="#E0E0E0"
+                        app:strokeWidth="1dp"
+                        android:text="Update Payment Method"
+                        android:textColor="@color/tertiary"
+                        android:textSize="14sp"
+                        android:textAllCaps="false"
+                        android:stateListAnimator="@null"
+                        android:fontFamily="@font/league_spartan_semibold"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_remove_payment"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/button_outline_primary"
+                        app:backgroundTint="@color/red"
+                        app:strokeColor="#E0E0E0"
+                        app:strokeWidth="1dp"
+                        android:text="Remove Payment Method"
+                        android:textColor="@color/red"
+                        android:textSize="14sp"
+                        android:textAllCaps="false"
+                        android:stateListAnimator="@null"
+                        android:fontFamily="@font/league_spartan_semibold"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Billing History -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Billing History"
+                android:textColor="#212121"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/league_spartan_bold"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Billing Item 1 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Basic Plan - Monthly Renewal"
+                            android:textColor="#212121"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_semibold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Jan 18, 2025"
+                            android:textColor="#757575"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/league_spartan"
+                            android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="end">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₱699.00"
+                            android:textColor="#212121"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Paid"
+                            android:background="@drawable/button_rounded"
+                            android:backgroundTint="#4CAF50"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:textSize="10sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_semibold"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Billing Item 2 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Basic Plan - Monthly Renewal"
+                            android:textColor="#212121"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_semibold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Dec 18, 2024"
+                            android:textColor="#757575"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/league_spartan"
+                            android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="end">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₱699.00"
+                            android:textColor="#212121"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Paid"
+                            android:background="@drawable/button_rounded"
+                            android:backgroundTint="#4CAF50"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:textSize="10sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_semibold"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Billing Item 3 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Basic Plan - Monthly Renewal"
+                            android:textColor="#212121"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_semibold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Jan 18, 2025"
+                            android:textColor="#757575"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/league_spartan"
+                            android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="end">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₱699.00"
+                            android:textColor="#212121"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Due"
+                            android:background="@drawable/button_rounded"
+                            android:backgroundTint="#FF9800"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:textSize="10sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_semibold"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Manage Subscription -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manage Subscription"
+                android:textColor="#212121"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/league_spartan_bold"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Auto-renew -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_refresh"
+                        app:tint="#757575"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Auto-renew"
+                            android:textColor="#212121"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_semibold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Your plan renews automatically every month"
+                            android:textColor="#757575"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/league_spartan"
+                            android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_auto_renew"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        app:thumbTint="@color/white"
+                        app:trackTint="#4CAF50"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Download Invoice -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/download_invoice_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_download"
+                        app:tint="#757575"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:text="Download Invoice"
+                        android:textColor="#212121"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/league_spartan_semibold"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#757575"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Cancel Subscription -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cancel_subscription_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_close"
+                        app:tint="#F44336"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cancel Subscription"
+                            android:textColor="#F44336"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/league_spartan_semibold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="End your current plan"
+                            android:textColor="#757575"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/league_spartan"
+                            android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#757575"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Footer Note -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Subscriptions are managed securely. All transactions follow the Terms, Terms of Service, and Privacy Policy."
+                android:textColor="#9E9E9E"
+                android:textSize="11sp"
+                android:gravity="center"
+                android:fontFamily="@font/league_spartan"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

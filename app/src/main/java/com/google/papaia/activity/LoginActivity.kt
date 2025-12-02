@@ -425,6 +425,7 @@ class LoginActivity : AppCompatActivity() {
             finish()
         } else {
             Toast.makeText(this, "Access denied. Only farmers can log in.", Toast.LENGTH_LONG).show()
+            startActivity(Intent(this, OwnerActivity::class.java))
             SecurePrefsHelper.clearToken(this)
             getSharedPreferences("prefs", MODE_PRIVATE).edit().clear().apply()
         }

@@ -88,6 +88,7 @@ class SettingsActivity : AppCompatActivity() {
 
         cardManageBilling.setOnClickListener {
             showToast("Manage Billing clicked")
+            startActivity(Intent(this, BillingActivity::class.java))
             // Navigate to BillingActivity
         }
 

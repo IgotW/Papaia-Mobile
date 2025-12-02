@@ -28,6 +28,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         <activity
+            android:name=".activity.BillingActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.AnalyticsActivity"
             android:exported="false" />
         <activity

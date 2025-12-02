@@ -68,7 +68,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Agricultural AI Assistant"
+                    android:text="Smart Farming Solution"
                     android:textColor="#E8F5E8"
                     android:textSize="16sp"
                     android:fontFamily="@font/league_spartan" />
@@ -165,7 +165,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:textColor="@color/black"
-                    android:textColorHint="#A8A7A7"
+                    android:textColorHint="#757575"
                     android:textSize="16sp"
                     android:fontFamily="@font/league_spartan"
                     android:inputType="textPassword"

@@ -209,7 +209,7 @@ class ScanResultDetailsActivity : AppCompatActivity() {
 //        }.joinToString("\n\n")
         // Format each step with bold "Step ①" then the content
         val formatted = steps.mapIndexed { index, step ->
-            "<b>🌱 Step ${getCircledNumber(index + 1)}</b><br>${step}"
+            "<b>🌱 Suggestion ${getCircledNumber(index + 1)}</b><br>${step}"
         }.joinToString("<br><br>")
 
         // Convert HTML string to styled text

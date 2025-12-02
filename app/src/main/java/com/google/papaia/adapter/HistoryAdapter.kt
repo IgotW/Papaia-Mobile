@@ -2,6 +2,7 @@ package com.google.papaia.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -53,7 +54,8 @@ class HistoryAdapter(
         formatTimestamp(item.timestamp, txtTime, txtDate)
 
         // Status badge
-        setStatusBadge(item.prediction, txtStatus)
+//        setStatusBadge(item.prediction, txtStatus)
+        setStatusBadge(item.confidence, txtStatus)
 
         // Description / suggestions
         txtDescription.text = getShortSuggestion(item.suggestions)
@@ -234,18 +236,27 @@ class HistoryAdapter(
         }
     }
 
-    private fun setStatusBadge(prediction: String?, txtStatus: TextView) {
-        val isHealthy = prediction?.lowercase()?.contains("healthy") == true ||
-                prediction?.lowercase()?.contains("normal") == true
-
-        if (isHealthy) {
-            txtStatus.text = "Healthy"
-            txtStatus.setBackgroundResource(R.drawable.status_badge_healthy)
-            txtStatus.setTextColor(context.getColor(R.color.primary))
+//    private fun setStatusBadge(prediction: String?, txtStatus: TextView) {
+//        val isHealthy = prediction?.lowercase()?.contains("healthy") == true ||
+//                prediction?.lowercase()?.contains("normal") == true
+//
+//        if (isHealthy) {
+//            txtStatus.text = "Healthy"
+//            txtStatus.setBackgroundResource(R.drawable.status_badge_healthy)
+//            txtStatus.setTextColor(context.getColor(R.color.primary))
+//        } else {
+//            txtStatus.text = "Disease Detected"
+//            txtStatus.setBackgroundResource(R.drawable.status_badge_diseased)
+//            txtStatus.setTextColor(context.getColor(R.color.tertiary))
+//        }
+//    }
+    private fun setStatusBadge(confidence: Double?, txtStatus: TextView) {
+        if (confidence != null) {
+            txtStatus.text = "AI Verified : ${(confidence * 100).toInt()}%"
+            txtStatus.setBackgroundResource(R.drawable.status_verified)
+            txtStatus.setTextColor(Color.parseColor("#005FF7"))
         } else {
-            txtStatus.text = "Disease Detected"
-            txtStatus.setBackgroundResource(R.drawable.status_badge_diseased)
-            txtStatus.setTextColor(context.getColor(R.color.tertiary))
+            txtStatus.text = "N/A"
         }
     }
 

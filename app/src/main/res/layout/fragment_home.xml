@@ -440,13 +440,13 @@
 
                             <!-- Change the src to water drop/other. -->
                             <!-- The reminder will be based on weather. -->
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/water_drop"
-                                android:tint="@color/primary"
-                                android:layout_marginTop="2dp"
-                                android:layout_marginRight="12dp"/>
+<!--                            <ImageView-->
+<!--                                android:layout_width="20dp"-->
+<!--                                android:layout_height="20dp"-->
+<!--                                android:src="@drawable/water_drop"-->
+<!--                                android:tint="@color/primary"-->
+<!--                                android:layout_marginTop="2dp"-->
+<!--                                android:layout_marginRight="12dp"/>-->
 
                             <TextView
                                 android:id="@+id/txtview_dailytips"
@@ -457,7 +457,9 @@
                                 android:textColor="#374151"
                                 android:textSize="15sp"
                                 android:lineSpacingMultiplier="1.4"
-                                android:fontFamily="@font/league_spartan"/>
+                                android:fontFamily="@font/league_spartan"
+                                android:padding="5dp"
+                                android:gravity="center"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

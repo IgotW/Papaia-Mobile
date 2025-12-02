@@ -52,20 +52,10 @@
         android:gravity="center"
         android:layout_marginBottom="12dp">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Confidence:"
-            android:textSize="15sp"
-            android:textStyle="italic"
-            android:textColor="#555555"
-            android:gravity="center"
-            android:layout_marginRight="5dp"
-            android:fontFamily="@font/league_spartan"/>
-        <TextView
             android:id="@+id/tv_confidence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="97.23%"
+            android:text="Confidence: 97.23%"
             android:textSize="15sp"
             android:textStyle="italic"
             android:textColor="#555555"

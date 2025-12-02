@@ -54,11 +54,15 @@ class Register0Activity : AppCompatActivity() {
 
         // Continue button click
         continueButton.setOnClickListener {
-            if (selectedRole != null) {
+            if (selectedRole == "farmer") {
                 startActivity(
                     Intent(this, Register1Activity::class.java).apply {
                         putExtra("role", selectedRole)
                     }
+                )
+            } else {
+                startActivity(
+                    Intent(this, OwnerActivity::class.java)
                 )
             }
         }

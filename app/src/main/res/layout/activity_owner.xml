@@ -20,7 +20,8 @@
             android:layout_height="120dp"
             android:layout_marginBottom="32dp"
             app:cardCornerRadius="60dp"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            android:backgroundTint="@color/white">
 
             <ImageView
                 android:layout_width="80dp"
@@ -37,7 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             app:cardCornerRadius="16dp"
-            app:cardElevation="3dp">
+            app:cardElevation="3dp"
+            android:backgroundTint="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,7 +85,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             app:cardCornerRadius="16dp"
-            app:cardElevation="3dp">
+            app:cardElevation="3dp"
+            android:backgroundTint="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -107,12 +110,12 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Access Owner Portal"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/league_spartan_semibold"
+                        android:text="Access Farm Owner Portal"
                         android:textColor="#333333"
                         android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/league_spartan_semibold"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -147,7 +150,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="https://papaia-web.vercel.app/"
+                        android:text="https://papaia.vercel.app/"
                         android:textColor="#2196F3"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -167,7 +170,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginBottom="12dp"
-                    android:text="Open Web Portal"
+                    android:text="Open in Browser"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -176,7 +179,8 @@
                     app:icon="@drawable/ic_open_in_browser"
                     app:iconGravity="textStart"
                     app:iconPadding="8dp"
-                    app:iconTint="@android:color/white" />
+                    app:iconTint="@android:color/white"
+                    android:textAllCaps="false"/>
 
                 <!-- Copy URL Button -->
                 <com.google.android.material.button.MaterialButton
@@ -186,14 +190,15 @@
                     android:text="Copy URL"
                     android:textColor="@color/primary"
                     android:textSize="14sp"
-                    app:backgroundTint="@android:color/transparent"
+                    app:backgroundTint="@color/white"
                     app:cornerRadius="12dp"
                     app:icon="@drawable/ic_copy"
                     app:iconGravity="textStart"
                     app:iconPadding="8dp"
                     app:iconTint="@color/primary"
                     app:strokeColor="@color/primary"
-                    app:strokeWidth="1dp" />
+                    app:strokeWidth="1dp"
+                    android:textAllCaps="false"/>
 
             </LinearLayout>
 
@@ -205,7 +210,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             app:cardCornerRadius="16dp"
-            app:cardElevation="3dp">
+            app:cardElevation="3dp"
+            android:backgroundTint="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -220,7 +226,7 @@
                     android:gravity="center"
                     android:text="Owner Portal Features"
                     android:textColor="#333333"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/league_spartan_semibold"/>
 
@@ -310,7 +316,8 @@
             android:text="Back to Login"
             android:textColor="#666666"
             android:textSize="16sp"
-            app:backgroundTint="@android:color/transparent"
+            app:backgroundTint="@color/white"
+            app:rippleColor="@color/primary"
             app:cornerRadius="12dp"
             app:icon="@drawable/arrow_back"
             app:iconGravity="textStart"
