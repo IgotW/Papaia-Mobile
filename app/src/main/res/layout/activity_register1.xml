@@ -374,45 +374,45 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Birth Date -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Birth Date"
-            android:textColor="#333333"
-            android:textSize="16sp"
-            android:fontFamily="@font/league_spartan_semibold" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            android:text="Birth Date"-->
+<!--            android:textColor="#333333"-->
+<!--            android:textSize="16sp"-->
+<!--            android:fontFamily="@font/league_spartan_semibold" />-->
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxStrokeColor="#E0E0E0"
-            app:endIconMode="custom"
-            app:endIconDrawable="@drawable/ic_calendar"
-            app:endIconTint="@color/gray"
-            app:boxBackgroundColor="@android:color/white"
-            app:hintEnabled="false">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="16dp"-->
+<!--            app:boxBackgroundMode="outline"-->
+<!--            app:boxCornerRadiusBottomEnd="8dp"-->
+<!--            app:boxCornerRadiusBottomStart="8dp"-->
+<!--            app:boxCornerRadiusTopEnd="8dp"-->
+<!--            app:boxCornerRadiusTopStart="8dp"-->
+<!--            app:boxStrokeColor="#E0E0E0"-->
+<!--            app:endIconMode="custom"-->
+<!--            app:endIconDrawable="@drawable/ic_calendar"-->
+<!--            app:endIconTint="@color/gray"-->
+<!--            app:boxBackgroundColor="@android:color/white"-->
+<!--            app:hintEnabled="false">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/reg_edittext_birthdate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Select birth date"
-                android:inputType="none"
-                android:focusable="false"
-                android:clickable="true"
-                android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/gray"/>
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/reg_edittext_birthdate"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Select birth date"-->
+<!--                android:inputType="none"-->
+<!--                android:focusable="false"-->
+<!--                android:clickable="true"-->
+<!--                android:fontFamily="@font/league_spartan"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textColorHint="@color/gray"/>-->
 
-        </com.google.android.material.textfield.TextInputLayout>
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <!-- Contact Number -->
         <TextView

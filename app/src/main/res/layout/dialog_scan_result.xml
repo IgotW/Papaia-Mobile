@@ -55,12 +55,17 @@
             android:id="@+id/tv_confidence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Confidence: 97.23%"
+            android:text="AI Verified: 97.23%"
             android:textSize="15sp"
             android:textStyle="italic"
-            android:textColor="#555555"
+            android:textColor="#005ff7"
             android:gravity="center"
-            android:fontFamily="@font/league_spartan"/>
+            android:fontFamily="@font/league_spartan"
+            android:background="@drawable/status_verified"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"/>
     </LinearLayout>
 
     <!-- 🌱 Scrollable Remedy Section -->

@@ -1,8 +1,10 @@
 package com.google.papaia.activity
 
+import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -45,7 +47,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var lastname: EditText
     private lateinit var suffix: EditText
     private lateinit var contactnumber: EditText
-    private lateinit var birthdate: EditText
+//    private lateinit var birthdate: EditText
     private lateinit var street: EditText
     private lateinit var barangay: EditText
     private lateinit var municipality: EditText
@@ -129,7 +131,7 @@ class EditProfileActivity : AppCompatActivity() {
         lastname = findViewById(R.id.edittext_edit_lastname)
         suffix = findViewById(R.id.edittext_edit_suffix)
         contactnumber = findViewById(R.id.edittext_edit_contactnumber)
-        birthdate = findViewById(R.id.edittext_edit_birthdate)
+//        birthdate = findViewById(R.id.edittext_edit_birthdate)
         street = findViewById(R.id.edittext_edit_street)
         barangay = findViewById(R.id.edittext_edit_barangay)
         municipality = findViewById(R.id.edittext_edit_municipality)
@@ -170,7 +172,7 @@ class EditProfileActivity : AppCompatActivity() {
                                 lastname.setText(user.lastName)
                                 suffix.setText(user.suffix)
                                 contactnumber.setText(user.contactNumber)
-                                birthdate.setText(user.birthDate)
+//                                birthdate.setText(user.birthDate)
                                 street.setText(user.street)
                                 barangay.setText(user.barangay)
                                 municipality.setText(user.municipality)
@@ -235,7 +237,7 @@ class EditProfileActivity : AppCompatActivity() {
         updatedUser["lastName"] = lastname.text.toString()
         updatedUser["suffix"] = suffix.text.toString()
         updatedUser["contactNumber"] = contactnumber.text.toString()
-        updatedUser["birthDate"] = birthdate.text.toString()
+//        updatedUser["birthDate"] = birthdate.text.toString()
         updatedUser["street"] = street.text.toString()
         updatedUser["barangay"] = barangay.text.toString()
         updatedUser["municipality"] = municipality.text.toString()
@@ -250,7 +252,7 @@ class EditProfileActivity : AppCompatActivity() {
                             if (response.isSuccessful && response.body()?.success == true) {
                                 Toast.makeText(this@EditProfileActivity, "Profile updated!", Toast.LENGTH_SHORT).show()
                                 updateSharedPreferences()
-                                navigateBackToDashboard()
+                                showSuccessDialog()
                             } else {
                                 Toast.makeText(this@EditProfileActivity, "Update failed", Toast.LENGTH_SHORT).show()
                             }
@@ -266,6 +268,19 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun uploadProfilePicture(uri: Uri) {
         val file = File(uri.path!!)
+
+        // 🔥 10 MB limit
+        val maxSizeBytes = 10 * 1024 * 1024 // 10MB
+
+        if (file.length() > maxSizeBytes) {
+            Toast.makeText(
+                this,
+                "File too large! Maximum allowed size is 10 MB.",
+                Toast.LENGTH_LONG
+            ).show()
+            return
+        }
+
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
@@ -303,7 +318,7 @@ class EditProfileActivity : AppCompatActivity() {
         editor.putString("lastname", lastname.text.toString())
         editor.putString("suffix", suffix.text.toString())
         editor.putString("contactnumber", contactnumber.text.toString())
-        editor.putString("birthdate", birthdate.text.toString())
+//        editor.putString("birthdate", birthdate.text.toString())
         editor.putString("street", street.text.toString())
         editor.putString("barangay", barangay.text.toString())
         editor.putString("municipality", municipality.text.toString())
@@ -342,6 +357,22 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         province.threshold = 0
+    }
+
+    private fun showSuccessDialog() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_successful_edit)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+
+        val btnOk = dialog.findViewById<Button>(R.id.btnOk)
+
+        btnOk.setOnClickListener {
+            dialog.dismiss()
+            navigateBackToDashboard()
+        }
+
+        dialog.show()
     }
 
     private fun navigateBackToDashboard() {

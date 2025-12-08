@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.EditProfileActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#F5F5F5">
 
     <!-- Header with back button -->
     <LinearLayout
@@ -37,7 +38,7 @@
             android:textColor="@color/black"
             android:gravity="center"
             android:layout_marginEnd="28dp"
-            android:fontFamily="@font/league_spartan" />
+            android:fontFamily="@font/league_spartan_bold" />
 
     </LinearLayout>
 
@@ -348,48 +349,48 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Birth Date Field -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Birth Date"
-                android:textColor="#333333"
-                android:textSize="16sp"
-                android:fontFamily="@font/league_spartan_semibold" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:text="Birth Date"-->
+<!--                android:textColor="#333333"-->
+<!--                android:textSize="16sp"-->
+<!--                android:fontFamily="@font/league_spartan_semibold" />-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                app:boxBackgroundMode="outline"
-                app:boxCornerRadiusBottomEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxBackgroundColor="@android:color/white"
-                app:boxStrokeColor="#E0E0E0"
-                app:boxStrokeWidth="1dp"
-                app:boxStrokeWidthFocused="2dp"
-                app:hintTextColor="@color/primary"
-                app:endIconMode="custom"
-                app:endIconDrawable="@drawable/ic_calendar"
-                app:endIconTint="#9CA3AF"
-                app:hintEnabled="false">
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="20dp"-->
+<!--                app:boxBackgroundMode="outline"-->
+<!--                app:boxCornerRadiusBottomEnd="12dp"-->
+<!--                app:boxCornerRadiusBottomStart="12dp"-->
+<!--                app:boxCornerRadiusTopEnd="12dp"-->
+<!--                app:boxCornerRadiusTopStart="12dp"-->
+<!--                app:boxBackgroundColor="@android:color/white"-->
+<!--                app:boxStrokeColor="#E0E0E0"-->
+<!--                app:boxStrokeWidth="1dp"-->
+<!--                app:boxStrokeWidthFocused="2dp"-->
+<!--                app:hintTextColor="@color/primary"-->
+<!--                app:endIconMode="custom"-->
+<!--                app:endIconDrawable="@drawable/ic_calendar"-->
+<!--                app:endIconTint="#9CA3AF"-->
+<!--                app:hintEnabled="false">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edittext_edit_birthdate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Select your birth date"
-                    android:inputType="none"
-                    android:textSize="16sp"
-                    android:padding="18dp"
-                    android:textColor="@color/black"
-                    android:focusable="false"
-                    android:clickable="true"
-                    android:fontFamily="@font/league_spartan" />
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/edittext_edit_birthdate"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Select your birth date"-->
+<!--                    android:inputType="none"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:padding="18dp"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:focusable="false"-->
+<!--                    android:clickable="true"-->
+<!--                    android:fontFamily="@font/league_spartan" />-->
 
-            </com.google.android.material.textfield.TextInputLayout>
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <!-- Email Address Field -->
             <TextView

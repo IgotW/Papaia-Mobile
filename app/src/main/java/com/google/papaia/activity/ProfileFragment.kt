@@ -48,7 +48,7 @@ class ProfileFragment : Fragment() {
     private lateinit var fullname: TextView
     private lateinit var farmerId: TextView
     private lateinit var username: TextView
-    private lateinit var birthdate: TextView
+//    private lateinit var birthdate: TextView
     private lateinit var email: TextView
     private lateinit var contactNumber: TextView
     private lateinit var farmName: TextView
@@ -78,7 +78,7 @@ class ProfileFragment : Fragment() {
         fullname = view.findViewById(R.id.txtview_fullname)
         farmerId = view.findViewById(R.id.txtview_farmerid)
         username = view.findViewById(R.id.txtview_username)
-        birthdate = view.findViewById(R.id.txtview_birthdate)
+//        birthdate = view.findViewById(R.id.txtview_birthdate)
         email = view.findViewById(R.id.txtview_email)
         contactNumber = view.findViewById(R.id.txtview_contact)
         farmName = view.findViewById(R.id.txtview_farmName)
@@ -141,7 +141,7 @@ class ProfileFragment : Fragment() {
         farmerId.text = idNum
         username.text = prefs.getString("username", "")
         email.text = prefs.getString("email", "")
-        birthdate.text = prefs.getString("birthdate", "")
+//        birthdate.text = prefs.getString("birthdate", "")
         contactNumber.text = prefs.getString("contactNumber", "")
 
         val profileImage = prefs.getString("profileImage", "")

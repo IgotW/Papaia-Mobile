@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
             <!-- Header Section -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,9 +43,10 @@
                     android:layout_marginStart="12dp">
 
                     <TextView
+                        android:id="@+id/txtview_home_greeting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Good Morning"
+                        android:text="Hello"
                         android:textSize="16sp"
                         android:textColor="#6B7280"
                         android:fontFamily="@font/league_spartan"/>

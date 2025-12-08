@@ -53,6 +53,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Calendar
 import kotlin.math.roundToInt
 
 // TODO: Rename parameter arguments, choose names that match
@@ -73,6 +74,7 @@ class HomeFragment : Fragment() {
     private lateinit var bearerToken: String
     private lateinit var userId: String
     private lateinit var lineChart: LineChart
+    private lateinit var txtview_greeting: TextView
     private lateinit var analytics_summary: TextView
     private lateinit var txtview_username: TextView
     private lateinit var txtDailyTips: TextView
@@ -172,13 +174,27 @@ class HomeFragment : Fragment() {
         // Get username from SharedPreferences
         val prefs = requireContext().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE)
         val username = prefs.getString("username", "User")
+        val first = prefs.getString("firstname", "") ?: ""
+        val middle = prefs.getString("middlename", "") ?: ""
+        val last = prefs.getString("lastname", "") ?: ""
+        val suffix = prefs.getString("suffix", "") ?: ""
         val token = prefs.getString("token", "")
         val user = prefs.getString("userId", "User")
         bearerToken = "Bearer $token"
         userId = user ?: ""
 
-        // Update the TextView
-        txtview_username.text = "Hello, $username"
+        val middleInitial = if (middle.isNotBlank()) {
+            middle.trim().first().uppercase() + "."
+        } else {
+            ""
+        }
+
+        val fullName = listOf(first, middleInitial, last, suffix)
+            .filter { it.isNotBlank() }
+            .joinToString(" ")
+
+        txtview_username.text = fullName
+
 
         button_seemore.setOnClickListener {
             startActivity(
@@ -194,14 +210,16 @@ class HomeFragment : Fragment() {
         // ✅ UPDATED: Register receiver for daily tip updates from FCM
         registerDailyTipReceiver()
         setupButtonClickListeners()
+        setDynamicGreeting()
 
     }
 
     private fun initViews(view: View) {
-        txtview_username = view.findViewById<TextView>(R.id.txtview_home_username)
-        txtDailyTips  = view.findViewById<TextView>(R.id.txtview_dailytips)
-        button_seemore = view.findViewById<TextView>(R.id.home_button_seemore)
-        listViewScanHistory = view.findViewById<ListView>(R.id.listViewScanHistory)
+        txtview_greeting = view.findViewById(R.id.txtview_home_greeting)
+        txtview_username = view.findViewById(R.id.txtview_home_username)
+        txtDailyTips  = view.findViewById(R.id.txtview_dailytips)
+        button_seemore = view.findViewById(R.id.home_button_seemore)
+        listViewScanHistory = view.findViewById(R.id.listViewScanHistory)
         emptyStateContainer = view.findViewById(R.id.empty_state_container)
         todayScans = view.findViewById(R.id.scans_count)
         healthPercent = view.findViewById(R.id.health_percent)
@@ -1020,12 +1038,33 @@ class HomeFragment : Fragment() {
             })
     }
 
-
     fun updateAnalytics(bearerToken: String) {
         getCountScans(bearerToken)
         getDailyAnalytics(bearerToken)
         getPredictionHistory()
         getFiveDaysSummary()
+    }
+
+    private fun setDynamicGreeting() {
+
+        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+//        val greeting = when (hour) {
+//            in 5..11 -> "Good Morning"
+//            in 12..16 -> "Good Afternoon"
+//            in 17..20 -> "Good Evening"
+//            in 21..23, in 0..4 -> "Good Night"
+//            else -> "Hello"
+//        }
+
+        val (emoji, greeting) = when (hour) {
+            in 5..11 -> "☀️" to "Good Morning"
+            in 12..16 -> "🌤️" to "Good Afternoon"
+            in 17..20 -> "🌆" to "Good Evening"
+            in 21..23, in 0..4 -> "🌙" to "Good Night"
+            else -> "👋" to "Hello"
+        }
+
+        txtview_greeting.text = "$greeting $emoji"
     }
 
     /** Fetching Scan Counting **/
@@ -1062,44 +1101,6 @@ class HomeFragment : Fragment() {
             })
     }
 
-//    private fun setupAutoRefresh() {
-//        refreshRunnable = object : Runnable {
-//            override fun run() {
-//                // Only refresh if fragment is visible and attached
-//                if (isAdded && !isDetached && view != null && userVisibleHint) {
-//                    Log.d("HomeFragment", "Auto-refreshing data...")
-//                    loadAllData()
-//                }
-//
-//                // Schedule next refresh
-//                refreshHandler.postDelayed(this, refreshInterval)
-//            }
-//        }
-//
-//        // Start the auto-refresh cycle
-//        refreshHandler.postDelayed(refreshRunnable!!, refreshInterval)
-//    }
-//
-//    private fun stopAutoRefresh() {
-//        refreshRunnable?.let {
-//            refreshHandler.removeCallbacks(it)
-//        }
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//        // Resume auto-refresh when fragment becomes visible
-//        if (::bearerToken.isInitialized && bearerToken.isNotEmpty()) {
-//            setupAutoRefresh()
-//        }
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        // Pause auto-refresh when fragment is not visible
-//        stopAutoRefresh()
-//    }
-//
     override fun onDestroyView() {
         super.onDestroyView()
         // Clean up to prevent memory leaks
@@ -1126,20 +1127,6 @@ class HomeFragment : Fragment() {
         }
         dailyTipReceiver = null
     }
-//
-//    // Method to manually refresh (can be called from parent activity)
-//    fun manualRefresh() {
-//        if (::bearerToken.isInitialized && bearerToken.isNotEmpty()) {
-//            swipeRefreshLayout.isRefreshing = true
-//            refreshData()
-//        }
-//    }
-//
-//    // Method to change refresh interval
-//    fun setRefreshInterval(intervalMs: Long) {
-//        stopAutoRefresh()
-//        refreshHandler.postDelayed(refreshRunnable!!, intervalMs)
-//    }
 
 
 

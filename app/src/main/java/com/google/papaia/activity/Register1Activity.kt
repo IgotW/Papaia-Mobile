@@ -43,7 +43,7 @@ class Register1Activity : AppCompatActivity() {
     private lateinit var edittext_middlename: TextInputEditText
     private lateinit var edittext_lastname: TextInputEditText
     private lateinit var edittext_suffix: AutoCompleteTextView
-    private lateinit var edittext_birthdate: TextInputEditText
+//    private lateinit var edittext_birthdate: TextInputEditText
     private lateinit var edittext_contactnumber: TextInputEditText
     private lateinit var edittext_street: TextInputEditText
     private lateinit var edittext_barangay: TextInputEditText
@@ -77,7 +77,7 @@ class Register1Activity : AppCompatActivity() {
         edittext_firstname = findViewById(R.id.reg_edittext_firstname)
         edittext_middlename = findViewById(R.id.reg_edittext_middlename)
         edittext_lastname = findViewById(R.id.reg_edittext_lastname)
-        edittext_birthdate = findViewById(R.id.reg_edittext_birthdate)
+//        edittext_birthdate = findViewById(R.id.reg_edittext_birthdate)
         edittext_contactnumber = findViewById(R.id.reg_edittext_contactnumber)
         edittext_street = findViewById(R.id.reg_edittext_street)
         edittext_barangay = findViewById(R.id.reg_edittext_barangay)
@@ -95,6 +95,12 @@ class Register1Activity : AppCompatActivity() {
         button_signup = findViewById(R.id.button_signup)
         button_back = findViewById(R.id.btn_back)
         passwordStrengthBar = findViewById(R.id.password_strength_bar)
+
+        cbTerms.setOnClickListener {
+            // Always uncheck first to prevent auto-check
+            cbTerms.isChecked = false
+            showTermsDialog()
+        }
 
         setupDropdowns()
         setupDatePicker()
@@ -125,36 +131,36 @@ class Register1Activity : AppCompatActivity() {
     }
 
     private fun setupDatePicker() {
-        edittext_birthdate.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-            val datePickerDialog = DatePickerDialog(
-                this,
-                { _, selectedYear, selectedMonth, selectedDay ->
-                    val selectedDate = Calendar.getInstance()
-                    selectedDate.set(selectedYear, selectedMonth, selectedDay)
-
-                    // Set display text (user-friendly format)
-                    edittext_birthdate.setText(displayDateFormat.format(selectedDate.time))
-
-                    // Store the date in API format (yyyy-MM-dd) as tag
-                    edittext_birthdate.tag = dateFormat.format(selectedDate.time)
-                },
-                year, month, day
-            )
-
-            // Set maximum date to today (can't select future dates)
-            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
-
-            // Set minimum date to 100 years ago (reasonable limit)
-            calendar.add(Calendar.YEAR, -100)
-            datePickerDialog.datePicker.minDate = calendar.timeInMillis
-
-            datePickerDialog.show()
-        }
+//        edittext_birthdate.setOnClickListener {
+//            val calendar = Calendar.getInstance()
+//            val year = calendar.get(Calendar.YEAR)
+//            val month = calendar.get(Calendar.MONTH)
+//            val day = calendar.get(Calendar.DAY_OF_MONTH)
+//
+//            val datePickerDialog = DatePickerDialog(
+//                this,
+//                { _, selectedYear, selectedMonth, selectedDay ->
+//                    val selectedDate = Calendar.getInstance()
+//                    selectedDate.set(selectedYear, selectedMonth, selectedDay)
+//
+//                    // Set display text (user-friendly format)
+//                    edittext_birthdate.setText(displayDateFormat.format(selectedDate.time))
+//
+//                    // Store the date in API format (yyyy-MM-dd) as tag
+//                    edittext_birthdate.tag = dateFormat.format(selectedDate.time)
+//                },
+//                year, month, day
+//            )
+//
+//            // Set maximum date to today (can't select future dates)
+//            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+//
+//            // Set minimum date to 100 years ago (reasonable limit)
+//            calendar.add(Calendar.YEAR, -100)
+//            datePickerDialog.datePicker.minDate = calendar.timeInMillis
+//
+//            datePickerDialog.show()
+//        }
     }
 
     private fun setupDropdowns() {
@@ -196,7 +202,7 @@ class Register1Activity : AppCompatActivity() {
         edittext_confirmPassword.error = null
         edittext_firstname.error = null
         edittext_lastname.error = null
-        edittext_birthdate.error = null
+//        edittext_birthdate.error = null
         edittext_contactnumber.error = null
         edittext_street.error = null
         edittext_barangay.error = null
@@ -321,7 +327,7 @@ class Register1Activity : AppCompatActivity() {
         val middleName = edittext_middlename.text.toString().trim()
         val lastName = edittext_lastname.text.toString().trim()
         val suffix = edittext_suffix.text.toString().trim()
-        val birthDate = edittext_birthdate.tag?.toString() ?: "" // Get the API format date from tag
+//        val birthDate = edittext_birthdate.tag?.toString() ?: "" // Get the API format date from tag
         val contactNumber = edittext_contactnumber.text.toString().trim()
         val street = edittext_street.text.toString().trim()
         val barangay = edittext_barangay.text.toString().trim()
@@ -339,7 +345,7 @@ class Register1Activity : AppCompatActivity() {
                 if (middleName.isEmpty()) null else middleName,
                 lastName,
                 if (suffix.isEmpty()) null else suffix,
-                birthDate, contactNumber, street, barangay, municipality, province, zipCode
+                contactNumber, street, barangay, municipality, province, zipCode
             )
 
             RetrofitClient.instance.registerUser(register).enqueue(object :
@@ -513,6 +519,35 @@ class Register1Activity : AppCompatActivity() {
 
         return isValid
     }
+
+    private fun showTermsDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_term_and_condition, null)
+
+        val dialog = android.app.AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val btnAccept = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.button_accept)
+        val btnDecline = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.button_decline)
+
+        // Accept Click
+        btnAccept.setOnClickListener {
+            cbTerms.isChecked = true
+            dialog.dismiss()
+        }
+
+        // Decline Click
+        btnDecline.setOnClickListener {
+            cbTerms.isChecked = false
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
 
     enum class PasswordStrength {
         WEAK, MEDIUM, STRONG

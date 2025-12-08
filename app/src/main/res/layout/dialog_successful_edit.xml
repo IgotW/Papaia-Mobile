@@ -4,10 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp"
     android:background="@drawable/dialog_background"
-    android:gravity="center_horizontal"
-    android:elevation="8dp">
+    android:padding="24dp"
+    android:gravity="center">
 
     <!-- ✅ Success Icon -->
     <ImageView
@@ -18,43 +17,37 @@
         android:contentDescription="Success Icon"
         android:layout_marginBottom="16dp" />
 
-    <!-- 🌿 Title -->
+    <!-- Success Title -->
     <TextView
-        android:id="@+id/tvDialogTitle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password Changed!"
-        android:textSize="20sp"
+        android:text="Profile Updated!"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/primary"
-        android:gravity="center"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"/>
 
-    <!-- 📝 Description -->
+    <!-- Success Message -->
     <TextView
-        android:id="@+id/tvDialogMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your password has been updated successfully. Please use your new password next time you log in."
+        android:text="Your profile information has been successfully updated."
         android:textSize="16sp"
         android:textColor="@color/gray"
         android:gravity="center"
-        android:layout_marginBottom="24dp"
-        android:lineSpacingExtra="2dp" />
+        android:layout_marginBottom="32dp"/>
 
-    <!-- 🔘 OK Button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_ok"
-        style="?attr/materialButtonStyle"
+    <!-- OK Button -->
+    <Button
+        android:id="@+id/btnOk"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:textSize="16sp"
-        android:text="OK"
+        android:text="Great!"
         android:textAllCaps="false"
-        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
         android:backgroundTint="@color/primary"
         app:rippleColor="#80FFFFFF"
         app:cornerRadius="12dp"
         app:elevation="3dp" />
-
 </LinearLayout>

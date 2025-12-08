@@ -37,7 +37,7 @@
             android:textColor="@color/black"
             android:gravity="center"
             android:layout_marginEnd="28dp"
-            android:fontFamily="@font/league_spartan" />
+            android:fontFamily="@font/league_spartan_bold" />
     </LinearLayout>
 
     <ScrollView

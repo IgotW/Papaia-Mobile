@@ -219,6 +219,24 @@
 
         </LinearLayout>
     </LinearLayout>
+<!--    <FrameLayout-->
+<!--        android:id="@+id/loadingOverlay"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="#80000000"-->
+<!--        android:visibility="gone"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true">-->
+
+<!--        <ProgressBar-->
+<!--            android:id="@+id/progressBar"-->
+<!--            style="?android:attr/progressBarStyleLarge"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"/>-->
+
+<!--    </FrameLayout>-->
+
     <FrameLayout
         android:id="@+id/loadingOverlay"
         android:layout_width="match_parent"
@@ -228,12 +246,31 @@
         android:clickable="true"
         android:focusable="true">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleLarge"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/tvLoadingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fetching result..."
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/league_spartan"/>
+
+        </LinearLayout>
 
     </FrameLayout>
 </FrameLayout>

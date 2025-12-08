@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -11,6 +13,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.text.Html
 import android.util.Log
+import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,7 +67,12 @@ class ScanFragment : Fragment() {
 
     private var capturedUri: Uri? = null
 
-//    private var isViewReady = false
+    private val MAX_UPLOAD_MB = 10
+
+//    private var loadingHandler = android.os.Handler()
+//    private var dotCount = 0
+
+    //    private var isViewReady = false
     private var arePermissionsGranted = false
 
 
@@ -254,6 +262,7 @@ class ScanFragment : Fragment() {
                         .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                         .build()
 
+
                     val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
                     provider.unbindAll()
@@ -319,7 +328,20 @@ class ScanFragment : Fragment() {
 
     private fun sendImageToApi(imageUri: Uri) {
         try {
-            val file = uriToFile(imageUri)
+            val fileSizeMB = getFileSizeInMB(imageUri)
+            if (fileSizeMB > MAX_UPLOAD_MB) {
+                hideLoading()
+                Toast.makeText(
+                    requireContext(),
+                    "Image too large! Max allowed: $MAX_UPLOAD_MB MB\nSelected: ${"%.2f".format(fileSizeMB)} MB",
+                    Toast.LENGTH_LONG
+                ).show()
+                return
+            }
+
+//            val file = uriToFile(imageUri)
+            val file = compressImageFile(uriToFile(imageUri))
+
             val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
             val multipartBody = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
@@ -365,7 +387,7 @@ class ScanFragment : Fragment() {
                                     .setTitle("Unrecognized Disease")
                                     .setMessage(
                                         "${body.message ?: "Disease not recognized. Please try again with a clearer image."}\n\n" +
-                                                "Confidence: ${"%.2f".format(confidencePercent)}%"
+                                                "AI Verified: ${"%.2f".format(confidencePercent)}%"
                                     )
                                     .setPositiveButton("Try Again") { dialog, _ ->
                                         dialog.dismiss()
@@ -479,7 +501,7 @@ class ScanFragment : Fragment() {
 
         // Format with circled numbers and emoji steps
         val formatted = steps.mapIndexed { index, step ->
-            "<b>🌱 Step ${getCircledNumber(index + 1)}</b><br>${step}"
+            "<b>🌱 Suggestion ${getCircledNumber(index + 1)}</b><br>${step}"
         }.joinToString("<br><br>")
 
         // Render as styled HTML text
@@ -514,6 +536,20 @@ class ScanFragment : Fragment() {
         return file
     }
 
+    private fun compressImageFile(originalFile: File): File {
+        val compressedFile = File(outputDirectory, "compressed_${System.currentTimeMillis()}.jpg")
+
+        val bitmap = BitmapFactory.decodeFile(originalFile.path)
+
+        val outputStream = FileOutputStream(compressedFile)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream) // 70% quality
+        outputStream.flush()
+        outputStream.close()
+
+        return compressedFile
+    }
+
+
 
     private val outputDirectory: File
         get() = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
@@ -535,13 +571,50 @@ class ScanFragment : Fragment() {
         }
     }
 
+    private fun getFileSizeInMB(uri: Uri): Double {
+        val cursor = requireContext().contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            val sizeIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)
+            it.moveToFirst()
+            val size = it.getLong(sizeIndex)
+            return size / (1024.0 * 1024.0) // Convert bytes → MB
+        }
+        return 0.0
+    }
+
+
     private fun showLoading() {
         loadingOverlay.visibility = View.VISIBLE
     }
 
+//    private fun showLoading() {
+//        loadingOverlay.visibility = View.VISIBLE
+//
+//        val loadingText = view?.findViewById<TextView>(R.id.tvLoadingText)
+//
+//        dotCount = 0
+//
+//        loadingHandler.post(object : Runnable {
+//            override fun run() {
+//                dotCount = (dotCount + 1) % 4
+//                val dots = ".".repeat(dotCount)
+//                loadingText?.text = "Fetching result$dots"
+//                loadingHandler.postDelayed(this, 500) // update every 0.5s
+//            }
+//        })
+//    }
+
     private fun hideLoading() {
         loadingOverlay.visibility = View.GONE
     }
+
+//    private fun hideLoading() {
+//        loadingOverlay.visibility = View.GONE
+//        loadingHandler.removeCallbacksAndMessages(null)
+//
+//        val loadingText = view?.findViewById<TextView>(R.id.tvLoadingText)
+//        loadingText?.text = "Fetching result..."
+//    }
 
     override fun onDestroy() {
         super.onDestroy()
