@@ -267,7 +267,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun uploadProfilePicture(uri: Uri) {
-        val file = File(uri.path!!)
+        val file = uriToFile(uri)
 
         // 🔥 10 MB limit
         val maxSizeBytes = 10 * 1024 * 1024 // 10MB
@@ -282,7 +282,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        val body = MultipartBody.Part.createFormData("profilePicture", file.name, requestFile)
 
         bearerToken?.let { token ->
             idNumber?.let { id ->
@@ -326,6 +326,16 @@ class EditProfileActivity : AppCompatActivity() {
         editor.putString("zipcode", zipcode.text.toString())
         editor.apply()
     }
+
+    private fun uriToFile(uri: Uri): File {
+        val inputStream = contentResolver.openInputStream(uri)!!
+        val tempFile = File(cacheDir, "${UUID.randomUUID()}.jpg")
+        tempFile.outputStream().use { output ->
+            inputStream.copyTo(output)
+        }
+        return tempFile
+    }
+
 
     private fun setupDropdowns() {
         // Philippines provinces dropdown

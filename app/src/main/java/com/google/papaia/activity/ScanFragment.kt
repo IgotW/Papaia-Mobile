@@ -499,12 +499,13 @@ class ScanFragment : Fragment() {
             .map { it.trim() }
             .filter { it.isNotEmpty() }
 
-        // Format with circled numbers and emoji steps
-        val formatted = steps.mapIndexed { index, step ->
-            "<b>🌱 Suggestion ${getCircledNumber(index + 1)}</b><br>${step}"
-        }.joinToString("<br><br>")
+        // Custom BIG GREEN bullet (HTML + Unicode)
+        val bullet = "<span style='font-size:20px;'>●</span>"
 
-        // Render as styled HTML text
+        val formatted = steps.joinToString("<br><br>") { step ->
+            "$bullet &nbsp; $step"
+        }
+
         return Html.fromHtml(formatted, Html.FROM_HTML_MODE_LEGACY)
     }
 

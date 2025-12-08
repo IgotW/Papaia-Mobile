@@ -28,7 +28,7 @@ class ScanResultDetailsActivity : AppCompatActivity() {
     private lateinit var backButton: ImageView
     private lateinit var shareButton: ImageView
     private lateinit var plantImage: ImageView
-    private lateinit var diseaseStatus: TextView
+//    private lateinit var diseaseStatus: TextView
     private lateinit var diseaseName: TextView
     private lateinit var confidenceText: TextView
     private lateinit var treatmentButton: MaterialButton
@@ -65,7 +65,7 @@ class ScanResultDetailsActivity : AppCompatActivity() {
     private fun initViews() {
         backButton = findViewById(R.id.backButton)
         plantImage = findViewById(R.id.plantImage)
-        diseaseStatus = findViewById(R.id.diseaseStatus)
+//        diseaseStatus = findViewById(R.id.diseaseStatus)
         diseaseName = findViewById(R.id.diseaseName)
         confidenceText = findViewById(R.id.confidenceText)
         treatmentButton = findViewById(R.id.treatmentButton)
@@ -75,7 +75,7 @@ class ScanResultDetailsActivity : AppCompatActivity() {
 
     private fun fetchPredictionData(predictionId: String, tokenId: String) {
         // Show loading state
-        diseaseStatus.text = "Loading prediction data..."
+//        diseaseStatus.text = "Loading prediction data..."
 
         RetrofitClient.instance.getPredictionById(predictionId, tokenId).enqueue(object :
             Callback<ScanResult> {
@@ -111,8 +111,8 @@ class ScanResultDetailsActivity : AppCompatActivity() {
         loadImageFromUrl(scanResult.imageUrl)
 
         // Set disease status
-        diseaseStatus.text = "⚠ Diseased"
-        diseaseStatus.setTextColor(ContextCompat.getColor(this, R.color.tertiary))
+//        diseaseStatus.text = "⚠ Diseased"
+//        diseaseStatus.setTextColor(ContextCompat.getColor(this, R.color.tertiary))
 
         diseaseName.text = scanResult.prediction
 
@@ -130,19 +130,19 @@ class ScanResultDetailsActivity : AppCompatActivity() {
 //            else -> ContextCompat.getColor(this, R.color.green)
 //        })
 
-        confidenceText.setTextColor(
-            when {
-                scanResult.confidence >= 0.9 -> ContextCompat.getColor(this, R.color.green)
-                scanResult.confidence >= 0.7 -> ContextCompat.getColor(this, R.color.orange)
-                else -> ContextCompat.getColor(this, R.color.red)
-            }
-        )
+//        confidenceText.setTextColor(
+//            when {
+//                scanResult.confidence >= 0.9 -> ContextCompat.getColor(this, R.color.green)
+//                scanResult.confidence >= 0.7 -> ContextCompat.getColor(this, R.color.orange)
+//                else -> ContextCompat.getColor(this, R.color.red)
+//            }
+//        )
 
         // Extract description and show confidence
         val description = extractDescription(scanResult.suggestion)
         val confidencePercentage = (scanResult.confidence * 100).toInt()
 //        confidenceText.text = "${description.joinToString("\n")}\n\nConfidence: $confidencePercentage%"
-            confidenceText.text = "$confidencePercentage%"
+            confidenceText.text = "AI Verified: $confidencePercentage%"
     }
 
     private fun loadImageFromUrl(imageUrl: String?) {
@@ -193,28 +193,48 @@ class ScanResultDetailsActivity : AppCompatActivity() {
         }
     }
 
-    //String -> CharSequence
     private fun formatSuggestions(suggestion: String?): CharSequence {
         if (suggestion.isNullOrBlank()) {
             return "No treatment suggestions available."
         }
 
-        // Split by '*' (used as bullet points in your backend response)
+        // Split suggestions by "*"
         val steps = suggestion.split("*")
             .map { it.trim() }
             .filter { it.isNotEmpty() }
 
-//        return steps.mapIndexed { index, step ->
-//            "${getCircledNumber(index + 1)} $step"
-//        }.joinToString("\n\n")
-        // Format each step with bold "Step ①" then the content
-        val formatted = steps.mapIndexed { index, step ->
-            "<b>🌱 Suggestion ${getCircledNumber(index + 1)}</b><br>${step}"
-        }.joinToString("<br><br>")
+        // Custom BIG GREEN bullet (HTML + Unicode)
+        val bullet = "<span style='font-size:20px;'>●</span>"
 
-        // Convert HTML string to styled text
+        val formatted = steps.joinToString("<br><br>") { step ->
+            "$bullet &nbsp; $step"
+        }
+
         return Html.fromHtml(formatted, Html.FROM_HTML_MODE_LEGACY)
     }
+
+    //String -> CharSequence
+//    private fun formatSuggestions(suggestion: String?): CharSequence {
+//        if (suggestion.isNullOrBlank()) {
+//            return "No treatment suggestions available."
+//        }
+//
+//        // Split by '*' (used as bullet points in your backend response)
+//        val steps = suggestion.split("*")
+//            .map { it.trim() }
+//            .filter { it.isNotEmpty() }
+//
+////        return steps.mapIndexed { index, step ->
+////            "${getCircledNumber(index + 1)} $step"
+////        }.joinToString("\n\n")
+//        // Format each step with bold "Step ①" then the content
+//        val formatted = steps.mapIndexed { index, step ->
+//            "<b>🌱 Suggestion ${getCircledNumber(index + 1)}</b><br>${step}"
+//        }.joinToString("<br><br>")
+//
+//        // Convert HTML string to styled text
+//        return Html.fromHtml(formatted, Html.FROM_HTML_MODE_LEGACY)
+//    }
 
 
     private fun formatSection(section: String, sectionIndex: Int): String {
@@ -338,7 +358,7 @@ class ScanResultDetailsActivity : AppCompatActivity() {
 
     private fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        diseaseStatus.text = "Error loading data"
-        diseaseStatus.setTextColor(ContextCompat.getColor(this, R.color.red))
+//        diseaseStatus.text = "Error loading data"
+//        diseaseStatus.setTextColor(ContextCompat.getColor(this, R.color.red))
     }
 }
