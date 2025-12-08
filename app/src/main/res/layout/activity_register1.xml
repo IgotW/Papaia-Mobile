@@ -450,212 +450,212 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Street Address -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Street Address"
-            android:textColor="#333333"
-            android:textSize="16sp"
-            android:fontFamily="@font/league_spartan_semibold" />
+<!--        &lt;!&ndash; Street Address &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            android:text="Street Address"-->
+<!--            android:textColor="#333333"-->
+<!--            android:textSize="16sp"-->
+<!--            android:fontFamily="@font/league_spartan_semibold" />-->
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxStrokeColor="#E0E0E0"
-            app:boxBackgroundColor="@android:color/white"
-            app:hintEnabled="false">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="16dp"-->
+<!--            app:boxBackgroundMode="outline"-->
+<!--            app:boxCornerRadiusBottomEnd="8dp"-->
+<!--            app:boxCornerRadiusBottomStart="8dp"-->
+<!--            app:boxCornerRadiusTopEnd="8dp"-->
+<!--            app:boxCornerRadiusTopStart="8dp"-->
+<!--            app:boxStrokeColor="#E0E0E0"-->
+<!--            app:boxBackgroundColor="@android:color/white"-->
+<!--            app:hintEnabled="false">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/reg_edittext_street"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter street address"
-                android:inputType="textPostalAddress"
-                android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/gray"/>
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/reg_edittext_street"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Enter street address"-->
+<!--                android:inputType="textPostalAddress"-->
+<!--                android:fontFamily="@font/league_spartan"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textColorHint="@color/gray"/>-->
 
-        </com.google.android.material.textfield.TextInputLayout>
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Barangay"
-            android:textColor="#333333"
-            android:textSize="16sp"
-            android:fontFamily="@font/league_spartan_semibold" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            android:text="Barangay"-->
+<!--            android:textColor="#333333"-->
+<!--            android:textSize="16sp"-->
+<!--            android:fontFamily="@font/league_spartan_semibold" />-->
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxStrokeColor="#E0E0E0"
-            app:boxBackgroundColor="@android:color/white"
-            app:hintEnabled="false">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="16dp"-->
+<!--            app:boxBackgroundMode="outline"-->
+<!--            app:boxCornerRadiusBottomEnd="8dp"-->
+<!--            app:boxCornerRadiusBottomStart="8dp"-->
+<!--            app:boxCornerRadiusTopEnd="8dp"-->
+<!--            app:boxCornerRadiusTopStart="8dp"-->
+<!--            app:boxStrokeColor="#E0E0E0"-->
+<!--            app:boxBackgroundColor="@android:color/white"-->
+<!--            app:hintEnabled="false">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/reg_edittext_barangay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter Barangay"
-                android:inputType="textPostalAddress"
-                android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/gray"/>
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/reg_edittext_barangay"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Enter Barangay"-->
+<!--                android:inputType="textPostalAddress"-->
+<!--                android:fontFamily="@font/league_spartan"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textColorHint="@color/gray"/>-->
 
-        </com.google.android.material.textfield.TextInputLayout>
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
-        <!-- City/Municipality -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="City/Municipality"
-            android:textColor="#333333"
-            android:textSize="16sp"
-            android:fontFamily="@font/league_spartan_semibold" />
+<!--        &lt;!&ndash; City/Municipality &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            android:text="City/Municipality"-->
+<!--            android:textColor="#333333"-->
+<!--            android:textSize="16sp"-->
+<!--            android:fontFamily="@font/league_spartan_semibold" />-->
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxStrokeColor="#E0E0E0"
-            app:boxBackgroundColor="@android:color/white"
-            app:hintEnabled="false">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="16dp"-->
+<!--            app:boxBackgroundMode="outline"-->
+<!--            app:boxCornerRadiusBottomEnd="8dp"-->
+<!--            app:boxCornerRadiusBottomStart="8dp"-->
+<!--            app:boxCornerRadiusTopEnd="8dp"-->
+<!--            app:boxCornerRadiusTopStart="8dp"-->
+<!--            app:boxStrokeColor="#E0E0E0"-->
+<!--            app:boxBackgroundColor="@android:color/white"-->
+<!--            app:hintEnabled="false">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/reg_edittext_municipality"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter city or municipality"
-                android:inputType="text"
-                android:fontFamily="@font/league_spartan"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/gray"/>
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/reg_edittext_municipality"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Enter city or municipality"-->
+<!--                android:inputType="text"-->
+<!--                android:fontFamily="@font/league_spartan"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textColorHint="@color/gray"/>-->
 
-        </com.google.android.material.textfield.TextInputLayout>
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
-        <!-- ZIP Code and Province Row -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+<!--        &lt;!&ndash; ZIP Code and Province Row &ndash;&gt;-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginBottom="16dp">-->
 
-            <!-- ZIP Code -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginEnd="8dp">
+<!--            &lt;!&ndash; ZIP Code &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_marginEnd="8dp">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="ZIP Code"
-                    android:textColor="#333333"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/league_spartan_semibold" />
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="8dp"-->
+<!--                    android:text="ZIP Code"-->
+<!--                    android:textColor="#333333"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:fontFamily="@font/league_spartan_semibold" />-->
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusBottomEnd="8dp"
-                    app:boxCornerRadiusBottomStart="8dp"
-                    app:boxCornerRadiusTopEnd="8dp"
-                    app:boxCornerRadiusTopStart="8dp"
-                    app:boxStrokeColor="#E0E0E0"
-                    app:boxBackgroundColor="@android:color/white"
-                    app:hintEnabled="false">
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:boxBackgroundMode="outline"-->
+<!--                    app:boxCornerRadiusBottomEnd="8dp"-->
+<!--                    app:boxCornerRadiusBottomStart="8dp"-->
+<!--                    app:boxCornerRadiusTopEnd="8dp"-->
+<!--                    app:boxCornerRadiusTopStart="8dp"-->
+<!--                    app:boxStrokeColor="#E0E0E0"-->
+<!--                    app:boxBackgroundColor="@android:color/white"-->
+<!--                    app:hintEnabled="false">-->
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/reg_edittext_zipcode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="ZIP"
-                        android:inputType="number"
-                        android:fontFamily="@font/league_spartan"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/gray"/>
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/reg_edittext_zipcode"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:hint="ZIP"-->
+<!--                        android:inputType="number"-->
+<!--                        android:fontFamily="@font/league_spartan"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textColorHint="@color/gray"/>-->
 
-                </com.google.android.material.textfield.TextInputLayout>
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
-            <!-- Province -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginStart="8dp">
+<!--            &lt;!&ndash; Province &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_marginStart="8dp">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="Province"
-                    android:textColor="#333333"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/league_spartan_semibold" />
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="8dp"-->
+<!--                    android:text="Province"-->
+<!--                    android:textColor="#333333"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:fontFamily="@font/league_spartan_semibold" />-->
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusBottomEnd="8dp"
-                    app:boxCornerRadiusBottomStart="8dp"
-                    app:boxCornerRadiusTopEnd="8dp"
-                    app:boxCornerRadiusTopStart="8dp"
-                    app:boxStrokeColor="#E0E0E0"
-                    app:boxBackgroundColor="@android:color/white"
-                    app:hintEnabled="false"
-                    app:endIconMode="dropdown_menu"
-                    app:endIconTint="@color/gray"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:boxBackgroundMode="outline"-->
+<!--                    app:boxCornerRadiusBottomEnd="8dp"-->
+<!--                    app:boxCornerRadiusBottomStart="8dp"-->
+<!--                    app:boxCornerRadiusTopEnd="8dp"-->
+<!--                    app:boxCornerRadiusTopStart="8dp"-->
+<!--                    app:boxStrokeColor="#E0E0E0"-->
+<!--                    app:boxBackgroundColor="@android:color/white"-->
+<!--                    app:hintEnabled="false"-->
+<!--                    app:endIconMode="dropdown_menu"-->
+<!--                    app:endIconTint="@color/gray"-->
+<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">-->
 
-                    <AutoCompleteTextView
-                        android:id="@+id/reg_province"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Province"
-                        android:inputType="none"
-                        android:fontFamily="@font/league_spartan"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/gray"/>
+<!--                    <AutoCompleteTextView-->
+<!--                        android:id="@+id/reg_province"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:hint="Province"-->
+<!--                        android:inputType="none"-->
+<!--                        android:fontFamily="@font/league_spartan"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textColorHint="@color/gray"/>-->
 
-                </com.google.android.material.textfield.TextInputLayout>
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
         <!-- Terms and Conditions -->
         <LinearLayout

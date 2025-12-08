@@ -484,6 +484,50 @@ class HomeFragment : Fragment() {
     }
 
     /** ---------------- For notification daily tip (START) ---------------- **/
+//    private fun generateDailyTip(lat: Double, lon: Double) {
+//        Log.d("HomeFragment", "Generating daily tip with location: $lat, $lon")
+//
+//        val request = LatLonRequest(lat, lon)
+//
+//        RetrofitClient.instance.generateDailyTip(bearerToken, request)
+//            .enqueue(object : Callback<TipResponse> {
+//                override fun onResponse(call: Call<TipResponse>, response: Response<TipResponse>) {
+//
+//                    // 🔥 Prevent crash: Fragment or view might no longer exist
+//                    if (!isAdded || view == null) {
+//                        Log.w("HomeFragment", "Fragment no longer attached. Ignoring response.")
+//                        return
+//                    }
+//
+//                    val ctx = context ?: return  // safe context
+//
+//                    if (response.isSuccessful && response.body() != null) {
+//                        val tipData = response.body()
+//                        val tipText = tipData?.tip?.text ?: "No tip available for today"
+//
+//                        Log.d("HomeFragment", "Daily tip received: ${tipText.take(50)}...")
+//
+//                        // 🔥 Safe UI update: check if view still exists
+//                        txtDailyTips?.text = tipText
+//
+//                        // 🔥 Safe SharedPreferences write
+//                        ctx.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+//                            .edit()
+//                            .putString("last_tip", tipText)
+//                            .apply()
+//
+//                    } else {
+//                        Log.e("HomeFragment", "Failed to get tip: ${response.code()} - ${response.message()}")
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<TipResponse>, t: Throwable) {
+//                    Log.e("HomeFragment", "Stats network error: ${t.message}")
+//                }
+//            })
+//    }
+
+
     private fun generateDailyTip(lat: Double, lon: Double) {
         Log.d("HomeFragment", "Generating daily tip with location: $lat, $lon")
 

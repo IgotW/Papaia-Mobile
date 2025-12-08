@@ -45,11 +45,11 @@ class Register1Activity : AppCompatActivity() {
     private lateinit var edittext_suffix: AutoCompleteTextView
 //    private lateinit var edittext_birthdate: TextInputEditText
     private lateinit var edittext_contactnumber: TextInputEditText
-    private lateinit var edittext_street: TextInputEditText
-    private lateinit var edittext_barangay: TextInputEditText
-    private lateinit var edittext_municipality: TextInputEditText
-    private lateinit var edittext_province: AutoCompleteTextView
-    private lateinit var edittext_zipCode: TextInputEditText
+//    private lateinit var edittext_street: TextInputEditText
+//    private lateinit var edittext_barangay: TextInputEditText
+//    private lateinit var edittext_municipality: TextInputEditText
+//    private lateinit var edittext_province: AutoCompleteTextView
+//    private lateinit var edittext_zipCode: TextInputEditText
     private lateinit var cbTerms: CheckBox
     private lateinit var button_signup: Button
     private lateinit var button_back: ImageView
@@ -79,16 +79,16 @@ class Register1Activity : AppCompatActivity() {
         edittext_lastname = findViewById(R.id.reg_edittext_lastname)
 //        edittext_birthdate = findViewById(R.id.reg_edittext_birthdate)
         edittext_contactnumber = findViewById(R.id.reg_edittext_contactnumber)
-        edittext_street = findViewById(R.id.reg_edittext_street)
-        edittext_barangay = findViewById(R.id.reg_edittext_barangay)
-        edittext_municipality = findViewById(R.id.reg_edittext_municipality)
-        edittext_zipCode = findViewById(R.id.reg_edittext_zipcode)
+//        edittext_street = findViewById(R.id.reg_edittext_street)
+//        edittext_barangay = findViewById(R.id.reg_edittext_barangay)
+//        edittext_municipality = findViewById(R.id.reg_edittext_municipality)
+//        edittext_zipCode = findViewById(R.id.reg_edittext_zipcode)
 
         val login = findViewById<TextView>(R.id.tvLogin)
 
         // AutoCompleteTextViews
         edittext_suffix = findViewById(R.id.reg_suffix)
-        edittext_province = findViewById(R.id.reg_province)
+//        edittext_province = findViewById(R.id.reg_province)
 
         // Checkbox and Button
         cbTerms = findViewById(R.id.cbTerms)
@@ -170,26 +170,26 @@ class Register1Activity : AppCompatActivity() {
         edittext_suffix.setAdapter(suffixAdapter)
 
         // Philippines provinces dropdown
-        val provinces = arrayOf(
-            "Abra", "Agusan del Norte", "Agusan del Sur", "Aklan", "Albay", "Antique",
-            "Apayao", "Aurora", "Basilan", "Bataan", "Batanes", "Batangas", "Benguet",
-            "Biliran", "Bohol", "Bukidnon", "Bulacan", "Cagayan", "Camarines Norte",
-            "Camarines Sur", "Camiguin", "Capiz", "Catanduanes", "Cavite", "Cebu",
-            "Compostela Valley", "Cotabato", "Davao del Norte", "Davao del Sur",
-            "Davao Oriental", "Dinagat Islands", "Eastern Samar", "Guimaras", "Ifugao",
-            "Ilocos Norte", "Ilocos Sur", "Iloilo", "Isabela", "Kalinga", "Laguna",
-            "Lanao del Norte", "Lanao del Sur", "La Union", "Leyte", "Maguindanao",
-            "Marinduque", "Masbate", "Metro Manila", "Misamis Occidental", "Misamis Oriental",
-            "Mountain Province", "Negros Occidental", "Negros Oriental", "Northern Samar",
-            "Nueva Ecija", "Nueva Vizcaya", "Occidental Mindoro", "Oriental Mindoro",
-            "Palawan", "Pampanga", "Pangasinan", "Quezon", "Quirino", "Rizal", "Romblon",
-            "Samar", "Sarangani", "Siquijor", "Sorsogon", "South Cotabato", "Southern Leyte",
-            "Sultan Kudarat", "Sulu", "Surigao del Norte", "Surigao del Sur", "Tarlac",
-            "Tawi-Tawi", "Zambales", "Zamboanga del Norte", "Zamboanga del Sur",
-            "Zamboanga Sibugay"
-        )
-        val provinceAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, provinces)
-        edittext_province.setAdapter(provinceAdapter)
+//        val provinces = arrayOf(
+//            "Abra", "Agusan del Norte", "Agusan del Sur", "Aklan", "Albay", "Antique",
+//            "Apayao", "Aurora", "Basilan", "Bataan", "Batanes", "Batangas", "Benguet",
+//            "Biliran", "Bohol", "Bukidnon", "Bulacan", "Cagayan", "Camarines Norte",
+//            "Camarines Sur", "Camiguin", "Capiz", "Catanduanes", "Cavite", "Cebu",
+//            "Compostela Valley", "Cotabato", "Davao del Norte", "Davao del Sur",
+//            "Davao Oriental", "Dinagat Islands", "Eastern Samar", "Guimaras", "Ifugao",
+//            "Ilocos Norte", "Ilocos Sur", "Iloilo", "Isabela", "Kalinga", "Laguna",
+//            "Lanao del Norte", "Lanao del Sur", "La Union", "Leyte", "Maguindanao",
+//            "Marinduque", "Masbate", "Metro Manila", "Misamis Occidental", "Misamis Oriental",
+//            "Mountain Province", "Negros Occidental", "Negros Oriental", "Northern Samar",
+//            "Nueva Ecija", "Nueva Vizcaya", "Occidental Mindoro", "Oriental Mindoro",
+//            "Palawan", "Pampanga", "Pangasinan", "Quezon", "Quirino", "Rizal", "Romblon",
+//            "Samar", "Sarangani", "Siquijor", "Sorsogon", "South Cotabato", "Southern Leyte",
+//            "Sultan Kudarat", "Sulu", "Surigao del Norte", "Surigao del Sur", "Tarlac",
+//            "Tawi-Tawi", "Zambales", "Zamboanga del Norte", "Zamboanga del Sur",
+//            "Zamboanga Sibugay"
+//        )
+//        val provinceAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, provinces)
+//        edittext_province.setAdapter(provinceAdapter)
     }
 
     private fun validateForm(): Boolean {
@@ -204,11 +204,11 @@ class Register1Activity : AppCompatActivity() {
         edittext_lastname.error = null
 //        edittext_birthdate.error = null
         edittext_contactnumber.error = null
-        edittext_street.error = null
-        edittext_barangay.error = null
-        edittext_municipality.error = null
-        edittext_zipCode.error = null
-        edittext_province.error = null
+//        edittext_street.error = null
+//        edittext_barangay.error = null
+//        edittext_municipality.error = null
+//        edittext_zipCode.error = null
+//        edittext_province.error = null
 
         // Username validation
         val usernameText = edittext_username.text.toString().trim()
@@ -329,11 +329,11 @@ class Register1Activity : AppCompatActivity() {
         val suffix = edittext_suffix.text.toString().trim()
 //        val birthDate = edittext_birthdate.tag?.toString() ?: "" // Get the API format date from tag
         val contactNumber = edittext_contactnumber.text.toString().trim()
-        val street = edittext_street.text.toString().trim()
-        val barangay = edittext_barangay.text.toString().trim()
-        val municipality = edittext_municipality.text.toString().trim()
-        val province = edittext_province.text.toString().trim()
-        val zipCode = edittext_zipCode.text.toString().trim()
+//        val street = edittext_street.text.toString().trim()
+//        val barangay = edittext_barangay.text.toString().trim()
+//        val municipality = edittext_municipality.text.toString().trim()
+//        val province = edittext_province.text.toString().trim()
+//        val zipCode = edittext_zipCode.text.toString().trim()
 
         // Show loading
         button_signup.isEnabled = false
@@ -345,7 +345,7 @@ class Register1Activity : AppCompatActivity() {
                 if (middleName.isEmpty()) null else middleName,
                 lastName,
                 if (suffix.isEmpty()) null else suffix,
-                contactNumber, street, barangay, municipality, province, zipCode
+                contactNumber
             )
 
             RetrofitClient.instance.registerUser(register).enqueue(object :
