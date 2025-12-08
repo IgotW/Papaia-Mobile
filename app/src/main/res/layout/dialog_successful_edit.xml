@@ -49,5 +49,6 @@
         android:backgroundTint="@color/primary"
         app:rippleColor="#80FFFFFF"
         app:cornerRadius="12dp"
-        app:elevation="3dp" />
+        app:elevation="3dp"
+        android:textColor="@color/white"/>
 </LinearLayout>

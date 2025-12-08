@@ -10,10 +10,5 @@ data class RegisterRequest(
     val lastName: String,
     val suffix: String?,
     val contactNumber: String,
-    val street: String,
-    val barangay: String,
-    val municipality: String,
-    val province: String,
-    val zipCode: String,
     val profilePicture: String? = ""
 )
