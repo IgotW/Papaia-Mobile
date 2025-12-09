@@ -382,19 +382,22 @@ class ScanFragment : Fragment() {
 
                             // ✅ Handle case when model confidence < 0.5
                             if (!body.success) {
-                                val confidencePercent = (body.confidence ?: 0.0) * 100
-                                AlertDialog.Builder(requireContext())
-                                    .setTitle("Unrecognized Disease")
-                                    .setMessage(
-                                        "${body.message ?: "Disease not recognized. Please try again with a clearer image."}\n\n" +
-                                                "AI Verified: ${"%.2f".format(confidencePercent)}%"
-                                    )
-                                    .setPositiveButton("Try Again") { dialog, _ ->
-                                        dialog.dismiss()
-                                        startCamera()
-                                    }
-                                    .setCancelable(false)
-                                    .show()
+//                                val confidencePercent = (body.confidence ?: 0.0) * 100
+//                                AlertDialog.Builder(requireContext())
+//                                    .setTitle("Unrecognized Disease")
+//                                    .setMessage(
+//                                        "${body.message ?: "Disease not recognized. Please try again with a clearer image."}\n\n" +
+//                                                "AI Verified: ${"%.2f".format(confidencePercent)}%"
+//                                    )
+//                                    .setPositiveButton("Try Again") { dialog, _ ->
+//                                        dialog.dismiss()
+//                                        startCamera()
+//                                    }
+//                                    .setCancelable(false)
+//                                    .show()
+//                                return
+
+                                showErrorDialog(body.message ?: "Unrecognized image. Please try again.")
                                 return
                             }
 
@@ -431,6 +434,35 @@ class ScanFragment : Fragment() {
             Log.e("ImageUpload", "Error: ${e.message}", e)
             startCamera()
         }
+    }
+
+    private fun showErrorDialog(message: String) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_error_detection, null)
+
+        val tvMessage = dialogView.findViewById<TextView>(R.id.tvErrorMessage)
+        val btnOk = dialogView.findViewById<Button>(R.id.btnErrorOk)
+
+        tvMessage.text = message
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        btnOk.setOnClickListener {
+            dialog.dismiss()
+            previewView.visibility = View.VISIBLE
+            btnCapture.visibility = View.VISIBLE
+            imageGallery.visibility = View.VISIBLE
+            capturedImageView.visibility = View.GONE
+            btnRetake.visibility = View.GONE
+            btnUsePhoto.visibility = View.GONE
+
+            startCamera()
+        }
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
     }
 
     private fun showScanDialog(predictedLabel: String, remedy: String, confidence: Double? = null, imageUri: Uri? = null) {
