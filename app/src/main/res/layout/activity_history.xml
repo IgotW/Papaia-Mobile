@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:elevation="4dp">
 
         <ImageView
             android:id="@+id/imageview_arrowback_history"
@@ -30,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Scan Log History"
+            android:text="Scan History"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
