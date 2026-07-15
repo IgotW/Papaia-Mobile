@@ -130,28 +130,22 @@ Firebase Storage                Disease Prediction
 
 # 📱 Screenshots
 
-Replace these with your own screenshots.
+Screenshot will be attached (to be follow):
 
 ```
 screenshots/
 
 login.png
-<img width="1500" height="1500" alt="papaia-login" src="https://github.com/user-attachments/assets/985fc486-34ed-41f3-82ea-6066ba9cc1d5" />
 
 dashboard.png
-<img width="1500" height="1500" alt="papaia-home" src="https://github.com/user-attachments/assets/4790ceae-698a-406d-ae76-821015ea1a33" />
 
 scan.png
-<img width="1500" height="1500" alt="papaia-camera1" src="https://github.com/user-attachments/assets/173b6785-bf2c-4207-b2b2-3793607ab60d" />
 
 prediction.png
-<img width="1500" height="1500" alt="papaia-result" src="https://github.com/user-attachments/assets/48db89d9-dcf7-4d42-ba90-df2137dda555" />
 
 history.png
-<img width="1500" height="1500" alt="papaia-scanlog" src="https://github.com/user-attachments/assets/88971256-d44c-486b-a10e-1867c8d5a6b7" />
 
 profile.png
-<img width="1500" height="1500" alt="papaia-profile" src="https://github.com/user-attachments/assets/5a05ed59-4701-4287-a5e7-b074928b6a01" />
 
 ```
 
